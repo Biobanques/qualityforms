@@ -3,3 +3,5 @@
 /webapp/frontend/runtime/
 /webapp/composer.lock
 /webapp/console/runtime/
+/webapp/assets/
+/webapp/protected/runtime/
