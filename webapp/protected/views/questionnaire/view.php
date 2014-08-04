@@ -41,6 +41,13 @@ foreach ($model->questions_group as $question_group) {
             echo "<input type=\"radio\" name=\"".$question_group->id."_".$question->id."\" value=\"".$value."\">".$value."</input>";
             }
         }
+        if($question->type=="checkbox"){
+            $values=$question->values;
+            $arvalue=  split(",", $values);
+            foreach($arvalue as $value){
+            echo "<input type=\"checkbox\" name=\"".$question_group->id."_".$question->id."\" value=\"".$value."\">".$value."</input>";
+            }
+        }
         echo"</div>";
         echo "</div>";
     }
