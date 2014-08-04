@@ -9,6 +9,7 @@ class Question extends EMongoEmbeddedDocument {
 	public $id;
 	public $question;
         public $question_fr;
+        public $type;
 	
 
 

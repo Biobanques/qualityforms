@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 4 août 2014, 14:03:08
+    Author     : nicolas
+*/
+.question_group{
+    font-weight: bold;
+    background-color: lightgray;
+    margin:10px 5px 15px 2px;
+    padding: 5px 5px 5px 5px;
+    float: left;
+    clear: left;
+    width:100%;
+    }
+.question-form {
+ //width: 500px;
+ //overflow:hidden;
+}
+
+.question-label {
+ display: inline-block;
+    float: left;
+    clear: left;
+    width: 200px;
+    text-align: left;
+    padding-right:5px;
+    margin-bottom: 10px;
+}
+
+.question-input {
+ display: inline-block;
+  float: left;
+}

@@ -53,6 +53,73 @@ db.questionnaire.insert({
                             "order":"6"
                         },
                         ]
+                },{
+                    "id":"biobankreceivingidentification",
+                    "title": "Identification of receiving biobank",
+                    "title_fr":"Identification de la biobanque recevant les échantillons",
+                    "questions": [{
+                            "id":"biobankname",
+                            "question": "Biobank name",
+                            "question_fr": "Nom de la biobanque",
+                            "type":"input",
+                            "order":"1"
+                        },
+                        {
+                            "id":"phone",
+                            "question": "Phone N°",
+                            "question_fr": "N° d etel",
+                            "type":"input",
+                            "order":"2"
+                        },
+                        {
+                            "id":"adress",
+                            "question": "Address",
+                            "question_fr": "Adresse",
+                            "type":"input",
+                            "order":"3"
+                        },
+                        {
+                            "id":"email",
+                            "question": "E-mail",
+                            "question_fr": "Courriel",
+                            "type":"input",
+                            "order":"4"
+                        },
+                        {
+                            "id":"responsiblecollection",
+                            "question": "Name of the person in charge of collections",
+                            "question_fr": "Nom de la personne chargée des collections",
+                            "type":"input",
+                            "order":"5"
+                        },
+                        {
+                            "id":"responsiblereception",
+                            "question": "Name of the person in charge of reception",
+                            "question_fr": "Nom de la personne responsable de la réception",
+                            "type":"input",
+                            "order":"6"
+                        }, {
+                            "id":"receiverphone",
+                            "question": "Phone N°",
+                            "question_fr": "N° d etel",
+                            "type":"input",
+                            "order":"7"
+                        },
+                        {
+                            "id":"receiveradress",
+                            "question": "Address",
+                            "question_fr": "Adresse",
+                            "type":"input",
+                            "order":"8"
+                        },
+                        {
+                            "id":"receiveremail",
+                            "question": "E-mail",
+                            "question_fr": "Courriel",
+                            "type":"input",
+                            "order":"9"
+                        },
+                        ]
                 },
               ]
 
