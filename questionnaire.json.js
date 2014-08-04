@@ -22,21 +22,23 @@ db.questionnaire.insert({
                             "question": "Title",
                             "question_fr": "Titre",
                             "type":"input",
-                            "order":"2"
+                            "order":"2",
+                            "style":"float:right"
                         },
                         {
                             "id":"phone",
                             "question": "Phone N°",
                             "question_fr": "N° de Tél.",
                             "type":"input",
-                            "order":"3"
+                            "order":"3",
                         },
                         {
                             "id":"adress",
                             "question": "Address",
                             "question_fr": "Adresse",
                             "type":"input",
-                            "order":"4"
+                            "order":"4",
+                            "style":"float:right"
                         },
                         {
                             "id":"email",
@@ -50,7 +52,8 @@ db.questionnaire.insert({
                             "question": "Name of the administrator",
                             "question_fr": "Nom du responsable administratif",
                             "type":"input",
-                            "order":"6"
+                            "order":"6",
+                            "style":"float:right"
                         },
                         ]
                 },{

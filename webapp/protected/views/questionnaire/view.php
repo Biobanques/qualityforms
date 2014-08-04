@@ -20,15 +20,14 @@ $this->widget('zii.widgets.CDetailView', array(
 ?>
 
 <?php
-//affichage des groupes de questions
-echo "nb groupes:" . count($model->questions_group);
 //
 foreach ($model->questions_group as $question_group) {
    // echo "<div>id" . $question_group->id . "</div>";
     //echo "<div style=\"border:1px solid blue;\">";
     echo "<div class=\"question_group\"><i>" . $question_group->title . "</i> / ".$question_group->title_fr."</div>";
     foreach ($question_group->questions as $question) {
-         echo "<div class=\"question-label\"><i>" . $question->question . "</i><br>".$question->question_fr."</div>";
+        echo "<div  style=\"".$question->style."\">";
+         echo "<div class=\"question-label\" ><i>" . $question->question . "</i><br>".$question->question_fr."</div>";
        // echo "</div>";
         echo "<div class=\"question-input\">";
         //affichage de l input selon son type
@@ -36,6 +35,7 @@ foreach ($model->questions_group as $question_group) {
             echo "<input type=\"text\" name=\"".$question_group->id."_".$question->id."\">";
         }
         echo"</div>";
+        echo "</div>";
     }
     //echo "</div>";
     echo "<br><div style=\”clear:both;\"></div>";

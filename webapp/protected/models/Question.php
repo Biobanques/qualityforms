@@ -10,6 +10,10 @@ class Question extends EMongoEmbeddedDocument {
 	public $question;
         public $question_fr;
         public $type;
+        /*
+         * css style applied to the label.
+         */
+        public $style;
 	
 
 
