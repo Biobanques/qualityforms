@@ -46,6 +46,16 @@ class QuestionnaireController extends Controller
 		));
 	}
 
+        /**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionViewOnePage($id)
+	{
+		$this->render('view_onepage',array(
+			'model'=>$this->loadModel($id),
+		));
+	}
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
