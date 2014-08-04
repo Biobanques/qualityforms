@@ -200,7 +200,8 @@ db.questionnaire.insert({
                             "question": "Duration",
                             "question_fr": "Durée évolutive",
                             "type":"input",
-                            "order":"10"
+                            "order":"10",
+                            "style":"float:right"
                         },
                          {
                             "id":"identifyingpseudo",
@@ -220,11 +221,103 @@ db.questionnaire.insert({
                             "question": "Opposition,non-opposition",
                             "question_fr": "Opposition, non opposition",
                             "type":"input",
+                            "style":"float:right"
                         },
                         {
                             "id":"serology",
                             "question": "Serology (VIH, hepatitis)",
                             "question_fr": "Sérologie ( VIH, hépatite)",
+                            "type":"input",
+                        },
+                        ]
+                },
+                {
+                    "id":"sample",
+                    "title": "Sample",
+                    "title_fr":"Echantillon",
+                    "questions": [{
+                            "id":"number",
+                            "question": "Sample number",
+                            "question_fr": "Numéro d'échantillon",
+                            "type":"input",
+                            "order":"1"
+                        },
+                        {
+                            "id":"species",
+                            "question": "Species ( and strain)",
+                            "question_fr": "Espèce (et souche)",
+                            "type":"input",
+                            "order":"2",
+                            "style":"float:right"
+                        },
+                        {
+                            "id":"sampletype",
+                            "question": "Sample type",
+                            "question_fr": "Type d'échantillon",
+                            "type":"list",
+                            "values":"Tissue/Tissu,Cells/Cellules,RNA/ARN, DNA/ADN, Plasma,Serum, CSF/LCR,PBMC, Buffy Coat, Other/Autre",
+                            "order":"3"
+                        },
+                        {
+                            "id":"sampletypeother",
+                            "question": "Other Type",
+                            "question_fr": "Autre type",
+                            "type":"input",
+                        },
+                        {
+                            "id":"source",
+                            "question": "Sample source ( organ, tissue)",
+                            "question_fr": "Source de l'échantillon (organe, tissu)",
+                            "type":"input"
+                        },
+                        {
+                            "id":"pathologicalstatus",
+                            "question": "Pathological status of the sample (e.g. affected, non-affected, indication of suspected diagnosis)",
+                            "question_fr": "Statut pathologique de l’échantillon (e.g. affecté, non affecté, indication sur le diagnostic suspecté)",
+                            "type":"input"
+                        }, {
+                            "id":"samplecollectiondate",
+                            "question": "Sample collection date and time",
+                            "question_fr": "Date et heure du prélèvement",
+                            "type":"input",
+                        },
+                        {
+                            "id":"samplereceptiondate",
+                            "question": "Reception date and time",
+                            "question_fr": "Date et heure de réception",
+                            "type":"input",
+                            "style":"float:right"
+                        },
+                        {
+                            "id":"nbsamples",
+                            "question": "Number of deposited sample",
+                            "question_fr": "Nombre d’échantillon déposés",
+                            "type":"input"
+                        },
+                         {
+                            "id":"Receptionconditions",
+                            "question": "Reception conditions(comments)",
+                            "question_fr": "Conditions de réception(commentaires)",
+                            "type":"text",
+                            "style":"float:right"
+                        },
+                         {
+                            "id":"requirements",
+                            "question": "Requirements or restriction for distribution",
+                            "question_fr": "Conditions requises ou restriction pour la distribution",
+                            "type":"radio",
+                            "values":"yes/oui,no/non"
+                        },
+                        {
+                            "id":"othersamples",
+                            "question": "Other samples for this patient",
+                            "question_fr": "Autres échantillons du même patient",
+                            "type":"input"
+                        },
+                         {
+                            "id":"documents",
+                            "question": "Associated documents",
+                            "question_fr": "Documents associés au dépôt",
                             "type":"input",
                         },
                         ]

@@ -48,6 +48,9 @@ foreach ($model->questions_group as $question_group) {
             echo "<input type=\"checkbox\" name=\"".$question_group->id."_".$question->id."\" value=\"".$value."\">".$value."</input>";
             }
         }
+        if($question->type=="text"){
+            echo "<input type=\"textarea\" rows=\"4\" cols=\"50\" name=\"".$question_group->id."_".$question->id."\" ></input>";
+        }
         echo"</div>";
         echo "</div>";
     }
