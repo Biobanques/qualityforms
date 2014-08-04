@@ -70,7 +70,7 @@ db.questionnaire.insert({
                         {
                             "id":"phone",
                             "question": "Phone N°",
-                            "question_fr": "N° d etel",
+                            "question_fr": "N° de tel",
                             "type":"input",
                             "order":"2"
                         },
@@ -124,6 +124,111 @@ db.questionnaire.insert({
                         },
                         ]
                 },
+                {
+                    "id":"patient",
+                    "title": "Patient (if applicable)",
+                    "title_fr":"Patient (si applicable)",
+                    "questions": [{
+                            "id":"birthdate",
+                            "question": "date of birth (DD/MM/YYYY)",
+                            "question_fr": "Date de naissance (JJ/MM/YYYY)",
+                            "type":"input",
+                            "order":"1"
+                        },
+                        {
+                            "id":"agedatecollection",
+                            "question": "Age at the date of sample collection",
+                            "question_fr": "Age à la date du prélèvement",
+                            "type":"input",
+                            "order":"2",
+                            "style":"float:right"
+                        },
+                        {
+                            "id":"gender",
+                            "question": "Gender",
+                            "question_fr": "Sexe",
+                            "type":"radio",
+                            "values":"M,F",
+                            "order":"3"
+                        },
+                        {
+                            "id":"disease",
+                            "question": "disease",
+                            "question_fr": "pathologie",
+                            "type":"checkbox",
+                            "values":"CIM10,OMIM",
+                            "order":"4"
+                        },
+                        {
+                            "id":"tnm",
+                            "question": "TNM when appropriate",
+                            "question_fr": "TNM s'il y'a lieu",
+                            "type":"input",
+                            "order":"5"
+                        },
+                        {
+                            "id":"undermedication",
+                            "question": "Under medication",
+                            "question_fr": "Sous traitement",
+                            "type":"radio",
+                            "values":"yes,no",
+                            "order":"6"
+                        }, {
+                            "id":"ifmedication",
+                            "question": "If yes which one?",
+                            "question_fr": "Si oui lequel",
+                            "type":"input",
+                            "order":"7",
+                            "style":"float:right",
+                        },
+                        {
+                            "id":"medicalhistory",
+                            "question": "Medical history",
+                            "question_fr": "Principaux antécédents",
+                            "type":"text",
+                            "order":"8"
+                        },
+                        {
+                            "id":"agedebut",
+                            "question": "Age at the onset",
+                            "question_fr": "Age de début",
+                            "type":"input",
+                            "order":"9"
+                        },
+                         {
+                            "id":"duration",
+                            "question": "Duration",
+                            "question_fr": "Durée évolutive",
+                            "type":"input",
+                            "order":"10"
+                        },
+                         {
+                            "id":"identifyingpseudo",
+                            "question": "Identifying pseudonym",
+                            "question_fr": "Identifiant anonymisé",
+                            "type":"input",
+                        },
+                        {
+                            "id":"consent",
+                            "question": "Signed and informed consent",
+                            "question_fr": "Consentement signé",
+                            "type":"radio",
+                            "values":"yes,no"
+                        },
+                         {
+                            "id":"opposition",
+                            "question": "Opposition,non-opposition",
+                            "question_fr": "Opposition, non opposition",
+                            "type":"input",
+                        },
+                        {
+                            "id":"serology",
+                            "question": "Serology (VIH, hepatitis)",
+                            "question_fr": "Sérologie ( VIH, hépatite)",
+                            "type":"input",
+                        },
+                        ]
+                }
               ]
 
 })

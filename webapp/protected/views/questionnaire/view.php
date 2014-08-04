@@ -34,6 +34,13 @@ foreach ($model->questions_group as $question_group) {
         if($question->type=="input"){
             echo "<input type=\"text\" name=\"".$question_group->id."_".$question->id."\">";
         }
+        if($question->type=="radio"){
+            $values=$question->values;
+            $arvalue=  split(",", $values);
+            foreach($arvalue as $value){
+            echo "<input type=\"radio\" name=\"".$question_group->id."_".$question->id."\" value=\"".$value."\">".$value."</input>";
+            }
+        }
         echo"</div>";
         echo "</div>";
     }

@@ -14,8 +14,10 @@ class Question extends EMongoEmbeddedDocument {
          * css style applied to the label.
          */
         public $style;
-	
-
+	/**
+         * values if question type is radio
+         */
+        public $values;
 
 	/**
 	 *
