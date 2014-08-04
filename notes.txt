@@ -1,0 +1,3 @@
+connect to mongo :
+
+mongo qualityformsdb -u qfuseradmin -p 'bbanques2015'
