@@ -3,12 +3,11 @@ db.questionnaire_answer.insert({
     "userid":"",
     "answers":
             [{
-                    "groupid":"g1",
-                    "questionid": "q1",
+                    "groupidquestionid":"g1q1",
                     "answer": "myanswer",
                 },
                 {
-                    "questionid": "q2",
+                    "groupidquestionid": "g1q2",
                     "answer": "thanks"
                 }]
 

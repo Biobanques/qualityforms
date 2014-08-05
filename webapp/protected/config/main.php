@@ -52,16 +52,18 @@ return array(
         'log' => array(
             'class' => 'CLogRouter',
             'routes' => array(
-                array(
+                 array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ),
-            // uncomment the following to show log messages on web pages
-            /*
-              array(
-              'class'=>'CWebLogRoute',
-              ),
-             */
+                array(
+                'class'=>'CWebLogRoute',
+                'levels' => 'error, warning',
+                //'categories'=>'system.db.*',
+                //'except'=>'system.db.ar.*', // shows all db level logs but nothing in the ar category
+                'enabled'=>true,
+                'showInFireBug'=>true
+            ),
             ),
         ),
     ),

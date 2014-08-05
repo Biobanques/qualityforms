@@ -30,6 +30,7 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
+                                array('label'=>'Questionnaires', 'url'=>array('/questionnaire/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
@@ -43,7 +44,20 @@
 		)); ?><!-- breadcrumbs -->
 	<?php endif?>
 
-	<?php echo $content; ?>
+                <section class="main-body">
+            <div class="container-fluid" style="height:70%; background-color: white">
+                <?php
+                $flashMessages = Yii::app()->user->getFlashes();
+                if ($flashMessages) {
+                    foreach ($flashMessages as $key => $message) {
+                        echo '<br><div class="flash-' . $key . '">' . $message . "</div>";
+                    }
+                }
+                ?>
+                <!-- Include content pages -->
+                <?php echo $content; ?>
+            </div>
+        </section>
 
 	<div class="clear"></div>
 
