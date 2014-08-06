@@ -86,12 +86,12 @@ class QuestionnaireController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
-        if (isset($_POST['Questionnaire'])) {
+        Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
+        /*if (isset($_POST['Questionnaire'])) {
             $model->attributes = $_POST['Questionnaire'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
-        }
+        }*/
 
         $this->render('update', array(
             'model' => $model,
