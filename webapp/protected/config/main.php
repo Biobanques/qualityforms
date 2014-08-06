@@ -24,6 +24,10 @@ return array(
     /* theme : classic , bootstrap */
     'theme'=>'bootstrap',
     'modules' => array(
+        /* 'gii'=>array(
+            'generatorPaths'=>array(
+                'bootstrap.gii',
+            ),*/
     ),
     // application components
     'components' => array(
