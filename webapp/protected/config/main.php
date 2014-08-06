@@ -18,18 +18,6 @@ return array(
         'application.components.*',
     ),
     'modules' => array(
-        // uncomment the following to enable the Gii tool
-
-        'gii' => array(
-            'class' => 'system.gii.GiiModule',
-            'password' => 'nicolas',
-            // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1'),
-            // add additional generator path
-            'generatorPaths' => array(
-                'ext.YiiMongoDbSuite.gii'
-            ),
-        ),
     ),
     // application components
     'components' => array(
