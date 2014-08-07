@@ -12,7 +12,7 @@ class Questionnaire extends EMongoDocument {
      * champs classiques d echantillons
      */
     public $id;
-    public $questionnaire;
+    public $name;
     public $description;
     public $message_start;
     public $message_end;
@@ -116,7 +116,7 @@ class Questionnaire extends EMongoDocument {
         public function renderQuestionHTML($idquestiongroup,$question) {
             $result="";
                 $result.="<div  style=\"" . $question->style . "\">";
-                $result.="<div class=\"question-label\" ><i>" . $question->question . "</i><br>" . $question->question_fr . "</div>";
+                $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr . "</div>";
                 // $result.="</div>";
                 $result.="<div class=\"question-input\">";
                 //affichage de l input selon son type

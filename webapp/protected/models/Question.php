@@ -7,8 +7,8 @@
  */
 class Question extends EMongoEmbeddedDocument {
 	public $id;
-	public $question;
-        public $question_fr;
+	public $label;
+        public $label_fr;
         public $type;
         /*
          * css style applied to the label.
@@ -39,8 +39,8 @@ class Question extends EMongoEmbeddedDocument {
 	public function attributeLabels() {
 		return array (
 				'id' => 'Id',
-				'question' => 'question',
-                                'question_fr' => 'question',
+				'label' => 'question',
+                                'label_fr' => 'question',
 		);
 	}
         

@@ -1,13 +1,14 @@
 <?php
 
 class QuestionnaireController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      * 
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/column2';
+    public $layout = '//layouts/column2';
 
     /**
      * @return array action filters
@@ -40,33 +41,49 @@ class QuestionnaireController extends Controller {
      */
     public function actionView($id) {
         $model = $this->loadModel($id);
-        $this->saveQuestionnaireAnswers($model);
-
-
-      $this->render('view', array(
+        $this->render('view', array(
             'model' => $model,
+        ));
+    }
+    
+    /**
+     * Action to save the questionnaire a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionSave($id) {
+        $model = $this->loadModel($id);
+        $answer=$this->saveQuestionnaireAnswers($model);
+        $this->render('view', array(
+            'model' => $answer,
         ));
     }
 
     /**
      * save answers by this questionnaire.
      * for each question group then question save answer
+     * //copy the questionnaire into answer
+     * //then fill it with answers
      * @param questionnaire
      */
     public function saveQuestionnaireAnswers($model) {
         $answer = new Answer;
-        $answer->questionnaireid = $model->id;
+        $answer->copy($model);
+        $answer->login=Yii::app()->user->name;
         foreach ($model->questions_group as $question_group) {
             foreach ($question_group->questions as $question) {
                 $input = $question_group->id . "_" . $question->id;
-                if (isset($_POST[$input]))
-                    $answer->addAnswer($input, $_POST[$input]);
+                if (isset($_POST[$input])) {
+                    $answer->addAnswer($question_group->id, $question->id, $_POST[$input]);
+                }
             }
         }
         if ($answer->save())
             Yii::app()->user->setFlash('success', "Questionnaire saved with success");
-        else
-            Yii::log("pb save answer".print_r ($answer->getErrors()),CLogger::LEVEL_ERROR);
+        else {
+            Yii::app()->user->setFlash('error', "Questionnaire not saved. A problem occured.");
+            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+        }
+        return $answer;
     }
 
     /**
@@ -87,11 +104,11 @@ class QuestionnaireController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
-        /*if (isset($_POST['Questionnaire'])) {
-            $model->attributes = $_POST['Questionnaire'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
-        }*/
+        /* if (isset($_POST['Questionnaire'])) {
+          $model->attributes = $_POST['Questionnaire'];
+          if ($model->save())
+          $this->redirect(array('view', 'id' => $model->id));
+          } */
 
         $this->render('update', array(
             'model' => $model,
@@ -160,33 +177,4 @@ class QuestionnaireController extends Controller {
         }
     }
 
-    /*
-     * render html the current question.
-     */
-    /* public function saveQuestion($idquestiongroup,$idquestion) {
-      $input=$idquestiongroup . "_" . $idquestion;
-      if(isset($_POST[$input]))
-      //affichage de l input selon son type
-      if ($question->type == "input") {
-      $result.="<input type=\"text\" name=\"" . $idquestiongroup . "_" . $idquestion . "\">";
-      }
-      if ($question->type == "radio") {
-      $values = $question->values;
-      $arvalue = split(",", $values);
-      foreach ($arvalue as $value) {
-      $result.="<input type=\"radio\" name=\"" . $idquestiongroup . "_" . $idquestion . "\" value=\"" . $value . "\">" . $value . "</input>";
-      }
-      }
-      if ($question->type == "checkbox") {
-      $values = $question->values;
-      $arvalue = split(",", $values);
-      foreach ($arvalue as $value) {
-      $result.="<input type=\"checkbox\" name=\"" . $idquestiongroup . "_" . $question->id . "\" value=\"" . $value . "\">" . $value . "</input>";
-      }
-      }
-      if ($question->type == "text") {
-      $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" name=\"" . $idquestiongroup . "_" . $question->id . "\" ></input>";
-      }
-      return $result;
-      } */
 }

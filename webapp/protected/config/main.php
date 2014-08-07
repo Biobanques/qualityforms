@@ -55,11 +55,11 @@ return array(
             'routes' => array(
                  array(
                     'class' => 'CFileLogRoute',
-                    'levels' => 'error, warning',
+                    'levels' => 'error, trace',
                 ),
                 array(
                 'class'=>'CWebLogRoute',
-                'levels' => 'error, warning',
+                'levels' => 'error, trace',
                 //'categories'=>'system.db.*',
                 //'except'=>'system.db.ar.*', // shows all db level logs but nothing in the ar category
                 'enabled'=>true,
