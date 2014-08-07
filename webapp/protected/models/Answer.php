@@ -130,26 +130,27 @@ class Answer extends EMongoDocument {
         // $result.="</div>";
         $result.="<div class=\"question-input\">";
         //affichage de l input selon son type
+        $idInput =$idanswergroup . "_" . $answer->id;
         if ($answer->type == "input") {
-            //" . $answer->answer . "
-            $result.="<input type=\"text\" name=\"" . $idanswergroup . "_" . $answer->id . " value=\"\" \">";
+            //
+            $result.="<input type=\"text\" id=\"" . $idInput . "\" value=\"" . $answer->answer . "\" >";
         }
         if ($answer->type == "radio") {
             $values = $answer->values;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" name=\"" . $idanswergroup . "_" . $answer->id . "\" value=\"" . $value . "\">" . $value . "</input>";
+                $result.="<input type=\"radio\" id=\"" . $idInput . "\" value=\"" . $value . "\">" . $value . "</input>";
             }
         }
         if ($answer->type == "checkbox") {
             $values = $answer->values;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $result.="<input type=\"checkbox\" name=\"" . $idanswergroup . "_" . $answer->id . "\" value=\"" . $value . "\">" . $value . "</input>";
+                $result.="<input type=\"checkbox\" id=\"" . $idInput. "\" value=\"" . $value . "\">" . $value . "</input>";
             }
         }
         if ($answer->type == "text") {
-            $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" name=\"" . $idanswergroup . "_" . $answer->id . "\" ></input>";
+            $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" name=\"" . $idInput. "\" ></input>";
         }
         $result.="</div>";
         $result.="</div>";
@@ -161,7 +162,7 @@ class Answer extends EMongoDocument {
      * @param type $answer
      * @param type $answer
      */
-    public function addAnswer($groupid, $questionid, $answer) {
+    /*public function addAnswer($groupid, $questionid, $answer) {
         foreach ($this->answers_group as $answer_group) {
             if ($answer_group->id == $groupid) {
                 foreach ($answer_group->answers as $answer) {
@@ -170,8 +171,11 @@ class Answer extends EMongoDocument {
                     }
                 }
             }
-        }
-    }
+        }}
+     * 
+     * */
+     
+    
 
     /**
      * copy attributes of questionnaire recursively to the final state answer-question.
@@ -179,6 +183,7 @@ class Answer extends EMongoDocument {
      */
     public function copy($questionnaire) {
         $this->id = $questionnaire->id;
+        $this->questionnaireMongoId=$questionnaire->_id;
         $this->name = $questionnaire->name;
         $this->description = $questionnaire->description;
         $this->message_start = $questionnaire->message_start;

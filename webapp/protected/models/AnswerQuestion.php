@@ -62,5 +62,12 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
         $this->style = $question->style;
         $this->values = $question->values;
     }
+    /**
+     * set the value of an answer
+     * @param type $val
+     */
+    public function setAnswer($val){
+        $this->answer =$val;
+    }
 
 }

@@ -41,20 +41,14 @@ class QuestionnaireController extends Controller {
      */
     public function actionView($id) {
         $model = $this->loadModel($id);
+        $answer = null;
+        if (isset($_POST['Questionnaire'])) {
+            $answer = $this->saveQuestionnaireAnswers($model);
+        }
+        if ($answer != null)
+            $model = $answer;
         $this->render('view', array(
             'model' => $model,
-        ));
-    }
-    
-    /**
-     * Action to save the questionnaire a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionSave($id) {
-        $model = $this->loadModel($id);
-        $answer=$this->saveQuestionnaireAnswers($model);
-        $this->render('view', array(
-            'model' => $answer,
         ));
     }
 
@@ -68,21 +62,29 @@ class QuestionnaireController extends Controller {
     public function saveQuestionnaireAnswers($model) {
         $answer = new Answer;
         $answer->copy($model);
-        $answer->login=Yii::app()->user->name;
-        foreach ($model->questions_group as $question_group) {
-            foreach ($question_group->questions as $question) {
-                $input = $question_group->id . "_" . $question->id;
-                if (isset($_POST[$input])) {
-                    $answer->addAnswer($question_group->id, $question->id, $_POST[$input]);
+        $answer->login = Yii::app()->user->name;
+        $flagNoInputToSave = true;
+        foreach ($answer->answers_group as $answer_group) {
+            foreach ($answer_group->answers as $answerQuestion) {
+                $input = $answer_group->id . "_" . $answerQuestion->id;
+                if (isset($_POST['Questionnaire'][$input])) {
+                    $flagNoInputToSave = false;
+                    $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
                 }
             }
+        }if ($flagNoInputToSave == false) {
+            if ($answer->save())
+                Yii::app()->user->setFlash('success', "Questionnaire saved with success");
+            else {
+                Yii::app()->user->setFlash('error', "Questionnaire not saved. A problem occured.");
+                Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+            }
+        } else {
+            Yii::app()->user->setFlash('error', "Questionnaire not saved. No Input to save.");
+            //null result
+            $answer = null;
         }
-        if ($answer->save())
-            Yii::app()->user->setFlash('success', "Questionnaire saved with success");
-        else {
-            Yii::app()->user->setFlash('error', "Questionnaire not saved. A problem occured.");
-            Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
-        }
+
         return $answer;
     }
 

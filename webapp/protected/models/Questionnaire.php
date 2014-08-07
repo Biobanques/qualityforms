@@ -120,25 +120,26 @@ class Questionnaire extends EMongoDocument {
                 // $result.="</div>";
                 $result.="<div class=\"question-input\">";
                 //affichage de l input selon son type
+                $idInput="id=\"".$idquestiongroup . "_" . $question->id."\" name=\"Questionnaire[".$idquestiongroup . "_" . $question->id."]";
                 if ($question->type == "input") {
-                    $result.="<input type=\"text\" name=\"" . $idquestiongroup . "_" . $question->id . "\">";
+                    $result.="<input type=\"text\" " .$idInput  . ">";
                 }
                 if ($question->type == "radio") {
                     $values = $question->values;
                     $arvalue = split(",", $values);
                     foreach ($arvalue as $value) {
-                        $result.="<input type=\"radio\" name=\"" . $idquestiongroup . "_" . $question->id . "\" value=\"" . $value . "\">" . $value . "</input>";
+                        $result.="<input type=\"radio\" ". $idInput. " value=\"" . $value . "\">" . $value . "</input>";
                     }
                 }
                 if ($question->type == "checkbox") {
                     $values = $question->values;
                     $arvalue = split(",", $values);
                     foreach ($arvalue as $value) {
-                        $result.="<input type=\"checkbox\" name=\"" . $idquestiongroup . "_" . $question->id . "\" value=\"" . $value . "\">" . $value . "</input>";
+                        $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">" . $value . "</input>";
                     }
                 }
                 if ($question->type == "text") {
-                    $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" name=\"" . $idquestiongroup . "_" . $question->id . "\" ></input>";
+                    $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" " . $idInput. " ></input>";
                 }
                 $result.="</div>";
                 $result.="</div>";
