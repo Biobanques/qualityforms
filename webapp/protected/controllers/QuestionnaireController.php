@@ -105,15 +105,19 @@ class QuestionnaireController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        $form = new QuestionnaireGroupForm;
         Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
-        /* if (isset($_POST['Questionnaire'])) {
-          $model->attributes = $_POST['Questionnaire'];
-          if ($model->save())
-          $this->redirect(array('view', 'id' => $model->id));
-          } */
+         if (isset($_POST['QuestionnaireGroupForm'])) {
+          $form->attributes = $_POST['QuestionnaireGroupForm'];
+          if ($model->updateForm($form))
+            Yii::app()->user->setFlash('success', "Questionnaire updated with success");
+          }else {
+             Yii::app()->user->setFlash('error', "Questionnaire not updated. A problem occured.");
+        } 
 
         $this->render('update', array(
             'model' => $model,
+            'form' => $form,
         ));
     }
 

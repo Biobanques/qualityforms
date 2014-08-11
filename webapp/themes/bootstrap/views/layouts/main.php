@@ -6,6 +6,8 @@
 	<meta name="language" content="en" />
 
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css" />
+    
+           <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/questionnaire.css" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 

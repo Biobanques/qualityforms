@@ -17,14 +17,16 @@ $this->breadcrumbs = array(
 <?php echo CHtml::errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
 <div class="form">
 <?php
-//echo //CHtml::beginForm(Yii::app()->createUrl('questionnaire/save',array('id'=>$model->_id)),'post',array());
  $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'questionnaire-form',
 	'enableAjaxValidation'=>false,
 )); 
 
 echo "<div style=\"text-align:center\">".CHtml::submitButton('Save')."</div>"; 
-echo "<br>";
+?><br>
+<div>
+    <?php
+    
 $this->widget('zii.widgets.jui.CJuiTabs',array(
     'tabs'=>$model->renderArrayTabGroup(),
     // additional javascript options for the tabs plugin
@@ -32,6 +34,9 @@ $this->widget('zii.widgets.jui.CJuiTabs',array(
         'collapsible'=>true,
     ),
 ));
+?>
+</div>
+    <?php
 
 $this->endWidget();
 ?>

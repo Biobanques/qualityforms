@@ -18,6 +18,9 @@ class Questionnaire extends EMongoDocument {
     public $message_end;
     public $questions_group;
 
+    /**
+     * fields to manage add question 
+     */
 // This has to be defined in every model, this is same as with standard Yii ActiveRecord
     public static function model($className = __CLASS__) {
         return parent::model($className);
@@ -89,63 +92,91 @@ class Questionnaire extends EMongoDocument {
         }
         return $result;
     }
+
     /**
      * render an array of association key/question group to display as tab
      */
     public function renderArrayTabGroup() {
         $result = array();
         foreach ($this->questions_group as $question_group) {
-            $result[$question_group->title]=$this->renderQuestionGroupHTML($question_group);
+            $result[$question_group->title] = $this->renderQuestionGroupHTML($question_group);
         }
         return $result;
     }
-    
-    public function renderQuestionGroupHTML($question_group){
-        $result = "";
+
+    public function renderQuestionGroupHTML($question_group) {
+        $result = "<div>";
         $result.="<div class=\"question_group\"><i>" . $question_group->title . "</i> / " . $question_group->title_fr . "</div>";
-        foreach ($question_group->questions as $question) {
-            $result.=$this->renderQuestionHTML($question_group->id, $question);
+        if (isset($question_group->questions)) {
+            foreach ($question_group->questions as $question) {
+                $result.=$this->renderQuestionHTML($question_group->id, $question);
+            }
         }
-        $result.= "<br><div style=\”clear:both;\"></div>";
+        $result.= "</div>";
         return $result;
     }
-    
+
     /*
-         * render html the current question.
-         */
-        public function renderQuestionHTML($idquestiongroup,$question) {
-            $result="";
-                $result.="<div  style=\"" . $question->style . "\">";
-                $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr . "</div>";
-                // $result.="</div>";
-                $result.="<div class=\"question-input\">";
-                //affichage de l input selon son type
-                $idInput="id=\"".$idquestiongroup . "_" . $question->id."\" name=\"Questionnaire[".$idquestiongroup . "_" . $question->id."]";
-                if ($question->type == "input") {
-                    $result.="<input type=\"text\" " .$idInput  . ">";
-                }
-                if ($question->type == "radio") {
-                    $values = $question->values;
-                    $arvalue = split(",", $values);
-                    foreach ($arvalue as $value) {
-                        $result.="<input type=\"radio\" ". $idInput. " value=\"" . $value . "\">" . $value . "</input>";
-                    }
-                }
-                if ($question->type == "checkbox") {
-                    $values = $question->values;
-                    $arvalue = split(",", $values);
-                    foreach ($arvalue as $value) {
-                        $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">" . $value . "</input>";
-                    }
-                }
-                if ($question->type == "text") {
-                    $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" " . $idInput. " ></input>";
-                }
-                $result.="</div>";
-                $result.="</div>";
-                return $result;
-                }
-    
+     * render html the current question.
+     */
+
+    public function renderQuestionHTML($idquestiongroup, $question) {
+        $result = "";
+        //if(isset($question->style))
+
+        $result.="<div style=\"" . $question->style . "\">";
+
+        // $result.="<div class=\"row\">";
+        $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr . "</div>";
+        // $result.="</div>";
+        $result.="<div class=\"question-input\">";
+        //affichage de l input selon son type
+        $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]\"";
+        if ($question->type == "input") {
+            $result.="<input type=\"text\" " . $idInput . "/>";
+        }
+        if ($question->type == "radio") {
+            $values = $question->values;
+            $arvalue = split(",", $values);
+            foreach ($arvalue as $value) {
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">" . $value . "</input>";
+            }
+        }
+        if ($question->type == "checkbox") {
+            $values = $question->values;
+            $arvalue = split(",", $values);
+            foreach ($arvalue as $value) {
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">" . $value . "</input>";
+            }
+        }
+        if ($question->type == "text") {
+            $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" " . $idInput . " ></input>";
+        }
+        //close question input
+        $result.="</div>";
+        //close row input
+        $result.="</div>";
+        return $result;
+    }
+
+    /**
+     * update questionnaire with fields filled.
+     * Add question group if necessary
+     */
+    public function updateForm($questionnaireGroupForm) {
+        $result = false;
+        //check if fields required are filled
+        if ($questionnaireGroupForm->validate()) {
+            $qg = new QuestionGroup;
+            $qg->id = $questionnaireGroupForm->formQuestionGroupId;
+            $qg->title = $questionnaireGroupForm->formQuestionGroupTitle;
+            $qg->title_fr = $questionnaireGroupForm->formQuestionGroupTitleFr;
+            $this->questions_group[] = $qg;
+            $this->save();
+            $result = true;
+        }
+        return $result;
+    }
 
 }
 

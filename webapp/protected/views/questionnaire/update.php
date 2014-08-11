@@ -12,4 +12,9 @@ $this->breadcrumbs=array(
 <h1>Update Questionnaire <?php echo $model->id; ?></h1>
 
 <?php 
-//echo $this->renderPartial('_form', array('model'=>$model)); ?>
+echo $this->renderPartial('_form', array('model'=>$form));
+
+
+echo $model->renderHTML();
+
+?>

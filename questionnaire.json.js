@@ -72,35 +72,38 @@ db.questionnaire.insert({
                             "label": "Phone N°",
                             "label_fr": "N° de tel",
                             "type":"input",
-                            "order":"2"
+                            "order":"2",
+                            "style":"float:right"
                         },
                         {
                             "id":"adress",
                             "label": "Address",
                             "label_fr": "Adresse",
                             "type":"input",
-                            "order":"3"
+                            "order":"3",
                         },
                         {
                             "id":"email",
                             "label": "E-mail",
                             "label_fr": "Courriel",
                             "type":"input",
-                            "order":"4"
+                            "order":"4",
+                            "style":"float:right"
                         },
                         {
                             "id":"responsiblecollection",
                             "label": "Name of the person in charge of collections",
                             "label_fr": "Nom de la personne chargée des collections",
                             "type":"input",
-                            "order":"5"
+                            "order":"5",
                         },
                         {
                             "id":"responsiblereception",
                             "label": "Name of the person in charge of reception",
                             "label_fr": "Nom de la personne responsable de la réception",
                             "type":"input",
-                            "order":"6"
+                            "order":"6",
+                            "style":"float:right"
                         }, {
                             "id":"receiverphone",
                             "label": "Phone N°",
@@ -113,7 +116,8 @@ db.questionnaire.insert({
                             "label": "Address",
                             "label_fr": "Adresse",
                             "type":"input",
-                            "order":"8"
+                            "order":"8",
+                            "style":"float:right"
                         },
                         {
                             "id":"receiveremail",
@@ -157,14 +161,15 @@ db.questionnaire.insert({
                             "label_fr": "pathologie",
                             "type":"checkbox",
                             "values":"CIM10,OMIM",
-                            "order":"4"
+                            "order":"4",
                         },
                         {
                             "id":"tnm",
                             "label": "TNM when appropriate",
                             "label_fr": "TNM s'il y'a lieu",
                             "type":"input",
-                            "order":"5"
+                            "order":"5",
+                            "style":"float:right"
                         },
                         {
                             "id":"undermedication",
@@ -214,7 +219,8 @@ db.questionnaire.insert({
                             "label": "Signed and informed consent",
                             "label_fr": "Consentement signé",
                             "type":"radio",
-                            "values":"yes,no"
+                            "values":"yes,no",
+                            "style":"float:right"
                         },
                          {
                             "id":"opposition",
@@ -263,6 +269,7 @@ db.questionnaire.insert({
                             "label": "Other Type",
                             "label_fr": "Autre type",
                             "type":"input",
+                            "style":"float:right"
                         },
                         {
                             "id":"source",
@@ -274,7 +281,8 @@ db.questionnaire.insert({
                             "id":"pathologicalstatus",
                             "label": "Pathological status of the sample (e.g. affected, non-affected, indication of suspected diagnosis)",
                             "label_fr": "Statut pathologique de l’échantillon (e.g. affecté, non affecté, indication sur le diagnostic suspecté)",
-                            "type":"input"
+                            "type":"input",
+                            "style":"float:right"
                         }, {
                             "id":"samplecollectiondate",
                             "label": "Sample collection date and time",
@@ -312,7 +320,8 @@ db.questionnaire.insert({
                             "id":"othersamples",
                             "label": "Other samples for this patient",
                             "label_fr": "Autres échantillons du même patient",
-                            "type":"input"
+                            "type":"input",
+                            "style":"float:right"
                         },
                          {
                             "id":"documents",
@@ -321,7 +330,123 @@ db.questionnaire.insert({
                             "type":"input",
                         },
                         ]
-                }
+                },
+                {
+                    "id":"dnarna",
+                    "title": "DNA-RNA",
+                    "title_fr":"ADN-ARN",
+                    "questions": [{
+                            "id":"extractiondate",
+                            "label": "Extraction date",
+                            "label_fr": "Date d'extraction",
+                            "type":"input",
+                        },
+                        {
+                            "id":"extractionmethod",
+                            "label": "Extraction method",
+                            "label_fr": "Methode d'extraction",
+                            "type":"input",
+                            "style":"float:right"
+                        },
+                        {
+                            "id":"samplestate",
+                            "label": "Sample state",
+                            "label_fr": "État de l’échantillon",
+                            "type":"radio",
+                            "values":"dry/sec,liquid/liquide"
+                        },
+                         {
+                            "id":"samplestatebuffer",
+                            "label": "If liquid state the buffer",
+                            "label_fr": "Si liquide préciser le tampon",
+                            "type":"input",
+                            "style":"float:right"
+                        },
+                        {
+                            "id":"weight",
+                            "label": "Quantity (as appropriate) Weight (μg)",
+                            "label_fr": "Quantité (selon le cas) Poids (μg)",
+                            "type":"input",
+                        },
+                        {
+                            "id":"concentration",
+                            "label": "Concentration (μg/μl)",
+                            "label_fr": "Concentration (μg/μl)",
+                            "type":"input",
+                            "style":"float:right"
+                        },
+                        {
+                            "id":"volume",
+                            "label": "Volume (μl)",
+                            "label_fr": "Volume (μl)",
+                            "type":"input",
+                            "style":"float:right"
+                        },
+                    ]},
+                 {
+                    "id":"celllines",
+                    "title": "Cell lines, primary cells and hybridomas cultures",
+                    "title_fr":"Cultures de lignées cellulaires, cellules primaires et hybridomes",
+                    "questions": [{
+                            "id":"celllinename",
+                            "label": "Cell line name",
+                            "label_fr": "Nom de la lignée cellulaire",
+                            "type":"input",
+                        },
+                    {
+                            "id":"Other cell line names",
+                            "label": "Other cell line names",
+                            "label_fr": "Autres noms de la lignée",
+                            "type":"input",
+                            "style":"float:right"
+                        },
+                    {
+                            "id":"Celltype",
+                            "label": "Cell type",
+                            "label_fr": "Type de cellules",
+                            "type":"list",
+                            "values":"Cell line/lignée,Primary cells/Cellules primaires,Hyridoma/Hybridoma"
+                        },
+                    {
+                            "id":"Cellnature",
+                            "label": "Nature of the cells",
+                            "label_fr": "Nature des cellules ( e.g épithéliales,fibroblastes...)",
+                            "type":"input",
+                            "style":"float:right"
+                        },
+                    {
+                            "id":"growthmode",
+                            "label": "Growth mode",
+                            "label_fr": "Mode de culture",
+                            "type":"list",
+                            "values":"adherant,semi-adherent,suspension"
+                        },
+                        {
+                            "id":"morphology",
+                            "label": "Morphology(picture)",
+                            "label_fr": "Morphologie(image)",
+                            "type":"input",
+                        },
+                        {
+                            "id":"immortalizationsystem",
+                            "label": "Immortalization system",
+                            "label_fr": "Système d'immortalisation",
+                            "type":"input",
+                        },
+                    {
+                            "id":"isclone",
+                            "label": "Is the cell line a clone?",
+                            "label_fr": "La lignée est-elle clonale?",
+                            "type":"check",
+                            "values":"Yes/Oui,No/Non"
+                        },
+                    {
+                            "id":"maincellline",
+                            "label": "Main cell line properties",
+                            "label_fr": "Principales propriétés de la lignée",
+                            "type":"input",
+                        },]
+                    },
               ]
 
 })
