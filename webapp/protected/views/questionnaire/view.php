@@ -26,14 +26,7 @@ echo "<div style=\"text-align:center\">".CHtml::submitButton('Save')."</div>";
 ?><br>
 <div>
     <?php
-    
-$this->widget('zii.widgets.jui.CJuiTabs',array(
-    'tabs'=>$model->renderArrayTabGroup(),
-    // additional javascript options for the tabs plugin
-    'options'=>array(
-        'collapsible'=>true,
-    ),
-));
+    echo $model->renderTabbedGroup();
 ?>
 </div>
     <?php

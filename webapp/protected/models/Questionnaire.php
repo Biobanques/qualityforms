@@ -92,16 +92,19 @@ class Questionnaire extends EMongoDocument {
         }
         return $result;
     }
-
+    
     /**
-     * render an array of association key/question group to display as tab
+     * render tab associated to each group
      */
-    public function renderArrayTabGroup() {
-        $result = array();
+    public function renderTabbedGroup() {
+        $divTabs="<ul class=\"nav nav-tabs\" role=\"tablist\">";
+        $divPans="<div class=\"tab-content\">";
         foreach ($this->questions_group as $question_group) {
-            $result[$question_group->title] = $this->renderQuestionGroupHTML($question_group);
+      $divTabs.= "<li><a href=\"#".$question_group->id."\" role=\"tab\" data-toggle=\"tab\">".$question_group->title."</a></li>";
+               $divPans.= " <div class=\"tab-pane\" id=\"".$question_group->id."\">".$this->renderQuestionGroupHTML($question_group)."</div>";
         }
-        return $result;
+        $divTabs.="</ul>";
+        return $divTabs.$divPans;
     }
 
     public function renderQuestionGroupHTML($question_group) {
