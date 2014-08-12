@@ -193,11 +193,12 @@ class Questionnaire extends EMongoDocument {
     
     /**
      * render contributors
+     * used in plain page and tab page
      * @return string
      */
     public function renderContributors(){
         $result="<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
-        $result.="<div class=\"span9\">".$this->contributors."</div>";
+        $result.="<div class=\"span5\">".$this->contributors."</div>";
         $result.="</div>";
         return $result;
     }
