@@ -100,8 +100,10 @@ class Questionnaire extends EMongoDocument {
         $divTabs="<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans="<div class=\"tab-content\">";
         foreach ($this->questions_group as $question_group) {
-      $divTabs.= "<li><a href=\"#".$question_group->id."\" role=\"tab\" data-toggle=\"tab\">".$question_group->title."</a></li>";
-               $divPans.= " <div class=\"tab-pane\" id=\"".$question_group->id."\">".$this->renderQuestionGroupHTML($question_group)."</div>";
+            if($question_group->parent_group==null){
+                $divTabs.= "<li><a href=\"#".$question_group->id."\" role=\"tab\" data-toggle=\"tab\">".$question_group->title."</a></li>";
+                $divPans.= " <div class=\"tab-pane\" id=\"".$question_group->id."\">".$this->renderQuestionGroupHTML($question_group)."</div>";
+               }
         }
         $divTabs.="</ul>";
         return $divTabs.$divPans;
@@ -116,6 +118,13 @@ class Questionnaire extends EMongoDocument {
             }
         }
         $result.= "</div>";
+        //add question groups that have parents for this group
+        foreach ($this->questions_group as $qg) {
+            if($qg->parent_group==$question_group->id){
+                $result.=$this->renderQuestionGroupHTML($qg);
+               }
+        }
+        $result .= "<div class=\"end-question-group\"></div>";
         return $result;
     }
 

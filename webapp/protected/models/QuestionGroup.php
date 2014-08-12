@@ -10,6 +10,11 @@ class QuestionGroup extends EMongoEmbeddedDocument {
 	public $title;
         public $title_fr;
         public $questions;
+        /**
+         * parent group if setted.
+         * @var type 
+         */
+        public $parent_group;
         
          public function behaviors() {
         return array('embeddedArrays' => array(
@@ -42,6 +47,7 @@ class QuestionGroup extends EMongoEmbeddedDocument {
 				'id' => 'Id',
 				'title' => 'title',
                                 'title_fr' => 'titre',
+                                'parent_group'=>'parent_group'
 		);
 	}
 

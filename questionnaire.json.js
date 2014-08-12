@@ -337,6 +337,7 @@ db.questionnaire.insert({
                     "id": "dnarna",
                     "title": "DNA-RNA",
                     "title_fr": "ADN-ARN",
+                    "parent_group":"sample",
                     "questions": [{
                             "id": "extractiondate",
                             "label": "Extraction date",
@@ -389,6 +390,7 @@ db.questionnaire.insert({
                     "id": "celllines",
                     "title": "Cell lines, primary cells and hybridomas cultures",
                     "title_fr": "Cultures de lignées cellulaires, cellules primaires et hybridomes",
+                    "parent_group":"sample",
                     "questions": [{
                             "id": "celllinename",
                             "label": "Cell line name",
@@ -468,7 +470,7 @@ db.questionnaire.insert({
                             "style": "float:right"
                         },
                         {
-                            "id": "Date of freezing (DD/MM/YYYY)",
+                            "id": "Date_of_freezing",
                             "label": "Date of freezing (DD/MM/YYYY)",
                             "label_fr": "Date de congélation (JJ/MM/AAAA)",
                             "type": "input",
@@ -618,6 +620,7 @@ db.questionnaire.insert({
                     "id": "fluids",
                     "title": "Fluids",
                     "title_fr": "Fluides",
+                    "parent_group":"sample",
                     "questions": [{
                             "id": "Sample weight (g)",
                             "label": "Sample weight (g)",
@@ -678,6 +681,7 @@ db.questionnaire.insert({
                     "id": "tissues",
                     "title": "Tissues",
                     "title_fr": "Tissus",
+                    "parent_group":"sample",
                     "questions": [{
                             "id": "Sample preparation site",
                             "label": "Sample preparation site",
@@ -748,7 +752,7 @@ db.questionnaire.insert({
                     ]
                 },
                 {
-                    "id": "Storage, packaging and transport",
+                    "id": "Storage_packaging_transport",
                     "title": "Storage, packaging and transport",
                     "title_fr": "Conservation, conditionnement et transport",
                     "questions": [{
@@ -780,7 +784,7 @@ db.questionnaire.insert({
                     ]
                 },
                   {
-                    "id": "Reception conditions: non-conformance",
+                    "id": "reception_conditions",
                     "title": "Reception conditions: non-conformance",
                     "title_fr": "Conditions de réception : non- conformité",
                     "questions": [{
@@ -858,11 +862,11 @@ db.questionnaire.insert({
                     ]
                 },
                 {
-                    "id": "Samples quality control (by the depositor)",
+                    "id": "Samples_quality_control",
                     "title": "Samples quality control (by the depositor)",
                     "title_fr": "Contrôle qualité des échantillons (par le déposant)",
                     "questions": [{
-                            "id": "260/280 and 260/230 absorbance ratios",
+                            "id": "260280and260230absorbanceratios",
                             "label": "260/280 and 260/230 absorbance ratios",
                             "label_fr": "Rapports d’absorbance 260/280 et 260/230",
                             "type": "input",
