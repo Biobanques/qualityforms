@@ -15,6 +15,12 @@ class QuestionGroup extends EMongoEmbeddedDocument {
          * @var type 
          */
         public $parent_group;
+        /**
+         * display rule
+         * condition to display the question group
+         * @return type
+         */
+        public $display_rule;
         
          public function behaviors() {
         return array('embeddedArrays' => array(
@@ -50,5 +56,13 @@ class QuestionGroup extends EMongoEmbeddedDocument {
                                 'parent_group'=>'parent_group'
 		);
 	}
+        
+        /**
+         * TODO : display rule dinammcally ( with JS)
+         * make the javascript display rule.
+         */
+        public function makeDisplayRule(){
+            
+        }
 
 }

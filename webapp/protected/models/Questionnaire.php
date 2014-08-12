@@ -17,6 +17,10 @@ class Questionnaire extends EMongoDocument {
     public $message_start;
     public $message_end;
     public $questions_group;
+    /**
+     * contributors are people working on thi squetsionnaire
+     */
+    public $contributors;
 
     /**
      * fields to manage add question 
@@ -90,6 +94,7 @@ class Questionnaire extends EMongoDocument {
             $result.=$this->renderQuestionGroupHTML($question_group);
             $result.= "<br><div style=\”clear:both;\"></div>";
         }
+        $result.=$this->renderContributors();
         return $result;
     }
     
@@ -106,6 +111,7 @@ class Questionnaire extends EMongoDocument {
                }
         }
         $divTabs.="</ul>";
+        $divPans.="</div>";
         return $divTabs.$divPans;
     }
 
@@ -134,13 +140,8 @@ class Questionnaire extends EMongoDocument {
 
     public function renderQuestionHTML($idquestiongroup, $question) {
         $result = "";
-        //if(isset($question->style))
-
         $result.="<div style=\"" . $question->style . "\">";
-
-        // $result.="<div class=\"row\">";
         $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr . "</div>";
-        // $result.="</div>";
         $result.="<div class=\"question-input\">";
         //affichage de l input selon son type
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]\"";
@@ -187,6 +188,17 @@ class Questionnaire extends EMongoDocument {
             $this->save();
             $result = true;
         }
+        return $result;
+    }
+    
+    /**
+     * render contributors
+     * @return string
+     */
+    public function renderContributors(){
+        $result="<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
+        $result.="<div class=\"span9\">".$this->contributors."</div>";
+        $result.="</div>";
         return $result;
     }
 
