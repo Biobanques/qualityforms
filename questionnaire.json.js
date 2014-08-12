@@ -5,6 +5,8 @@ db.questionnaire.insert({
     "description": "deposit form",
     "message_start": "Welcome to the deposit form for DNA/RNA, cells, fluids and tissues (*)1 form per patient and per sampling date (*) 1 fiche par patient et par date de prélèvement",
     "message_end": "Thanks for your job",
+    "references":"",
+    "contributors": "DNA-RNA /ADN-ARN<br> Marie-Alexandra Alyanakian, APHP Necker; Jacques Bonnet, Institut Bergonié ;Marthe Colotte, Imagène; Sylvie Forlani, Banque d’ADN et de cellules Paris ; Jean-Marc Gerard, Qiagen ; Olivier Leroy, Trinean ; Philippe Lorimier, CRB Cancérologie – CHU Grenoble; Claire Mulot, St Peres-Epigeneter ; Sophie Tuffet, Imagène; Sabrina Turbant-Leclere, Banque de Cerveaux Hôpital Pitié Salpêtrière – GIE Neuro-CEB-Paris.<br><br>Cell culture/ Culture cellulaire<br>Maud Chapart Leclert, Association Institut de Myologie ; Nathalie Denis, Eurobio ; Isabelle Grosjean, Inserm ; Thierry Larmonier, Genethon ; Nadia Piga, Bioméreux; Céline Schaeffer, CRB Ferdinand Cabanne – Dijon.<br><br>Fluids/ Fluides<br>Grégory Huberty, Biobanque de Picardie ; Philippe Manivet, CRB GHV Lariboisière /APHP/Inserm942 ; Jane-Lise Samuel ; InsermU942.<br><br>Tissue/Tissu<br>Christine Chaumeil, CRB CHNNO des 15/20 ; Charles Duyckaerts, Banques de Cerveauw Hôpital Pitié Salpêtrière – GIE-Neuro-CEB- Paris ; Anne Gomez Brouchet, Biobanque CHU de Toulouse ; Sophie Prevot, Réseau CRB Paris Sud.<br><br>Microbiology/Microbiologie<br>ChristineChaumeil,CRBduCHNOdesQuinze-VingtParis; équipe de ChantalBizetCRBInstitutPasteur–CRBIPParis,Anne Favel, I ; Villena, CRB Toxoplasma CHU Reims.",
     "questions_group":
             [{
                     "id": "depositoridentification",
@@ -796,20 +798,295 @@ db.questionnaire.insert({
                             "values":"No sample-empty / Absence d'échantillon-vide,Setteled / Décanté,Broken-damaged during transport / Cassé-accidenté pendant le transport,Broken- damaged during handling / Cassé- endomagé pendant le traitement par le CRB,Incorrect sample number / Nombre incorrect d'échantillons,Wrong tube for the analysis / Tube incorrect pour l'analyse demandée,Insufficient volume / Volume insuffisant,Clotted, hemolysed / Coagulé, hémolysé,Other / Autre"
                         },
                         {
-                            "id": "Storage temperature monitoring",
-                            "label": "Storage temperature monitoring",
-                            "label_fr": "Suivi de la température de conservation",
+                            "id": "Defective labelling",
+                            "label": "Defective labelling",
+                            "label_fr": "Etiquetage défectueux",
                             "type": "radio",
-                            "values": "Yes/Oui,No/Non"
+                            "values": "Unlabeled tube / Absence d'étiquetage,Different identification between samplingand request / Identification différente entre demande et prélèvement,Sampling date and time not reported / Date et heure du prélèvement non mentionnées,Sample type not specified / Type déchantillon non précisé"
                         },
                         {
-                            "id": "Packaging of received sample (dry ice, room temperature...)",
-                            "label": "Packaging of received sample (dry ice, room temperature...)",
-                            "label_fr": "Conditionnement de l’échantillon reçu (carboglace, température ambiante...)",
-                            "type": "text",
+                            "id": "Deposit form",
+                            "label": "Deposit form",
+                            "label_fr": "Formulaire de dépôt",
+                            "type": "radio",
+                            "values":"No sheet / Abscence de feuille,Damaged sheet / Feuille détériorée,Inadequate deposit form / formulaire de dépôt non-conforme,No identification sheet / Abscence d'identification sur la feuille,Depositor not identified / Abscence d'identification du déposant,Service or department not identified, no phone N°/Service ou département non identifié, pas de N° de téléphone,Other / Autre"
                         },
                     ]
-                }
+                },
+                  {
+                    "id": "Decision",
+                    "title": "Decision",
+                    "title_fr": "Mesures prises",
+                    "questions": [{
+                            "id": "Decision",
+                            "label": "Decision",
+                            "label_fr": "Mesures prises",
+                            "type": "check",
+                            "values":"Acceptance under dispensation / Acceptation sous dérogation,Refusal / Refus,Additional informations needed / Informations complémentaires requises"
+                        },
+                        {
+                            "id": "Measures taken by",
+                            "label": "Measures taken by",
+                            "label_fr": "Mesures prises par",
+                            "type": "input",
+                         },
+                        {
+                            "id": "Phone N",
+                            "label": "Phone N",
+                            "label_fr": "Téléphone",
+                            "type": "input",
+                         },
+                        {
+                            "id": "Date and location",
+                            "label": "Date and location",
+                            "label_fr": "Date et lieu",
+                            "type": "input",
+                         },
+                         {
+                            "id": "Settled problem by request department",
+                            "label": "Settled problem by request department",
+                            "label_fr": "Problème régularisé par le service demandeur Téléphone",
+                            "type": "radio",
+                            "values":"yes/oui,no/non"
+                         },
+                         {
+                            "id": "Specify date, location, time, taken decision (destruction, banking, etc...)",
+                            "label": "Specify date, location, time, taken decision (destruction, banking, etc...)",
+                            "label_fr": "Préciser date, heure, décision prise (destruction, stockage, etc...)",
+                            "type": "text",
+                         },
+                    ]
+                },
+                {
+                    "id": "Samples quality control (by the depositor)",
+                    "title": "Samples quality control (by the depositor)",
+                    "title_fr": "Contrôle qualité des échantillons (par le déposant)",
+                    "questions": [{
+                            "id": "260/280 and 260/230 absorbance ratios",
+                            "label": "260/280 and 260/230 absorbance ratios",
+                            "label_fr": "Rapports d’absorbance 260/280 et 260/230",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Specific quantification (eg. fluorimetry)",
+                            "label": "Specific quantification (eg. fluorimetry)",
+                            "label_fr": "Quantification spécifique (eg. fluorimétrie)",
+                            "type": "input",
+                        },
+                        {
+                            "id": "28S/18S ratio for RNA",
+                            "label": "28S/18S ratio for RNA",
+                            "label_fr": "Rapport 28S/18S pour l’ARN",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Size estimation for DNA",
+                            "label": "Size estimation for DNA",
+                            "label_fr": "Estimation de la taille pour l’ADN",
+                            "type": "input",
+                        },
+                        {
+                            "id": "RIN score for RNA",
+                            "label": "RIN score for RNA",
+                            "label_fr": "Valeur RIN pour les ARN",
+                            "type": "input",
+                        },
+                        {
+                            "id": "DNAqual or RNAqual",
+                            "label": "DNAqual or RNAqual",
+                            "label_fr": "DNAqual or RNAqual",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Indentity verification",
+                            "label": "Indentity verification(e.g. STR analysis including amelogenin gene)",
+                            "label_fr": "Vérification de l’identité(e.g. analyse STR incluant le gène d’amélogénine)",
+                            "type": "input",
+                        },
+                         {
+                            "id": "Non-denaturating gel electrophoresis (image)",
+                            "label": "Non-denaturating gel electrophoresis (image)",
+                            "label_fr": "Electrophorèse sur gel non dénaturant (image)",
+                            "type": "text",
+                        },
+                        {
+                            "id": "Bioanalyser quality control (image)",
+                            "label": "Bioanalyser quality control (image)",
+                            "label_fr": "Contrôle qualité sur Bioanalyseur (image)",
+                            "type": "text",
+                        },
+                         {
+                            "id": "Mycoplasma testing",
+                            "label": "Mycoplasma testing",
+                            "label_fr": "Recherche de mycoplasmes",
+                            "type": "radio",
+                            "values":"yes/oui,no/non"
+                        },
+                        {
+                            "id": "If yes, technique used and results",
+                            "label": "If yes, technique used and results",
+                            "label_fr": "Si oui, technique utilisé et résultats",
+                            "type": "input",
+                            "style": "float:right"
+                        },
+                         {
+                            "id": "Sterility tests (bacteria, yeast, fungi)",
+                            "label": "Sterility tests (bacteria, yeast, fungi)",
+                            "label_fr": "Tests de stérilité (bactéries, levures, champignons)",
+                            "type": "input",
+                        },
+                         {
+                            "id": "Viability before and after freezing",
+                            "label": "Viability before and after freezing",
+                            "label_fr": "Viabilité avant et après la congélation",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Phenotype characterization",
+                            "label": "Phenotype characterization (marquer expression, functional characteristics, morphology or other)",
+                            "label_fr": "Caractérisation phénotypique (expression de marqueurs, caractéristiques fonctionnelles, morphologie ou autre)",
+                            "type": "input",
+                        },
+                         {
+                            "id": "Species verification(isoenzymes, DNA barcoding...) ",
+                            "label": "Species verification(isoenzymes, DNA barcoding...) ",
+                            "label_fr": "Vérification de l’espèce (isoenzymes, DNA barcoding...)",
+                            "type": "input",
+                        },
+                         {
+                            "id": "Viability before and after freezing",
+                            "label": "Viability before and after freezing",
+                            "label_fr": "Viabilité avant et après la congélation",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Human cells identity verification (DNA profiling or other)",
+                            "label": "Human cells identity verification",
+                            "label_fr": "Vérification de l’identité des cellules humaines (profile ADN ou autre)",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Other tests, specify ",
+                            "label": "Other tests, specify ",
+                            "label_fr": "Autres tests, préciser",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Hemolysis",
+                            "label": "Hemolysis",
+                            "label_fr": "Hémolyse",
+                            "type": "list",
+                            "values":"0,+,++,+++",
+                            "help":"* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
+                        },
+                        {
+                            "id": "Icteric",
+                            "label": "Icteric",
+                            "label_fr": "Ictérique",
+                            "type": "list",
+                             "values":"0,+,++,+++",
+                            "help":"* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
+                        },
+                         {
+                            "id": "Lactescence",
+                            "label": "Lactescence",
+                            "label_fr": "Lactescence",
+                            "type": "list",
+                             "values":"0,+,++,+++",
+                            "help":"* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
+                        },
+                         {
+                            "id": "Other, specify ",
+                            "label": "Other, specify ",
+                            "label_fr": "Autres, préciser",
+                            "type": "text",
+                        },
+                         {
+                            "id": "Morphological control has been performed ?",
+                            "label": "Morphological control has been performed ?",
+                            "label_fr": "Le contrôle morphologique a t-il été réalisé ?",
+                            "type": "radio",
+                            "values":"yes/oui,no/non"
+                        },
+                        {
+                            "id": "Control site",
+                            "label": "Control site",
+                            "label_fr": "Lieu de contrôle",
+                            "type": "input"
+                        },
+                        {
+                            "id": "Control manager",
+                            "label": "Control manager",
+                            "label_fr": "Responsable du contrôle",
+                            "type": "input"
+                        },
+                        {
+                            "id": "Control slides (on all samples or specify the samples)",
+                            "label": "Control slides (on all samples or specify the samples)",
+                            "label_fr": "Coupe contrôle (sur tous les échantillons ou préciser les échantillons)",
+                            "type": "check",
+                            "values":"Cryostat slides on the provided cryopreserved sample/Coupes au cryostat sur le prélèvement cryopréservé fourni,Fixed and parrafin-embedded tissue block slides/Coupes bloc tissulaire fixé et inclus en paraffine:,On a mirror sampling/Sur un prélèvement miroir,On a secondary sample distant from the initial sampling/Sur un prélèvement à distance de l’échantillon"
+                        },
+                        {
+                            "id": "Morphological control performed",
+                            "label": "Morphological control performed",
+                            "label_fr": "Contrôle morphologique effectué",
+                            "type": "check",
+                            "values":"Hematein-eosin staining/Coloration hématéine-éosine,Immunohistochemistry specify:/Immunohistochimie, préciser :,Other specify :/Autre préciser :"
+                        },
+                        {
+                            "id": "Stained slide reading result",
+                            "label": "Stained slide reading result No lesional control tissue (or EDTA blood)",
+                            "label_fr": "Résultat lecture coupe colorée Tissu contrôle non lésionnel (ou sang sur EDTA)",
+                            "type": "radio",
+                            "values":"yes/oui,no/non"
+                        },
+                        {
+                            "id": "Lesion due to main diagnosis",
+                            "label": "Lesion due to main diagnosis",
+                            "label_fr": "Lésion propre au diagnostic principal",
+                            "type": "radio",
+                            "values":"yes/oui,no/non"
+                        },
+                        {
+                            "id": "If yes, semi-quantitative evaluation of the lesion (ex: +, ++, +++; n lesions/mm ; method 'x'...)",
+                            "label": "If yes, semi-quantitative evaluation of the lesion (ex: +, ++, +++; n lesions/mm ; method 'x'...)",
+                            "label_fr": "Si oui, évaluation semi-quantitative de la lésion (ex: +, ++, +++; n lésions/mm2; méthode 'x'...)",
+                            "type": "text",
+                        },
+                        {
+                            "id": "If tumor Tumor cells (%)",
+                            "label": "If tumor Tumor cells (%)",
+                            "label_fr": "Si tumeur Cellules tumoral (%)",
+                            "type": "input",
+                        },
+                        {
+                            "id": "If tumor Stroma (%)",
+                            "label": "If tumor Stroma (%)",
+                            "label_fr": "Si tumeur Stroma (%)",
+                            "type": "input",
+                        },
+                        {
+                            "id": "Other lesions that may affect the observation results",
+                            "label": "Other lesions that may affect the observation results",
+                            "label_fr": "Autres lésions susceptibles de modifier les résultats de l’observation",
+                            "type": "radio",
+                            "values":"yes/oui,no/non"
+                        },
+                        {
+                            "id": "If yes, spécify Necrosis (%)",
+                            "label": "If yes, spécify Necrosis (%)",
+                            "label_fr": "Si oui, préciser Nécrose (%)",
+                            "type": "input",
+                        },
+                        {
+                            "id": "If yes, spécify other",
+                            "label": "If yes, spécify other",
+                            "label_fr": "Si oui, préciser autre",
+                            "type": "input",
+                        },
+                    ]
+                },
 
             ]
 
