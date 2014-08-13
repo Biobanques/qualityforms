@@ -17,6 +17,7 @@ class Questionnaire extends EMongoDocument {
     public $message_start;
     public $message_end;
     public $questions_group;
+
     /**
      * contributors are people working on thi squetsionnaire
      */
@@ -97,22 +98,22 @@ class Questionnaire extends EMongoDocument {
         $result.=$this->renderContributors();
         return $result;
     }
-    
+
     /**
      * render tab associated to each group
      */
     public function renderTabbedGroup() {
-        $divTabs="<ul class=\"nav nav-tabs\" role=\"tablist\">";
-        $divPans="<div class=\"tab-content\">";
+        $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
+        $divPans = "<div class=\"tab-content\">";
         foreach ($this->questions_group as $question_group) {
-            if($question_group->parent_group==null){
-                $divTabs.= "<li><a href=\"#".$question_group->id."\" role=\"tab\" data-toggle=\"tab\">".$question_group->title."</a></li>";
-                $divPans.= " <div class=\"tab-pane\" id=\"".$question_group->id."\">".$this->renderQuestionGroupHTML($question_group)."</div>";
-               }
+            if ($question_group->parent_group == null) {
+                $divTabs.= "<li><a href=\"#" . $question_group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $question_group->title . "</a></li>";
+                $divPans.= " <div class=\"tab-pane\" id=\"" . $question_group->id . "\">" . $this->renderQuestionGroupHTML($question_group) . "</div>";
+            }
         }
         $divTabs.="</ul>";
         $divPans.="</div>";
-        return $divTabs.$divPans;
+        return $divTabs . $divPans;
     }
 
     public function renderQuestionGroupHTML($question_group) {
@@ -126,9 +127,9 @@ class Questionnaire extends EMongoDocument {
         $result.= "</div>";
         //add question groups that have parents for this group
         foreach ($this->questions_group as $qg) {
-            if($qg->parent_group==$question_group->id){
+            if ($qg->parent_group == $question_group->id) {
                 $result.=$this->renderQuestionGroupHTML($qg);
-               }
+            }
         }
         $result .= "<div class=\"end-question-group\"></div>";
         return $result;
@@ -152,18 +153,18 @@ class Questionnaire extends EMongoDocument {
             $values = $question->values;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">" . $value . "</input>";
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input>&nbsp;";
             }
         }
         if ($question->type == "checkbox") {
             $values = $question->values;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">" . $value . "</input>";
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";
             }
         }
         if ($question->type == "text") {
-            $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" " . $idInput . " ></input>";
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 600px; height: 70px;\"></textarea>";
         }
         //close question input
         $result.="</div>";
@@ -190,15 +191,15 @@ class Questionnaire extends EMongoDocument {
         }
         return $result;
     }
-    
+
     /**
      * render contributors
      * used in plain page and tab page
      * @return string
      */
-    public function renderContributors(){
-        $result="<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
-        $result.="<div class=\"span5\">".$this->contributors."</div>";
+    public function renderContributors() {
+        $result = "<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
+        $result.="<div class=\"span5\">" . $this->contributors . "</div>";
         $result.="</div>";
         return $result;
     }

@@ -140,7 +140,7 @@ db.questionnaire.insert({
                     "title_fr": "Patient (si applicable)",
                     "questions": [{
                             "id": "birthdate",
-                            "label": "date of birth (DD/MM/YYYY)",
+                            "label": "Date of birth (DD/MM/YYYY)",
                             "label_fr": "Date de naissance (JJ/MM/YYYY)",
                             "type": "input",
                             "order": "1"
