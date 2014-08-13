@@ -142,8 +142,19 @@ class Questionnaire extends EMongoDocument {
     public function renderQuestionHTML($idquestiongroup, $question) {
         $result = "";
         $result.="<div style=\"" . $question->style . "\">";
-        $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr . "</div>";
+        $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr;
+        if (isset($question->help)) {
+            // $result.="ddd<span class=\"glyphicon glyphicon-help\"></span>";
+            $result.=HelpDivComponent::getHtml("help-".$question->id, $question->help);
+            /*$result.=$this->widget('bootstrap.widgets.TbButton', array(
+                'label' => '?',
+                'type' => 'info',
+                'htmlOptions' => array('data-title' => 'Help/Aide', 'data-content' => $question->help, 'rel' => 'popover'),
+            ));*/
+        }
+        $result.="</div>";
         $result.="<div class=\"question-input\">";
+
         //affichage de l input selon son type
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]\"";
         if ($question->type == "input") {

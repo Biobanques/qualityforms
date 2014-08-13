@@ -284,10 +284,10 @@ db.questionnaire.insert({
                         },
                         {
                             "id": "pathologicalstatus",
-                            "label": "Pathological status of the sample (e.g. affected, non-affected, indication of suspected diagnosis)",
-                            "label_fr": "Statut pathologique de l’échantillon (e.g. affecté, non affecté, indication sur le diagnostic suspecté)",
-                            "type": "input",
-                            "style": "float:right"
+                            "label": "Pathological status of the sample",
+                            "label_fr": "Statut pathologique de l’échantillon ",
+                            "type": "text",
+                            "help":"(e.g. affected, non-affected, indication of suspected diagnosis)/(e.g. affecté, non affecté, indication sur le diagnostic suspecté)"
                         }, {
                             "id": "samplecollectiondate",
                             "label": "Sample collection date and time",

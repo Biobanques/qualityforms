@@ -18,6 +18,12 @@ class Question extends EMongoEmbeddedDocument {
          * values if question type is radio
          */
         public $values;
+        
+        /**
+         * help text to add meta information around the question, displayed as an help button
+         * @var type 
+         */
+        public $help;
 
 	/**
 	 *
