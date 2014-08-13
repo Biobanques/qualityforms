@@ -201,8 +201,8 @@ db.questionnaire.insert({
                         },
                         {
                             "id": "agedebut",
-                            "label": "Age at the onset",
-                            "label_fr": "Age de début",
+                            "label": "Main clinical characteristics  Age at the onset",
+                            "label_fr": "Principales caractéristiques cliniques Age de début",
                             "type": "input",
                             "order": "9"
                         },
@@ -226,7 +226,6 @@ db.questionnaire.insert({
                             "label_fr": "Consentement signé",
                             "type": "radio",
                             "values": "yes,no",
-                            "style": "float:right"
                         },
                         {
                             "id": "opposition",

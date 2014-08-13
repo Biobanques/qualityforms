@@ -164,7 +164,17 @@ class Questionnaire extends EMongoDocument {
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 600px; height: 70px;\"></textarea>";
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 500px; height: 70px;\"></textarea>";
+        }
+        if ($question->type == "list") {
+            $values = $question->values;
+            $arvalue = split(",", $values);
+            $result.="<select " . $idInput . ">";
+            $result.="<option  value=\"\"></option>";
+            foreach ($arvalue as $value) {
+                $result.="<option  value=\"" . $value . "\">" . $value . "</option>";
+            }
+            $result.="</select>";
         }
         //close question input
         $result.="</div>";
