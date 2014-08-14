@@ -24,6 +24,17 @@ class Question extends EMongoEmbeddedDocument {
          * @var type 
          */
         public $help;
+        
+        /**
+         *columns if type is array
+         * @var type 
+         */
+        public $columns;
+        /**
+         * rows if type is array
+         * @var type 
+         */
+        public $rows;
 
 	/**
 	 *

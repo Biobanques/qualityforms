@@ -17,6 +17,10 @@ class Questionnaire extends EMongoDocument {
     public $message_start;
     public $message_end;
     public $questions_group;
+    /*
+     * date last modified.
+     */
+    public $last_modified;
 
     /**
      * contributors are people working on thi squetsionnaire
@@ -145,12 +149,12 @@ class Questionnaire extends EMongoDocument {
         $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr;
         if (isset($question->help)) {
             // $result.="ddd<span class=\"glyphicon glyphicon-help\"></span>";
-            $result.=HelpDivComponent::getHtml("help-".$question->id, $question->help);
-            /*$result.=$this->widget('bootstrap.widgets.TbButton', array(
-                'label' => '?',
-                'type' => 'info',
-                'htmlOptions' => array('data-title' => 'Help/Aide', 'data-content' => $question->help, 'rel' => 'popover'),
-            ));*/
+            $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
+            /* $result.=$this->widget('bootstrap.widgets.TbButton', array(
+              'label' => '?',
+              'type' => 'info',
+              'htmlOptions' => array('data-title' => 'Help/Aide', 'data-content' => $question->help, 'rel' => 'popover'),
+              )); */
         }
         $result.="</div>";
         $result.="<div class=\"question-input\">";
@@ -186,6 +190,27 @@ class Questionnaire extends EMongoDocument {
                 $result.="<option  value=\"" . $value . "\">" . $value . "</option>";
             }
             $result.="</select>";
+        }
+        if ($question->type == "array") {
+            $rows = $question->rows;
+            $arrows = split(",", $rows);
+            $cols = $question->columns;
+            $arcols = split(",", $cols);
+            $result.="<table><tr><td></td>";
+            foreach ($arcols as $col) {
+                $result.="<td>" . $col . "</td>";
+            }
+            $result.="</tr>";
+            foreach ($arrows as $row) {
+                $result.="<tr><td>" . $row . "</td>";
+                foreach ($arcols as $col) {
+                    $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
+                    $idInput = "id=\"" . $idunique . "\" name=\"Questionnaire[" . $idunique . "]\"";
+                    $result.="<td><input type=\"text\" " . $idInput . "/></td>";
+                }
+                $result.="</tr>";
+            }
+            $result.="</table>";
         }
         //close question input
         $result.="</div>";

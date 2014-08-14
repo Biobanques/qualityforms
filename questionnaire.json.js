@@ -3,9 +3,10 @@ db.questionnaire.insert({
     "id": "depositform",
     "name": "deposit form",
     "description": "deposit form",
+    "last_modified": new Date(),
     "message_start": "Welcome to the deposit form for DNA/RNA, cells, fluids and tissues (*)1 form per patient and per sampling date (*) 1 fiche par patient et par date de prélèvement",
     "message_end": "Thanks for your job",
-    "references":"",
+    "references": "",
     "contributors": "<b>DNA-RNA /ADN-ARN</b><br> Marie-Alexandra Alyanakian, APHP Necker; Jacques Bonnet, Institut Bergonié ;Marthe Colotte, Imagène; Sylvie Forlani, Banque d’ADN et de cellules Paris ; Jean-Marc Gerard, Qiagen ; Olivier Leroy, Trinean ; Philippe Lorimier, CRB Cancérologie – CHU Grenoble; Claire Mulot, St Peres-Epigeneter ; Sophie Tuffet, Imagène; Sabrina Turbant-Leclere, Banque de Cerveaux Hôpital Pitié Salpêtrière – GIE Neuro-CEB-Paris.<br><br>\n\
 <b>Cell culture/ Culture cellulaire</b><br>Maud Chapart Leclert, Association Institut de Myologie ; Nathalie Denis, Eurobio ; Isabelle Grosjean, Inserm ; Thierry Larmonier, Genethon ; Nadia Piga, Bioméreux; Céline Schaeffer, CRB Ferdinand Cabanne – Dijon.<br><br>\n\
 <b>Fluids/ Fluide</b><br>Grégory Huberty, Biobanque de Picardie ; Philippe Manivet, CRB GHV Lariboisière /APHP/Inserm942 ; Jane-Lise Samuel ; InsermU942.<br><br>\n\
@@ -287,7 +288,7 @@ db.questionnaire.insert({
                             "label": "Pathological status of the sample",
                             "label_fr": "Statut pathologique de l’échantillon ",
                             "type": "text",
-                            "help":"(e.g. affected, non-affected, indication of suspected diagnosis)/(e.g. affecté, non affecté, indication sur le diagnostic suspecté)"
+                            "help": "(e.g. affected, non-affected, indication of suspected diagnosis)/(e.g. affecté, non affecté, indication sur le diagnostic suspecté)"
                         }, {
                             "id": "samplecollectiondate",
                             "label": "Sample collection date and time",
@@ -312,7 +313,6 @@ db.questionnaire.insert({
                             "label": "Reception conditions(comments)",
                             "label_fr": "Conditions de réception(commentaires)",
                             "type": "text",
-                            "style": "float:right"
                         },
                         {
                             "id": "requirements",
@@ -325,8 +325,7 @@ db.questionnaire.insert({
                             "id": "othersamples",
                             "label": "Other samples for this patient",
                             "label_fr": "Autres échantillons du même patient",
-                            "type": "input",
-                            "style": "float:right"
+                            "type": "input"
                         },
                         {
                             "id": "documents",
@@ -340,8 +339,8 @@ db.questionnaire.insert({
                     "id": "dnarna",
                     "title": "DNA-RNA",
                     "title_fr": "ADN-ARN",
-                    "parent_group":"sample",
-                    "display_rule":"sample.sampletype==DNA/ADN",
+                    "parent_group": "sample",
+                    "display_rule": "sample.sampletype==DNA/ADN",
                     "questions": [{
                             "id": "extractiondate",
                             "label": "Extraction date",
@@ -386,15 +385,14 @@ db.questionnaire.insert({
                             "id": "volume",
                             "label": "Volume (μl)",
                             "label_fr": "Volume (μl)",
-                            "type": "input",
-                            "style": "float:right"
+                            "type": "input"
                         },
                     ]},
                 {
                     "id": "celllines",
                     "title": "Cell lines, primary cells and hybridomas cultures",
                     "title_fr": "Cultures de lignées cellulaires, cellules primaires et hybridomes",
-                    "parent_group":"sample",
+                    "parent_group": "sample",
                     "questions": [{
                             "id": "celllinename",
                             "label": "Cell line name",
@@ -445,20 +443,20 @@ db.questionnaire.insert({
                             "id": "isclone",
                             "label": "Is the cell line a clone?",
                             "label_fr": "La lignée est-elle clonale?",
-                            "type": "check",
+                            "type": "radio",
                             "values": "Yes/Oui,No/Non"
                         },
                         {
                             "id": "maincellline",
                             "label": "Main cell line properties",
                             "label_fr": "Principales propriétés de la lignée",
-                            "type": "input",
+                            "type": "text",
                         },
                         {
                             "id": "Culture medium and conditions",
                             "label": "Culture medium and conditions",
                             "label_fr": "Milieu et conditions de culture",
-                            "type": "input",
+                            "type": "text",
                         },
                         {
                             "id": "Passage number",
@@ -500,6 +498,14 @@ db.questionnaire.insert({
                             "type": "input",
                             "style": "float:right"
                         },
+                    ]
+                },
+                {
+                    "id": "ifgmo",
+                    "title": "If the cell line is GMO, specify",
+                    "title_fr": "Si la lignée cellulaire est un OGM, préciser",
+                    "parent_group": "celllines",
+                    "questions": [
                         {
                             "id": "GMO agreement number",
                             "label": "GMO agreement number",
@@ -573,6 +579,14 @@ db.questionnaire.insert({
                             "label_fr": "Agent de sélection",
                             "type": "input",
                         },
+                    ]
+                },
+                {
+                    "id": "ifhybridoma",
+                    "title": "In the case of hybridoma, specify",
+                    "title_fr": "Dans le cas d’un hybridome, préciser",
+                    "parent_group": "celllines",
+                    "questions": [
                         {
                             "id": "Hybridoma source species",
                             "label": "Hybridoma source species",
@@ -616,7 +630,7 @@ db.questionnaire.insert({
                             "id": "Antibody specificity",
                             "label": "Antibody specificity",
                             "label_fr": "Spécificité de l’anticorps",
-                            "type": "input",
+                            "type": "text",
                         },
                     ]
                 },
@@ -624,7 +638,7 @@ db.questionnaire.insert({
                     "id": "fluids",
                     "title": "Fluids",
                     "title_fr": "Fluides",
-                    "parent_group":"sample",
+                    "parent_group": "sample",
                     "questions": [{
                             "id": "Sample weight (g)",
                             "label": "Sample weight (g)",
@@ -676,8 +690,7 @@ db.questionnaire.insert({
                             "id": "Sample preparation protocol",
                             "label": "Sample preparation protocol",
                             "label_fr": "Protocole de préparation de l’échantillon",
-                            "type": "text",
-                            "style": "float:right"
+                            "type": "text"
                         },
                     ]
                 },
@@ -685,7 +698,7 @@ db.questionnaire.insert({
                     "id": "tissues",
                     "title": "Tissues",
                     "title_fr": "Tissus",
-                    "parent_group":"sample",
+                    "parent_group": "sample",
                     "questions": [{
                             "id": "Sample preparation site",
                             "label": "Sample preparation site",
@@ -702,7 +715,8 @@ db.questionnaire.insert({
                             "id": "Person performing the secondary sampling",
                             "label": "Person performing the secondary sampling",
                             "label_fr": "Personne réalisant l’échantillonnage secondaire",
-                            "type": "input"
+                            "type": "input",
+                            "style": "float:right"
                         },
                         {
                             "id": "Test prion",
@@ -720,8 +734,8 @@ db.questionnaire.insert({
                         },
                         {
                             "id": "Tumor grade",
-                            "label": "Tumor grade",
-                            "label_fr": "Grade de la tumeur",
+                            "label": "In case of neoplasic pathology Tumor grade",
+                            "label_fr": "En cas de pathologie néoplasique Grade de la tumeur",
                             "type": "radio",
                             "values": "Yes/Oui,No/Non"
                         },
@@ -748,10 +762,11 @@ db.questionnaire.insert({
                             "style": "float:right"
                         },
                         {
-                            "id": "Documentation on processing method (e.g. formaldehyde fixation...)",
-                            "label": "Documentation on processing method (e.g. formaldehyde fixation...)",
-                            "label_fr": "Documentation sur la méthode de préparation (e.g. fixation au formaldéhyde...)",
-                            "type": "input",
+                            "id": "Documentation on processing method ",
+                            "label": "Documentation on processing method",
+                            "label_fr": "Documentation sur la méthode de préparation",
+                            "type": "text",
+                            "help":"(e.g. formaldehyde fixation...)/ (e.g. fixation au formaldéhyde...)"
                         },
                     ]
                 },
@@ -766,11 +781,12 @@ db.questionnaire.insert({
                             "type": "input",
                         },
                         {
-                            "id": "Conditions (liquid N2, freezer, filter...)",
-                            "label": "Conditions (liquid N2, freezer, filter...)",
-                            "label_fr": "Conditions (azote liquide, congélateur, filtre...)",
+                            "id": "Conditions",
+                            "label": "Conditions",
+                            "label_fr": "Conditions ",
                             "type": "input",
-                            "style": "float:right"
+                            "style": "float:right",
+                            "help":" (liquid N2, freezer, filter...)/(azote liquide, congélateur, filtre...)"
                         },
                         {
                             "id": "Storage temperature monitoring",
@@ -780,14 +796,15 @@ db.questionnaire.insert({
                             "values": "Yes/Oui,No/Non"
                         },
                         {
-                            "id": "Packaging of received sample (dry ice, room temperature...)",
-                            "label": "Packaging of received sample (dry ice, room temperature...)",
-                            "label_fr": "Conditionnement de l’échantillon reçu (carboglace, température ambiante...)",
+                            "id": "Packaging of received sample",
+                            "label": "Packaging of received sample",
+                            "label_fr": "Conditionnement de l’échantillon reçu ",
                             "type": "text",
+                            "help":" (dry ice, room temperature...)/(carboglace, température ambiante...)"
                         },
                     ]
                 },
-                  {
+                {
                     "id": "reception_conditions",
                     "title": "Reception conditions: non-conformance",
                     "title_fr": "Conditions de réception : non- conformité",
@@ -795,33 +812,33 @@ db.questionnaire.insert({
                             "id": "Reception conditions (temperature/delay)",
                             "label": "Reception conditions (temperature/delay)",
                             "label_fr": "Conditions de réception (température, délai)",
-                            "type": "check",
-                            "values":"Conditions of transport were not filled (temperature) / Conditions de transport non respéctées (température),Delay between the sampling and the arrival at the biobank /Délai entre le prélèvement et l'arrivée au laboratoire,Delay between the arrival at the biobank and freezing / Délai entre l'arrivée au laboratoire et la congélation"
+                            "type": "checkbox",
+                            "values": "Conditions of transport were not filled (temperature) / Conditions de transport non respéctées (température),Delay between the sampling and the arrival at the biobank /Délai entre le prélèvement et l'arrivée au laboratoire,Delay between the arrival at the biobank and freezing / Délai entre l'arrivée au laboratoire et la congélation"
                         },
                         {
                             "id": "Sample / Echantillon",
                             "label": "Sample / Echantillon",
                             "label_fr": "Sample / Echantillon",
-                            "type": "check",
-                            "values":"No sample-empty / Absence d'échantillon-vide,Setteled / Décanté,Broken-damaged during transport / Cassé-accidenté pendant le transport,Broken- damaged during handling / Cassé- endomagé pendant le traitement par le CRB,Incorrect sample number / Nombre incorrect d'échantillons,Wrong tube for the analysis / Tube incorrect pour l'analyse demandée,Insufficient volume / Volume insuffisant,Clotted, hemolysed / Coagulé, hémolysé,Other / Autre"
+                            "type": "checkbox",
+                            "values": "No sample-empty / Absence d'échantillon-vide,Setteled / Décanté,Broken-damaged during transport / Cassé-accidenté pendant le transport,Broken- damaged during handling / Cassé- endomagé pendant le traitement par le CRB,Incorrect sample number / Nombre incorrect d'échantillons,Wrong tube for the analysis / Tube incorrect pour l'analyse demandée,Insufficient volume / Volume insuffisant,Clotted, hemolysed / Coagulé, hémolysé,Other / Autre"
                         },
                         {
                             "id": "Defective labelling",
                             "label": "Defective labelling",
                             "label_fr": "Etiquetage défectueux",
-                            "type": "radio",
+                            "type": "checkbox",
                             "values": "Unlabeled tube / Absence d'étiquetage,Different identification between samplingand request / Identification différente entre demande et prélèvement,Sampling date and time not reported / Date et heure du prélèvement non mentionnées,Sample type not specified / Type déchantillon non précisé"
                         },
                         {
                             "id": "Deposit form",
                             "label": "Deposit form",
                             "label_fr": "Formulaire de dépôt",
-                            "type": "radio",
-                            "values":"No sheet / Abscence de feuille,Damaged sheet / Feuille détériorée,Inadequate deposit form / formulaire de dépôt non-conforme,No identification sheet / Abscence d'identification sur la feuille,Depositor not identified / Abscence d'identification du déposant,Service or department not identified, no phone N°/Service ou département non identifié, pas de N° de téléphone,Other / Autre"
+                            "type": "checkbox",
+                            "values": "No sheet / Abscence de feuille,Damaged sheet / Feuille détériorée,Inadequate deposit form / formulaire de dépôt non-conforme,No identification sheet / Abscence d'identification sur la feuille,Depositor not identified / Abscence d'identification du déposant,Service or department not identified, no phone N°/Service ou département non identifié, pas de N° de téléphone,Other / Autre"
                         },
                     ]
                 },
-                  {
+                {
                     "id": "Decision",
                     "title": "Decision",
                     "title_fr": "Mesures prises",
@@ -829,40 +846,40 @@ db.questionnaire.insert({
                             "id": "Decision",
                             "label": "Decision",
                             "label_fr": "Mesures prises",
-                            "type": "check",
-                            "values":"Acceptance under dispensation / Acceptation sous dérogation,Refusal / Refus,Additional informations needed / Informations complémentaires requises"
+                            "type": "checkbox",
+                            "values": "Acceptance under dispensation / Acceptation sous dérogation,Refusal / Refus,Additional informations needed / Informations complémentaires requises"
                         },
                         {
                             "id": "Measures taken by",
                             "label": "Measures taken by",
                             "label_fr": "Mesures prises par",
                             "type": "input",
-                         },
+                        },
                         {
                             "id": "Phone N",
                             "label": "Phone N",
                             "label_fr": "Téléphone",
                             "type": "input",
-                         },
+                        },
                         {
                             "id": "Date and location",
                             "label": "Date and location",
                             "label_fr": "Date et lieu",
                             "type": "input",
-                         },
-                         {
+                        },
+                        {
                             "id": "Settled problem by request department",
                             "label": "Settled problem by request department",
                             "label_fr": "Problème régularisé par le service demandeur Téléphone",
                             "type": "radio",
-                            "values":"yes/oui,no/non"
-                         },
-                         {
+                            "values": "yes/oui,no/non"
+                        },
+                        {
                             "id": "Specify date, location, time, taken decision (destruction, banking, etc...)",
                             "label": "Specify date, location, time, taken decision (destruction, banking, etc...)",
                             "label_fr": "Préciser date, heure, décision prise (destruction, stockage, etc...)",
                             "type": "text",
-                         },
+                        },
                     ]
                 },
                 {
@@ -911,7 +928,7 @@ db.questionnaire.insert({
                             "label_fr": "Vérification de l’identité(e.g. analyse STR incluant le gène d’amélogénine)",
                             "type": "input",
                         },
-                         {
+                        {
                             "id": "Non-denaturating gel electrophoresis (image)",
                             "label": "Non-denaturating gel electrophoresis (image)",
                             "label_fr": "Electrophorèse sur gel non dénaturant (image)",
@@ -923,12 +940,12 @@ db.questionnaire.insert({
                             "label_fr": "Contrôle qualité sur Bioanalyseur (image)",
                             "type": "text",
                         },
-                         {
+                        {
                             "id": "Mycoplasma testing",
                             "label": "Mycoplasma testing",
                             "label_fr": "Recherche de mycoplasmes",
                             "type": "radio",
-                            "values":"yes/oui,no/non"
+                            "values": "yes/oui,no/non"
                         },
                         {
                             "id": "If yes, technique used and results",
@@ -937,13 +954,13 @@ db.questionnaire.insert({
                             "type": "input",
                             "style": "float:right"
                         },
-                         {
+                        {
                             "id": "Sterility tests (bacteria, yeast, fungi)",
                             "label": "Sterility tests (bacteria, yeast, fungi)",
                             "label_fr": "Tests de stérilité (bactéries, levures, champignons)",
                             "type": "input",
                         },
-                         {
+                        {
                             "id": "Viability before and after freezing",
                             "label": "Viability before and after freezing",
                             "label_fr": "Viabilité avant et après la congélation",
@@ -955,13 +972,13 @@ db.questionnaire.insert({
                             "label_fr": "Caractérisation phénotypique (expression de marqueurs, caractéristiques fonctionnelles, morphologie ou autre)",
                             "type": "input",
                         },
-                         {
+                        {
                             "id": "Species verification(isoenzymes, DNA barcoding...) ",
                             "label": "Species verification(isoenzymes, DNA barcoding...) ",
                             "label_fr": "Vérification de l’espèce (isoenzymes, DNA barcoding...)",
                             "type": "input",
                         },
-                         {
+                        {
                             "id": "Viability before and after freezing",
                             "label": "Viability before and after freezing",
                             "label_fr": "Viabilité avant et après la congélation",
@@ -984,37 +1001,37 @@ db.questionnaire.insert({
                             "label": "Hemolysis",
                             "label_fr": "Hémolyse",
                             "type": "list",
-                            "values":"0,+,++,+++",
-                            "help":"* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
+                            "values": "0,+,++,+++",
+                            "help": "* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
                         },
                         {
                             "id": "Icteric",
                             "label": "Icteric",
                             "label_fr": "Ictérique",
                             "type": "list",
-                             "values":"0,+,++,+++",
-                            "help":"* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
+                            "values": "0,+,++,+++",
+                            "help": "* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
                         },
-                         {
+                        {
                             "id": "Lactescence",
                             "label": "Lactescence",
                             "label_fr": "Lactescence",
                             "type": "list",
-                             "values":"0,+,++,+++",
-                            "help":"* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
+                            "values": "0,+,++,+++",
+                            "help": "* 0 : none/nul ; + : weak/faible ; ++ : mild/moyen ; +++ : strong/élevé"
                         },
-                         {
+                        {
                             "id": "Other, specify ",
                             "label": "Other, specify ",
                             "label_fr": "Autres, préciser",
                             "type": "text",
                         },
-                         {
+                        {
                             "id": "Morphological control has been performed ?",
                             "label": "Morphological control has been performed ?",
                             "label_fr": "Le contrôle morphologique a t-il été réalisé ?",
                             "type": "radio",
-                            "values":"yes/oui,no/non"
+                            "values": "yes/oui,no/non"
                         },
                         {
                             "id": "Control site",
@@ -1032,29 +1049,29 @@ db.questionnaire.insert({
                             "id": "Control slides (on all samples or specify the samples)",
                             "label": "Control slides (on all samples or specify the samples)",
                             "label_fr": "Coupe contrôle (sur tous les échantillons ou préciser les échantillons)",
-                            "type": "check",
-                            "values":"Cryostat slides on the provided cryopreserved sample/Coupes au cryostat sur le prélèvement cryopréservé fourni,Fixed and parrafin-embedded tissue block slides/Coupes bloc tissulaire fixé et inclus en paraffine:,On a mirror sampling/Sur un prélèvement miroir,On a secondary sample distant from the initial sampling/Sur un prélèvement à distance de l’échantillon"
+                            "type": "checkbox",
+                            "values": "Cryostat slides on the provided cryopreserved sample/Coupes au cryostat sur le prélèvement cryopréservé fourni,Fixed and parrafin-embedded tissue block slides/Coupes bloc tissulaire fixé et inclus en paraffine:,On a mirror sampling/Sur un prélèvement miroir,On a secondary sample distant from the initial sampling/Sur un prélèvement à distance de l’échantillon"
                         },
                         {
                             "id": "Morphological control performed",
                             "label": "Morphological control performed",
                             "label_fr": "Contrôle morphologique effectué",
-                            "type": "check",
-                            "values":"Hematein-eosin staining/Coloration hématéine-éosine,Immunohistochemistry specify:/Immunohistochimie, préciser :,Other specify :/Autre préciser :"
+                            "type": "checkbox",
+                            "values": "Hematein-eosin staining/Coloration hématéine-éosine,Immunohistochemistry specify:/Immunohistochimie, préciser :,Other specify :/Autre préciser :"
                         },
                         {
                             "id": "Stained slide reading result",
                             "label": "Stained slide reading result No lesional control tissue (or EDTA blood)",
                             "label_fr": "Résultat lecture coupe colorée Tissu contrôle non lésionnel (ou sang sur EDTA)",
                             "type": "radio",
-                            "values":"yes/oui,no/non"
+                            "values": "yes/oui,no/non"
                         },
                         {
                             "id": "Lesion due to main diagnosis",
                             "label": "Lesion due to main diagnosis",
                             "label_fr": "Lésion propre au diagnostic principal",
                             "type": "radio",
-                            "values":"yes/oui,no/non"
+                            "values": "yes/oui,no/non"
                         },
                         {
                             "id": "If yes, semi-quantitative evaluation of the lesion (ex: +, ++, +++; n lesions/mm ; method 'x'...)",
@@ -1079,7 +1096,7 @@ db.questionnaire.insert({
                             "label": "Other lesions that may affect the observation results",
                             "label_fr": "Autres lésions susceptibles de modifier les résultats de l’observation",
                             "type": "radio",
-                            "values":"yes/oui,no/non"
+                            "values": "yes/oui,no/non"
                         },
                         {
                             "id": "If yes, spécify Necrosis (%)",
@@ -1095,7 +1112,6 @@ db.questionnaire.insert({
                         },
                     ]
                 },
-
             ]
 
 })
