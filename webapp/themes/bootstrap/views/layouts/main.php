@@ -17,14 +17,12 @@
 <body>
 
 <?php
-
-
 $this->widget('bootstrap.widgets.TbNavbar',array(
     'items'=>array(
         array(
             'class'=>'bootstrap.widgets.TbMenu',
             'items'=>array(
-                array('label'=>'Home', 'url'=>array('/site/index')),
+                array('label'=>Yii::t('common', 'accueil'), 'url'=>array('/site/index')),
                 array('label'=>'Questionnaires', 'url'=>array('/questionnaire/index')),
                 array('label'=>'My documents', 'url'=>array('/answer/index')),
                // array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
@@ -37,7 +35,9 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
 )); ?>
 
 <div class="container" id="page">
-
+<div style="text-align:right;"><a href="./index.php?lang=fr"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>
+                <a style="padding-left: 10px;" href="./index.php?lang=en"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'); ?></a>
+            </div>
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
 			'links'=>$this->breadcrumbs,

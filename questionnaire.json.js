@@ -870,7 +870,7 @@ db.questionnaire.insert({
                         {
                             "id": "Settled problem by request department",
                             "label": "Settled problem by request department",
-                            "label_fr": "Problème régularisé par le service demandeur Téléphone",
+                            "label_fr": "Problème régularisé par le service demandeur",
                             "type": "radio",
                             "values": "yes/oui,no/non"
                         },
@@ -886,6 +886,12 @@ db.questionnaire.insert({
                     "id": "Samples_quality_control",
                     "title": "Samples quality control (by the depositor)",
                     "title_fr": "Contrôle qualité des échantillons (par le déposant)",
+                    "questions": [{}]},
+                {
+                  "id": "Samples_quality_control_dna",
+                    "title": "DNA-RNA",
+                    "title_fr": "ADN-ARN",
+                    "parent_group":"Samples_quality_control",
                     "questions": [{
                             "id": "260280and260230absorbanceratios",
                             "label": "260/280 and 260/230 absorbance ratios",
@@ -932,14 +938,21 @@ db.questionnaire.insert({
                             "id": "Non-denaturating gel electrophoresis (image)",
                             "label": "Non-denaturating gel electrophoresis (image)",
                             "label_fr": "Electrophorèse sur gel non dénaturant (image)",
-                            "type": "text",
+                            "type": "image",
                         },
                         {
                             "id": "Bioanalyser quality control (image)",
                             "label": "Bioanalyser quality control (image)",
                             "label_fr": "Contrôle qualité sur Bioanalyseur (image)",
-                            "type": "text",
+                            "type": "image",
                         },
+                        ]},
+                {
+                  "id": "Samples_quality_control_cells",
+                    "title": "Cells",
+                    "title_fr": "Cellules",
+                    "parent_group":"Samples_quality_control",
+                    "questions": [
                         {
                             "id": "Mycoplasma testing",
                             "label": "Mycoplasma testing",
@@ -995,8 +1008,14 @@ db.questionnaire.insert({
                             "label": "Other tests, specify ",
                             "label_fr": "Autres tests, préciser",
                             "type": "input",
-                        },
-                        {
+                        },]},
+                {
+                  "id": "Samples_quality_control_fluids",
+                    "title": "Fluids",
+                    "title_fr": "Fluides",
+                    "parent_group":"Samples_quality_control",
+                    "questions": [{
+                        
                             "id": "Hemolysis",
                             "label": "Hemolysis",
                             "label_fr": "Hémolyse",

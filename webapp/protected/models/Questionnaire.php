@@ -181,6 +181,9 @@ class Questionnaire extends EMongoDocument {
         if ($question->type == "text") {
             $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 500px; height: 70px;\"></textarea>";
         }
+        if ($question->type == "image") {
+            $result.="<div style=\"width:200px;height:100px;backgournd-color:#CDBFC2;\">Put your picture here/ Placer votre image ici.<br><i>Feature to upload picture in development.</i> </div>";
+        }
         if ($question->type == "list") {
             $values = $question->values;
             $arvalue = split(",", $values);
