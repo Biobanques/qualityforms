@@ -55,7 +55,8 @@ echo "<div style=\"text-align:center\">".CHtml::submitButton('Save')."</div>";
 ?><br>
 <div>
     <?php
-    echo $model->renderTabbedGroup();
+    
+    echo $model->renderTabbedGroup(Yii::app()->language);
 ?>
 </div>
     <?php

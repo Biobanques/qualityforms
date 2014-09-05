@@ -227,6 +227,7 @@ db.questionnaire.insert({
                             "label_fr": "Consentement signé",
                             "type": "radio",
                             "values": "yes,no",
+                            "values_fr": "oui,non",
                         },
                         {
                             "id": "opposition",

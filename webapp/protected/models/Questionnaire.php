@@ -106,13 +106,19 @@ class Questionnaire extends EMongoDocument {
     /**
      * render tab associated to each group
      */
-    public function renderTabbedGroup() {
+    public function renderTabbedGroup($lang) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         foreach ($this->questions_group as $question_group) {
             if ($question_group->parent_group == null) {
-                $divTabs.= "<li><a href=\"#" . $question_group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $question_group->title . "</a></li>";
-                $divPans.= " <div class=\"tab-pane\" id=\"" . $question_group->id . "\">" . $this->renderQuestionGroupHTML($question_group) . "</div>";
+                if ($lang == "fr")
+                    $title = $question_group->title_fr;
+                if ($lang == "en")
+                    $title=$question_group->title;
+                if ($lang == "both")
+                    $title = $question_group->title . "<bR> " . $question_group->title_fr;
+                $divTabs.= "<li><a href=\"#" . $question_group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                $divPans.= " <div class=\"tab-pane\" id=\"" . $question_group->id . "\">" . $this->renderQuestionGroupHTML($question_group, $lang) . "</div>";
             }
         }
         $divTabs.="</ul>";
@@ -120,19 +126,24 @@ class Questionnaire extends EMongoDocument {
         return $divTabs . $divPans;
     }
 
-    public function renderQuestionGroupHTML($question_group) {
+    public function renderQuestionGroupHTML($question_group, $lang) {
         $result = "<div>";
-        $result.="<div class=\"question_group\"><i>" . $question_group->title . "</i> / " . $question_group->title_fr . "</div>";
+        if ($lang == "fr")
+            $result.="<div class=\"question_group\"> " . $question_group->title_fr . "</div>";
+        if ($lang == "en")
+            $result.="<div class=\"question_group\">" . $question_group->title . "</div>";
+        if ($lang == "both")
+            $result.="<div class=\"question_group\"><i>" . $question_group->title . "</i> / " . $question_group->title_fr . "</div>";
         if (isset($question_group->questions)) {
             foreach ($question_group->questions as $question) {
-                $result.=$this->renderQuestionHTML($question_group->id, $question);
+                $result.=$this->renderQuestionHTML($question_group->id, $question,$lang);
             }
         }
         $result.= "</div>";
         //add question groups that have parents for this group
         foreach ($this->questions_group as $qg) {
             if ($qg->parent_group == $question_group->id) {
-                $result.=$this->renderQuestionGroupHTML($qg);
+                $result.=$this->renderQuestionGroupHTML($qg, $lang);
             }
         }
         $result .= "<div class=\"end-question-group\"></div>";
@@ -143,10 +154,17 @@ class Questionnaire extends EMongoDocument {
      * render html the current question.
      */
 
-    public function renderQuestionHTML($idquestiongroup, $question) {
+    public function renderQuestionHTML($idquestiongroup, $question,$lang) {
         $result = "";
         $result.="<div style=\"" . $question->style . "\">";
-        $result.="<div class=\"question-label\" ><i>" . $question->label . "</i><br>" . $question->label_fr;
+        if ($lang == "fr")
+                    $label = $question->label_fr;
+                if ($lang == "en")
+                    $label=$question->label;
+                if ($lang == "both")
+                    $label = $question->label . "</i><br>" . $question->label_fr;
+                
+        $result.="<div class=\"question-label\" ><i>" . $label;
         if (isset($question->help)) {
             // $result.="ddd<span class=\"glyphicon glyphicon-help\"></span>";
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
@@ -166,6 +184,8 @@ class Questionnaire extends EMongoDocument {
         }
         if ($question->type == "radio") {
             $values = $question->values;
+             if($lang=="fr" && $question->values_fr!="")
+                        $values=$question->values_fr;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input>&nbsp;";
@@ -173,6 +193,8 @@ class Questionnaire extends EMongoDocument {
         }
         if ($question->type == "checkbox") {
             $values = $question->values;
+            if($lang=="fr" && isset($question->values_fr))
+                        $values=$question->values_fr;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";

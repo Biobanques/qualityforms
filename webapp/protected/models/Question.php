@@ -18,6 +18,10 @@ class Question extends EMongoEmbeddedDocument {
          * values if question type is radio
          */
         public $values;
+        /**
+         * values if question type is radio and french setted
+         */
+        public $values_fr;
         
         /**
          * help text to add meta information around the question, displayed as an help button
