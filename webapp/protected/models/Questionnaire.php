@@ -93,10 +93,10 @@ class Questionnaire extends EMongoDocument {
     /**
      * render in html the questionnaire
      */
-    public function renderHTML() {
+    public function renderHTML($lang) {
         $result = "";
         foreach ($this->questions_group as $question_group) {
-            $result.=$this->renderQuestionGroupHTML($question_group);
+            $result.=$this->renderQuestionGroupHTML($question_group, $lang);
             $result.= "<br><div style=\”clear:both;\"></div>";
         }
         $result.=$this->renderContributors();
@@ -111,10 +111,10 @@ class Questionnaire extends EMongoDocument {
         $divPans = "<div class=\"tab-content\">";
         foreach ($this->questions_group as $question_group) {
             if ($question_group->parent_group == null) {
+                //par defaut lang = en
+                $title = $question_group->title;
                 if ($lang == "fr")
                     $title = $question_group->title_fr;
-                if ($lang == "en")
-                    $title=$question_group->title;
                 if ($lang == "both")
                     $title = $question_group->title . "<bR> " . $question_group->title_fr;
                 $divTabs.= "<li><a href=\"#" . $question_group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
@@ -136,7 +136,7 @@ class Questionnaire extends EMongoDocument {
             $result.="<div class=\"question_group\"><i>" . $question_group->title . "</i> / " . $question_group->title_fr . "</div>";
         if (isset($question_group->questions)) {
             foreach ($question_group->questions as $question) {
-                $result.=$this->renderQuestionHTML($question_group->id, $question,$lang);
+                $result.=$this->renderQuestionHTML($question_group->id, $question, $lang);
             }
         }
         $result.= "</div>";
@@ -154,16 +154,16 @@ class Questionnaire extends EMongoDocument {
      * render html the current question.
      */
 
-    public function renderQuestionHTML($idquestiongroup, $question,$lang) {
+    public function renderQuestionHTML($idquestiongroup, $question, $lang) {
         $result = "";
         $result.="<div style=\"" . $question->style . "\">";
+        //par defaut lang = enif ($lang == "en")
+        $label = $question->label;
         if ($lang == "fr")
-                    $label = $question->label_fr;
-                if ($lang == "en")
-                    $label=$question->label;
-                if ($lang == "both")
-                    $label = $question->label . "</i><br>" . $question->label_fr;
-                
+            $label = $question->label_fr;
+        if ($lang == "both")
+            $label = $question->label . "</i><br>" . $question->label_fr;
+
         $result.="<div class=\"question-label\" ><i>" . $label;
         if (isset($question->help)) {
             // $result.="ddd<span class=\"glyphicon glyphicon-help\"></span>";
@@ -183,9 +183,11 @@ class Questionnaire extends EMongoDocument {
             $result.="<input type=\"text\" " . $idInput . "/>";
         }
         if ($question->type == "radio") {
-            $values = $question->values;
-             if($lang=="fr" && $question->values_fr!="")
-                        $values=$question->values_fr;
+
+            if ($lang == "fr" && $question->values_fr != "")
+                $values = $question->values_fr;
+            else
+                $values = $question->values;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input>&nbsp;";
@@ -193,8 +195,8 @@ class Questionnaire extends EMongoDocument {
         }
         if ($question->type == "checkbox") {
             $values = $question->values;
-            if($lang=="fr" && isset($question->values_fr))
-                        $values=$question->values_fr;
+            if ($lang == "fr" && isset($question->values_fr))
+                $values = $question->values_fr;
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";

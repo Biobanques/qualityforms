@@ -13,5 +13,5 @@ $this->breadcrumbs = array(
 
 <?php
 //
-echo $model->renderHTML();
+echo $model->renderHTML(Yii::app()->language);
 ?>
