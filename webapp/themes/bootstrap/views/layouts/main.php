@@ -37,6 +37,7 @@ $this->widget('bootstrap.widgets.TbNavbar',array(
 <div class="container" id="page">
 <div style="text-align:right;"><a href="./index.php?lang=fr"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/fr.png'); ?></a>
                 <a style="padding-left: 10px;" href="./index.php?lang=en"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/gb.png'); ?></a>
+                <a style="padding-left: 10px;" href="./index.php?lang=both"><?php echo CHtml::image(Yii::app()->request->baseUrl . '/images/world.png'); ?></a>
             </div>
 	<?php if(isset($this->breadcrumbs)):?>
 		<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(

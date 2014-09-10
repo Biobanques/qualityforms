@@ -109,37 +109,45 @@ class Questionnaire extends EMongoDocument {
     public function renderTabbedGroup($lang) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
+        $firstTab=false;
         foreach ($this->questions_group as $question_group) {
             if ($question_group->parent_group == null) {
                 //par defaut lang = en
                 $title = $question_group->title;
                 if ($lang == "fr")
-                    $title = $question_group->title_fr;
+                    {$title = $question_group->title_fr;}
                 if ($lang == "both")
-                    $title = $question_group->title . "<bR> " . $question_group->title_fr;
-                $divTabs.= "<li><a href=\"#" . $question_group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
-                $divPans.= " <div class=\"tab-pane\" id=\"" . $question_group->id . "\">" . $this->renderQuestionGroupHTML($question_group, $lang) . "</div>";
+                   { $title = "<i>".$question_group->title . "</i><bR> " . $question_group->title_fr;}
+                   $extraActive="";
+                   $extraActive2="";
+                   if($firstTab==false){
+                       $firstTab=true;
+                       $extraActive="class=\"active\"";
+                       $extraActive2=" active";
+                   }
+                $divTabs.= "<li ".$extraActive."><a href=\"#" . $question_group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                $divPans.= " <div class=\"tab-pane ".$extraActive2."\" id=\"" . $question_group->id . "\">" . $this->renderQuestionGroupHTML($question_group, $lang) . "</div>";
             }
         }
-        $divTabs.="</ul>";
         $divPans.="</div>";
-        return $divTabs . $divPans;
+        $divTabs.="</ul>";
+        return "<div class=\"tabbable\">".$divTabs . $divPans."</div>";
     }
 
     public function renderQuestionGroupHTML($question_group, $lang) {
-        $result = "<div>";
+        $result = "";
+        //en par defaut
+        $title=$question_group->title;
         if ($lang == "fr")
-            $result.="<div class=\"question_group\"> " . $question_group->title_fr . "</div>";
-        if ($lang == "en")
-            $result.="<div class=\"question_group\">" . $question_group->title . "</div>";
-        if ($lang == "both")
-            $result.="<div class=\"question_group\"><i>" . $question_group->title . "</i> / " . $question_group->title_fr . "</div>";
+            {$title=$question_group->title_fr;}
+         if ($lang == "both")
+           { $title= "<i>".$question_group->title . "</i> / " . $question_group->title_fr ;}
+        $result.="<div class=\"question_group\">" .$title . "</div>";
         if (isset($question_group->questions)) {
             foreach ($question_group->questions as $question) {
                 $result.=$this->renderQuestionHTML($question_group->id, $question, $lang);
             }
         }
-        $result.= "</div>";
         //add question groups that have parents for this group
         foreach ($this->questions_group as $qg) {
             if ($qg->parent_group == $question_group->id) {
@@ -160,11 +168,11 @@ class Questionnaire extends EMongoDocument {
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
         if ($lang == "fr")
-            $label = $question->label_fr;
+            {$label = $question->label_fr;}
         if ($lang == "both")
-            $label = $question->label . "</i><br>" . $question->label_fr;
+           { $label = "<i>".$question->label . "</i><br>" . $question->label_fr;}
 
-        $result.="<div class=\"question-label\" ><i>" . $label;
+        $result.="<div class=\"question-label\" >" . $label;
         if (isset($question->help)) {
             // $result.="ddd<span class=\"glyphicon glyphicon-help\"></span>";
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);

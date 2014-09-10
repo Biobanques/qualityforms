@@ -838,7 +838,7 @@ db.questionnaire.insert({
                             "label": "Sample",
                             "label_fr": "Echantillon",
                             "type": "checkbox",
-                            "values": "No sample-empty ,Setteled,Broken-damaged during transport,Cassé- endomagé pendant le traitement par le CRB,Incorrect sample number,Wrong tube for the analysis,Insufficient volume ,Clotted, hemolysed,Other"
+                            "values": "No sample-empty ,Setteled,Broken-damaged during transport,Broken damaged during handling,Incorrect sample number,Wrong tube for the analysis,Insufficient volume ,Clotted, hemolysed,Other"
                             , "values_fr": " Absence d'échantillon-vide,Décanté,Cassé-accidenté pendant le transport,Cassé- endomagé pendant le traitement par le CRB,Nombre incorrect d'échantillons,Tube incorrect pour l'analyse demandée,Volume insuffisant,Coagulé, hémolysé,Autre"
                         },
                         {
