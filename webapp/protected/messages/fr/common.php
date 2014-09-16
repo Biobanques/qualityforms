@@ -2,6 +2,7 @@
 
 return array(
     'accueil' => 'Accueil',
+    'mydocuments' =>'Mes documents',
     'administration' => 'Administration',
     'seconnecter' => 'Connexion',
     'sedeconnecter' => 'Déconnexion',

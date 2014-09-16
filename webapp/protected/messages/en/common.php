@@ -2,6 +2,7 @@
 
 return array(
     'accueil' => 'Home',
+    'mydocuments' =>'My documents',
     'administration' => 'Management',
     'seconnecter' => 'Login',
     'sedeconnecter' => 'Logout',

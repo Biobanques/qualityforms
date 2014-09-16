@@ -42,6 +42,11 @@ class Answer extends EMongoDocument {
     public $message_end;
     public $answers_group;
 
+       /**
+     * contributors are people working on thi squetsionnaire
+     */
+    public $contributors;
+    
     public function behaviors() {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
@@ -95,11 +100,15 @@ class Answer extends EMongoDocument {
         }
         return $result;
     }
+    
+    public function renderTabbedGroup($lang) {
+        return QuestionnaireHTMLRenderer::renderTabbedGroup($this,$lang,true);
+    }
 
     /**
      * render an array of association key/question group to display as tab
      */
-    public function renderArrayTabGroup() {
+   /* public function renderArrayTabGroup() {
         $result = array();
         if ($this->answers_group != null) {
             foreach ($this->answers_group as $answer_group) {
@@ -107,7 +116,7 @@ class Answer extends EMongoDocument {
             }
         }
         return $result;
-    }
+    }*/
 
     public function renderAnswerGroupHTML($answer_group) {
         $result = "";
@@ -121,6 +130,7 @@ class Answer extends EMongoDocument {
 
     /*
      * render html the current answer.
+     * TODO HERITAGE AVEC QUESTION POUR EVITER LES FORKS de PRESENTATION
      */
 
     public function renderAnswerHTML($idanswergroup, $answer) {
@@ -193,6 +203,16 @@ class Answer extends EMongoDocument {
             $answerGroup->copy($question_group);
             $this->answers_group[] = $answerGroup;
         }
+    }
+    
+    
+    /**
+     * render contributors
+     * used in plain page and tab page
+     * @return string
+     */
+    public function renderContributors() {
+        return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
 
 }

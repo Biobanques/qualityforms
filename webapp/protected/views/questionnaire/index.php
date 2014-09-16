@@ -18,6 +18,7 @@ $this->breadcrumbs=array(
         array(
             'class'=>'bootstrap.widgets.TbButtonColumn',
             'htmlOptions'=>array('style'=>'width: 50px'),
+            'template'=>'{view}{update}'
         ),
     ),
 )); ?>

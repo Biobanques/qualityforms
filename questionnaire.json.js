@@ -748,9 +748,7 @@ db.questionnaire.insert({
                             "id": "Tumor grade",
                             "label": "In case of neoplasic pathology Tumor grade",
                             "label_fr": "En cas de pathologie néoplasique Grade de la tumeur",
-                            "type": "radio",
-                            "values": "Yes,No",
-                            "values_fr": "Oui,Non"
+                            "type": "input",
                         },
                         {
                             "id": "Tumor type / Type de la tumeur",
@@ -838,8 +836,8 @@ db.questionnaire.insert({
                             "label": "Sample",
                             "label_fr": "Echantillon",
                             "type": "checkbox",
-                            "values": "No sample-empty ,Setteled,Broken-damaged during transport,Broken damaged during handling,Incorrect sample number,Wrong tube for the analysis,Insufficient volume ,Clotted, hemolysed,Other"
-                            , "values_fr": " Absence d'échantillon-vide,Décanté,Cassé-accidenté pendant le transport,Cassé- endomagé pendant le traitement par le CRB,Nombre incorrect d'échantillons,Tube incorrect pour l'analyse demandée,Volume insuffisant,Coagulé, hémolysé,Autre"
+                            "values": "No sample-empty ,Setteled,Broken-damaged during transport,Broken damaged during handling,Incorrect sample number,Wrong tube for the analysis,Insufficient volume ,Clotted or hemolysed,Other"
+                            , "values_fr": " Absence d'échantillon-vide,Décanté,Cassé-accidenté pendant le transport,Cassé- endomagé pendant le traitement par le CRB,Nombre incorrect d'échantillons,Tube incorrect pour l'analyse demandée,Volume insuffisant,Coagulé ou hémolysé,Autre"
                         },
                         {
                             "id": "Defective labelling",
@@ -1070,8 +1068,14 @@ db.questionnaire.insert({
                             "label": "Other, specify ",
                             "label_fr": "Autres, préciser",
                             "type": "text",
-                        },
-                        {
+                        },]},
+                         {
+                    "id": "Samples_quality_control_tissus",
+                    "title": "Tissues",
+                    "title_fr": "Tissus",
+                    "parent_group": "Samples_quality_control",
+                    "questions": [{
+                        
                             "id": "Morphological control has been performed ?",
                             "label": "Morphological control has been performed ?",
                             "label_fr": "Le contrôle morphologique a t-il été réalisé ?",

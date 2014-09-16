@@ -11,6 +11,11 @@ class AnswerGroup extends EMongoEmbeddedDocument {
     public $title;
     public $title_fr;
     public $answers;
+    /**
+         * parent group if setted.
+         * @var type 
+         */
+        public $parent_group;
 
     public function behaviors() {
         return array('embeddedArrays' => array(

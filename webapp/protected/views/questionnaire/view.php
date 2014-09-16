@@ -8,8 +8,6 @@ $this->breadcrumbs = array(
 );
 ?>
 <h1>View Questionnaire #<?php echo $model->id; ?></h1>
-
-
 <?php
  echo CHtml::link('Vue une page HTML',array('questionnaire/viewOnePage','id'=>$model->_id)); ;
 ?>
@@ -44,15 +42,6 @@ $this->breadcrumbs = array(
     ),
 )); ?>
 <?php echo CHtml::errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
-<div class="form">
-<?php
- $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'questionnaire-form',
-	'enableAjaxValidation'=>false,
-)); 
-
-echo "<div style=\"text-align:center\">".CHtml::submitButton('Save')."</div>"; 
-?><br>
 <div>
     <?php
     
@@ -60,8 +49,5 @@ echo "<div style=\"text-align:center\">".CHtml::submitButton('Save')."</div>";
 ?>
 </div>
     <?php
-
-$this->endWidget();
 ?>
     
-</div>

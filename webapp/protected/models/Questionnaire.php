@@ -103,10 +103,13 @@ class Questionnaire extends EMongoDocument {
         return $result;
     }
 
+    public function renderTabbedGroup($lang) {
+        return QuestionnaireHTMLRenderer::renderTabbedGroup($this,$lang,false);
+    }
     /**
      * render tab associated to each group
      */
-    public function renderTabbedGroup($lang) {
+   /* public function renderTabbedGroupOne($lang) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
         $firstTab=false;
@@ -132,9 +135,9 @@ class Questionnaire extends EMongoDocument {
         $divPans.="</div>";
         $divTabs.="</ul>";
         return "<div class=\"tabbable\">".$divTabs . $divPans."</div>";
-    }
+    }*/
 
-    public function renderQuestionGroupHTML($question_group, $lang) {
+   /* public function renderQuestionGroupHTML($question_group, $lang) {
         $result = "";
         //en par defaut
         $title=$question_group->title;
@@ -156,13 +159,13 @@ class Questionnaire extends EMongoDocument {
         }
         $result .= "<div class=\"end-question-group\"></div>";
         return $result;
-    }
+    }*/
 
     /*
      * render html the current question.
      */
 
-    public function renderQuestionHTML($idquestiongroup, $question, $lang) {
+   /* public function renderQuestionHTML($idquestiongroup, $question, $lang) {
         $result = "";
         $result.="<div style=\"" . $question->style . "\">";
         //par defaut lang = enif ($lang == "en")
@@ -176,11 +179,7 @@ class Questionnaire extends EMongoDocument {
         if (isset($question->help)) {
             // $result.="ddd<span class=\"glyphicon glyphicon-help\"></span>";
             $result.=HelpDivComponent::getHtml("help-" . $question->id, $question->help);
-            /* $result.=$this->widget('bootstrap.widgets.TbButton', array(
-              'label' => '?',
-              'type' => 'info',
-              'htmlOptions' => array('data-title' => 'Help/Aide', 'data-content' => $question->help, 'rel' => 'popover'),
-              )); */
+
         }
         $result.="</div>";
         $result.="<div class=\"question-input\">";
@@ -252,7 +251,7 @@ class Questionnaire extends EMongoDocument {
         //close row input
         $result.="</div>";
         return $result;
-    }
+    }*/
 
     /**
      * update questionnaire with fields filled.
@@ -279,10 +278,7 @@ class Questionnaire extends EMongoDocument {
      * @return string
      */
     public function renderContributors() {
-        $result = "<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
-        $result.="<div class=\"span5\">" . $this->contributors . "</div>";
-        $result.="</div>";
-        return $result;
+        return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
 
 }

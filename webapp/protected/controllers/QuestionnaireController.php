@@ -27,7 +27,9 @@ class QuestionnaireController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', 'users' => array('*'),
+            array('allow', 'actions' => array('index', 'view','viewOnePage'),'users' => array('*'),
+            ),
+            array('allow', 'actions' => array('update'),'users' => array('@'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -99,23 +101,43 @@ class QuestionnaireController extends Controller {
     }
 
     /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
+     * Display to fill in questionnaire
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
-        $model = $this->loadModel($id);
-        $form = new QuestionnaireGroupForm;
+         $model = $this->loadModel($id);
+        $answer = null;
+        if (isset($_POST['Questionnaire'])) {
+            $answer = $this->saveQuestionnaireAnswers($model);
+        }
+        if ($answer != null)
+            $model = $answer;
+        $this->render('update', array(
+            'model' => $model,
+        ));
+        
+    }
+    
+        /**
+     * edit questionnaire : add/delete questions..
+         * Not uyet implemented
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionEdit($id) {
+        //$model = $this->loadModel($id);
+        //$form = new QuestionnaireGroupForm;
         Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
-         if (isset($_POST['QuestionnaireGroupForm'])) {
+         /*if (isset($_POST['QuestionnaireGroupForm'])) {
           $form->attributes = $_POST['QuestionnaireGroupForm'];
           if ($model->updateForm($form))
             Yii::app()->user->setFlash('success', "Questionnaire updated with success");
           }else {
              Yii::app()->user->setFlash('error', "Questionnaire not updated. A problem occured.");
         } 
+          * 
+          */
 
-        $this->render('update', array(
+        $this->render('edit', array(
             'model' => $model,
             'form' => $form,
         ));

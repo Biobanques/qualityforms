@@ -11,22 +11,22 @@ $this->breadcrumbs = array(
 
 
 <?php
- echo CHtml::link('Vue une page HTML',array('questionnaire/viewOnePage','id'=>$model->_id)); ;
+echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' => $model->_id));
+;
 ?>
 <br><bR>
-<?php
-echo CHtml::beginForm(); 
-echo "<div style=\"text-align:center\">".CHtml::submitButton('Save')."</div>"; 
-echo "<br>";
-$this->widget('zii.widgets.jui.CJuiTabs',array(
-    'tabs'=>$model->renderArrayTabGroup(),
-    // additional javascript options for the tabs plugin
-    'options'=>array(
-        'collapsible'=>true,
-    ),
-));
+<div class="form">
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'questionnaire-form',
+        'enableAjaxValidation' => false,
+    ));
+    echo "<div style=\"text-align:center\">" . CHtml::submitButton('Save') . "<div>";
+    echo $model->renderTabbedGroup(Yii::app()->language);
+    ?>
+</div>
+    <?php
+    $this->endWidget();
+    ?>
 
-
-
-echo CHtml::endForm();
-?>
+</div>
