@@ -79,7 +79,7 @@ class QuestionnaireHTMLRenderer {
            { $title= "<i>".$group->title . "</i> / " . $group->title_fr ;}
         $result.="<div class=\"question_group\">" .$title . "</div>";
         if (isset($group->questions)) {
-            foreach ($group->questions as $question) {
+            foreach ($group->questions as $question) {   
                 $result.=QuestionnaireHTMLRenderer::renderQuestionHTML($group->id, $question, $lang,$isAnswered);
             }
         }
@@ -103,7 +103,7 @@ class QuestionnaireHTMLRenderer {
 
     public function renderQuestionHTML($idquestiongroup, $question, $lang,$isAnswered) {
         $result = "";
-        $result.="<div style=\"" . $question->style . "\">";
+            $result.="<div style=\"" . $question->style . "\">";
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
         if ($lang == "fr")
@@ -144,7 +144,7 @@ class QuestionnaireHTMLRenderer {
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 500px; height: 70px;\"></textarea>";
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\"></textarea>";
         }
         if ($question->type == "image") {
             $result.="<div style=\"width:128px;height:128px;background-repeat:no-repeat;background-image:url('./images/gnome_mime_image.png');\"> </div>";
