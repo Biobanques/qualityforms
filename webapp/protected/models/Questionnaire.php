@@ -96,16 +96,19 @@ class Questionnaire extends EMongoDocument {
     public function renderHTML($lang) {
         $result = "";
         foreach ($this->questions_group as $question_group) {
-            $result.=QuestionnaireHTMLRenderer::renderQuestionGroupHTML($this,$question_group, $lang,false);
-            $result.= "<br><div style=\”clear:both;\"></div>";
+            if ($question_group->parent_group == "") {
+                $result.=QuestionnaireHTMLRenderer::renderQuestionGroupHTML($this, $question_group, $lang, false);
+                $result.= "<br><div style=\”clear:both;\"></div>";
+            }
         }
         $result.=$this->renderContributors();
         return $result;
     }
 
     public function renderTabbedGroup($lang) {
-        return QuestionnaireHTMLRenderer::renderTabbedGroup($this,$lang,false);
+        return QuestionnaireHTMLRenderer::renderTabbedGroup($this, $lang, false);
     }
+
     /**
      * update questionnaire with fields filled.
      * Add question group if necessary

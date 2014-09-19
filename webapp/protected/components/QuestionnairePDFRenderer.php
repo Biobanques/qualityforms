@@ -76,13 +76,13 @@ class QuestionnairePDFRenderer {
      * used in plain page and tab page
      * @return string
      */
-    public function renderContributors($pdf,$contributors) {
+    public function renderContributors($pdf, $contributors) {
         $pdf->AddPage();
         $pdf->Cell(0, 5, 'Contributors / Contributeurs', 0, 1, 'C');
 
 
 // Print text using writeHTMLCell()
-$pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
+        $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
         $pdf->Cell(100, 100, $contributors);
         return $pdf;
     }
@@ -92,10 +92,11 @@ $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
      */
     public static function renderPDF($pdf, $questionnaire, $lang) {
         foreach ($questionnaire->questions_group as $question_group) {
-            $pdf->AddPage();
-            $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $question_group, $lang, false);
+            //$pdf->AddPage();
+            if( $question_group->parent_group=="")
+              $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $question_group, $lang, false);
         }
-         $pdf=QuestionnairePDFRenderer::renderContributors($pdf,$questionnaire->contributors);
+        $pdf = QuestionnairePDFRenderer::renderContributors($pdf, $questionnaire->contributors);
         return $pdf;
     }
 
@@ -118,6 +119,8 @@ $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
         }
         $pdf->SetFont('helvetica', 'BI', 18);
         $pdf->Cell(0, 5, $title, 0, 1, 'C');
+        $pdf->Ln(10);
+        $pdf->Cell(0, 5, $group->parent_group, 0, 1, 'C');
         $pdf->Ln(10);
         $pdf->SetFont('helvetica', '', 12);
         if (isset($group->questions)) {
@@ -158,7 +161,6 @@ $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
             $pdf->TextField($id, 50, 5);
             $pdf->Ln(6);
         }
-
         if ($question->type == "radio") {
             if ($lang == "fr" && $question->values_fr != "") {
                 $values = $question->values_fr;
@@ -170,31 +172,27 @@ $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
                 $pdf->RadioButton($id, 5, array(), array(), $value);
                 $pdf->Cell(35, 5, $value);
                 $pdf->Ln(6);
-             }
+            }
         }
-        
-          if ($question->type == "checkbox") {
-          $values = $question->values;
-          if ($lang == "fr" && isset($question->values_fr)) {
+        if ($question->type == "checkbox") {
+            $values = $question->values;
+            if ($lang == "fr" && isset($question->values_fr)) {
                 $values = $question->values_fr;
             }
             $arvalue = split(",", $values);
-          foreach ($arvalue as $value) {
-              $pdf->CheckBox($id, 5, true, array(), array(), $value);
-              $pdf->Ln(10);
-          //$result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";
-          }
-          }
-          if ($question->type == "text") {
-        //  $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\"></textarea>";
-          $pdf->TextField($id, 60, 18, array('multiline'=>true, 'lineWidth'=>0, 'borderStyle'=>'none'), array('v'=>'', 'dv'=>''));
-            $pdf->Ln(19);
-          }
-          if ($question->type == "image") {
-          
-              //Image ($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false, $alt=false, $altimgs=array())
-            $pdf->Image('images/gnome_mime_image.png', '','' , '', '', 'PNG', '', '', true, 100);
+            foreach ($arvalue as $value) {
+                $pdf->CheckBox($id, 5, true, array(), array(), $value);
+                $pdf->Ln(10);
             }
+        }
+        if ($question->type == "text") {
+            $pdf->TextField($id, 60, 18, array('multiline' => true, 'lineWidth' => 0, 'borderStyle' => 'none'), array('v' => '', 'dv' => ''));
+            $pdf->Ln(19);
+        }
+        if ($question->type == "image") {
+            //TODO ameliorer le rendu des images et leur integration
+            //$pdf->Image('images/gnome_mime_image.png', '', '', '', '', 'PNG', '', '', true, 100);
+        }
         if ($question->type == "list") {
             $values = $question->values;
             $arvalue = split(",", $values);
@@ -206,30 +204,32 @@ $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
             $pdf->ComboBox($id, 30, 5, $arrValuesPDF);
             $pdf->Ln(6);
         }
-        /*
-          if ($question->type == "array") {
-          $rows = $question->rows;
-          $arrows = split(",", $rows);
-          $cols = $question->columns;
-          $arcols = split(",", $cols);
-          $result.="<table><tr><td></td>";
-          foreach ($arcols as $col) {
-          $result.="<td>" . $col . "</td>";
-          }
-          $result.="</tr>";
-          foreach ($arrows as $row) {
-          $result.="<tr><td>" . $row . "</td>";
-          foreach ($arcols as $col) {
-          $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
-          $idInput = "id=\"" . $idunique . "\" name=\"Questionnaire[" . $idunique . "]\"";
-          $result.="<td><input type=\"text\" " . $idInput . "/></td>";
-          }
-          $result.="</tr>";
-          }
-          $result.="</table>";
-          } */
-        //$result .="</div>";
-        
+
+        if ($question->type == "array") {
+            $pdf->Ln(6);
+            $rows = $question->rows;
+            $arrows = split(",", $rows);
+            $cols = $question->columns;
+            $arcols = split(",", $cols);
+            //$result.="<table><tr><td></td>";
+            foreach ($arcols as $col) {
+              //  $result.="<td>" . $col . "</td>";
+           $pdf->Cell(35, 5, $col);
+                }
+                $pdf->Ln(6);
+            //$result.="</tr>";
+            foreach ($arrows as $row) {
+                //$result.="<tr><td>" . $row . "</td>";
+                $pdf->Cell(35, 5, $row);
+                foreach ($arcols as $col) {
+                    $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
+                    $pdf->TextField($idunique, 50, 5);
+                }
+               // $result.="</tr>";
+                $pdf->Ln(6);
+            }
+           // $result.="</table>";
+        }
         return $pdf;
     }
 
