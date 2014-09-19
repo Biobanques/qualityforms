@@ -54,16 +54,15 @@ class QuestionnairePDFRenderer {
         $pdf->AddPage();
         //form default properties
         $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => array(255, 255, 200), 'strokeColor' => array(255, 128, 128)));
-        
-        $pdf->SetFont('helvetica', 'BI', 18);
-$pdf->Cell(0, 5, 'Biobanques Quality Form ', 0, 1, 'C');
-$pdf->Ln(10);
 
-        $pdf=QuestionnairePDFRenderer::renderPDF($pdf,$questionnaire, "fr");
+        $pdf->SetFont('helvetica', 'BI', 18);
+        $pdf->Cell(0, 5, 'Biobanques Quality Form ', 0, 1, 'C');
+        $pdf->Ln(10);
+
+        $pdf = QuestionnairePDFRenderer::renderPDF($pdf, $questionnaire, "fr");
 
 // output the HTML content
-       // $pdf->writeHTML($html, true, false, true, false);
-
+        // $pdf->writeHTML($html, true, false, true, false);
 // reset pointer to the last page
         $pdf->lastPage();
 
@@ -77,24 +76,26 @@ $pdf->Ln(10);
      * used in plain page and tab page
      * @return string
      */
-    public function renderContributors($contributors) {
-        $result = "<div><div class=\"question_group\"><i>Contributors</i> / Contributeurs</div>";
-        $result.="<div class=\"span5\">" . $contributors . "</div>";
-        $result.="</div>";
-        return $result;
+    public function renderContributors($pdf,$contributors) {
+        $pdf->AddPage();
+        $pdf->Cell(0, 5, 'Contributors / Contributeurs', 0, 1, 'C');
+
+
+// Print text using writeHTMLCell()
+$pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
+        $pdf->Cell(100, 100, $contributors);
+        return $pdf;
     }
 
     /**
      * render in xhtml the questionnaire to the pdf output
      */
-    public static function renderPDF($pdf,$questionnaire, $lang) {
-       // $result .= "<form method=\"post\" action=\"http://localhost/printvars.php\" enctype=\"multipart/form-data\">";
+    public static function renderPDF($pdf, $questionnaire, $lang) {
         foreach ($questionnaire->questions_group as $question_group) {
-            $pdf=QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf,$questionnaire, $question_group, $lang, false);
-           // $result.= "<br />";
+            $pdf->AddPage();
+            $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $question_group, $lang, false);
         }
-        // $result.=QuestionnaireHTMLRenderer::renderContributors($questionnaire->contributors);
-        //$result .="</form>";
+         $pdf=QuestionnairePDFRenderer::renderContributors($pdf,$questionnaire->contributors);
         return $pdf;
     }
 
@@ -106,8 +107,7 @@ $pdf->Ln(10);
      * @param type $isAnswered
      * @return string
      */
-    public function renderQuestionGroupPDF($pdf,$questionnaire, $group, $lang, $isAnswered) {
-        $result = "";
+    public function renderQuestionGroupPDF($pdf, $questionnaire, $group, $lang, $isAnswered) {
         //en par defaut
         $title = $group->title;
         if ($lang == "fr") {
@@ -122,7 +122,7 @@ $pdf->Ln(10);
         $pdf->SetFont('helvetica', '', 12);
         if (isset($group->questions)) {
             foreach ($group->questions as $question) {
-                $pdf=QuestionnairePDFRenderer::renderQuestionPDF($pdf,$group->id, $question, $lang, $isAnswered);
+                $pdf = QuestionnairePDFRenderer::renderQuestionPDF($pdf, $group->id, $question, $lang, $isAnswered);
             }
         }
         //add question groups that have parents for this group
@@ -132,10 +132,9 @@ $pdf->Ln(10);
             $groups = $questionnaire->questions_group;
         foreach ($groups as $qg) {
             if ($qg->parent_group == $group->id) {
-                $pdf=QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf,$questionnaire, $qg, $lang, $isAnswered);
+                $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $qg, $lang, $isAnswered);
             }
         }
-       // $result .= "<div>-------------</div>";
         return $pdf;
     }
 
@@ -143,8 +142,7 @@ $pdf->Ln(10);
      * render html the current question.
      */
 
-    public function renderQuestionPDF($pdf,$idquestiongroup, $question, $lang, $isAnswered) {
-        //$result = "<div>";
+    public function renderQuestionPDF($pdf, $idquestiongroup, $question, $lang, $isAnswered) {
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
         if ($lang == "fr") {
@@ -153,57 +151,62 @@ $pdf->Ln(10);
         if ($lang == "both") {
             $label = "<i>" . $question->label . "</i><br/>" . $question->label_fr;
         }
+        $pdf->Cell(100, 5, $label);
         //affichage de l input selon son type
         $id = $idquestiongroup . "_" . $question->id;
-        //$idInput = "id=\"" . $id . "\" name=\"Questionnaire[" . $id . "]\"";
-        //$result.="<label for=\"" . $id . "\">" . $label . "</label>";
-        $pdf->Cell(35, 5, $label.':');
         if ($question->type == "input") {
             $pdf->TextField($id, 50, 5);
-         //   $result.= " <input type=\"text\" " . $idInput . " size=\"20\" maxlength=\"30\" />";
+            $pdf->Ln(6);
         }
 
-        /* if ($question->type == "radio") {
-          if ($lang == "fr" && $question->values_fr != "")
-          $values = $question->values_fr;
-          else
-          $values = $question->values;
-          $arvalue = split(",", $values);
-          foreach ($arvalue as $value) {
-          $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input>&nbsp;";
-          }
-          }
+        if ($question->type == "radio") {
+            if ($lang == "fr" && $question->values_fr != "") {
+                $values = $question->values_fr;
+            } else {
+                $values = $question->values;
+            }
+            $arvalue = split(",", $values);
+            foreach ($arvalue as $value) {
+                $pdf->RadioButton($id, 5, array(), array(), $value);
+                $pdf->Cell(35, 5, $value);
+                $pdf->Ln(6);
+             }
+        }
+        
           if ($question->type == "checkbox") {
           $values = $question->values;
-          if ($lang == "fr" && isset($question->values_fr))
-          $values = $question->values_fr;
-          $arvalue = split(",", $values);
+          if ($lang == "fr" && isset($question->values_fr)) {
+                $values = $question->values_fr;
+            }
+            $arvalue = split(",", $values);
           foreach ($arvalue as $value) {
-          $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";
+              $pdf->CheckBox($id, 5, true, array(), array(), $value);
+              $pdf->Ln(10);
+          //$result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";
           }
           }
           if ($question->type == "text") {
-          $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\"></textarea>";
+        //  $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\"></textarea>";
+          $pdf->TextField($id, 60, 18, array('multiline'=>true, 'lineWidth'=>0, 'borderStyle'=>'none'), array('v'=>'', 'dv'=>''));
+            $pdf->Ln(19);
           }
           if ($question->type == "image") {
-          $result.="<div style=\"width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/qualityforms/images/gnome_mime_image.png');\"> </div>";
-          }*/
-          if ($question->type == "list") {
-          $values = $question->values;
-          $arvalue = split(",", $values);
-          //$result.="<select " . $idInput . ">";
-          //$result.="<option  value=\"\"></option>";
-            //$pdf->ComboBox($id, 30, 5, array(array('', '-'), array('M', 'Male'), array('F', 'Female')));
-            $arrValuesPDF=array();
-            $arrValuesPDF['']='-';
-          foreach ($arvalue as $value) {
-              $arrValuesPDF[$value]=$value;
-          //$result.="<option  value=\"" . $value . "\">" . $value . "</option>";
-          }
-          $pdf->ComboBox($id, 30, 5, $arrValuesPDF);
-          //$result.="</select>";
-          }
-          /*
+          
+              //Image ($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false, $alt=false, $altimgs=array())
+            $pdf->Image('images/gnome_mime_image.png', '','' , '', '', 'PNG', '', '', true, 100);
+            }
+        if ($question->type == "list") {
+            $values = $question->values;
+            $arvalue = split(",", $values);
+            $arrValuesPDF = array();
+            $arrValuesPDF[''] = '-';
+            foreach ($arvalue as $value) {
+                $arrValuesPDF[$value] = $value;
+            }
+            $pdf->ComboBox($id, 30, 5, $arrValuesPDF);
+            $pdf->Ln(6);
+        }
+        /*
           if ($question->type == "array") {
           $rows = $question->rows;
           $arrows = split(",", $rows);
@@ -226,7 +229,7 @@ $pdf->Ln(10);
           $result.="</table>";
           } */
         //$result .="</div>";
-                  $pdf->Ln(6);
+        
         return $pdf;
     }
 
