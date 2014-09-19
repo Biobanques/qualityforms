@@ -147,7 +147,7 @@ class QuestionnaireHTMLRenderer {
             $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\"></textarea>";
         }
         if ($question->type == "image") {
-            $result.="<div style=\"width:128px;height:128px;background-repeat:no-repeat;background-image:url('./images/gnome_mime_image.png');\"> </div>";
+            $result.="<div style=\"width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/qualityforms/images/gnome_mime_image.png');\"> </div>";
         }
         if ($question->type == "list") {
             $values = $question->values;

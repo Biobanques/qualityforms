@@ -11,6 +11,9 @@ $this->breadcrumbs = array(
 <?php
  echo CHtml::link('Vue une page HTML',array('questionnaire/viewOnePage','id'=>$model->_id)); ;
 ?>
+<?php
+ echo CHtml::link('Export PDF',array('questionnaire/exportPDF','id'=>$model->_id)); ;
+?>
 <br><bR>
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModalContributors')); ?>
  
