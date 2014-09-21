@@ -79,11 +79,8 @@ class QuestionnairePDFRenderer {
     public function renderContributors($pdf, $contributors) {
         $pdf->AddPage();
         $pdf->Cell(0, 5, 'Contributors / Contributeurs', 0, 1, 'C');
-
-
 // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
-        $pdf->Cell(100, 100, $contributors);
         return $pdf;
     }
 
@@ -109,6 +106,7 @@ class QuestionnairePDFRenderer {
      * @return string
      */
     public function renderQuestionGroupPDF($pdf, $questionnaire, $group, $lang, $isAnswered) {
+        $pdf->Ln(5);
         //en par defaut
         $title = $group->title;
         if ($lang == "fr") {
@@ -119,9 +117,7 @@ class QuestionnairePDFRenderer {
         }
         $pdf->SetFont('helvetica', 'BI', 18);
         $pdf->Cell(0, 5, $title, 0, 1, 'C');
-        $pdf->Ln(10);
-        $pdf->Cell(0, 5, $group->parent_group, 0, 1, 'C');
-        $pdf->Ln(10);
+        $pdf->Ln(5);
         $pdf->SetFont('helvetica', '', 12);
         if (isset($group->questions)) {
             foreach ($group->questions as $question) {
@@ -152,14 +148,19 @@ class QuestionnairePDFRenderer {
             $label = $question->label_fr;
         }
         if ($lang == "both") {
-            $label = "<i>" . $question->label . "</i><br/>" . $question->label_fr;
+        $label = $question->label;
+            //$label = "<i>" . $question->label . "</i><br/>" . $question->label_fr;
         }
-        $pdf->Cell(100, 5, $label);
+        if($question->style!="float:right")
+                        $pdf->Ln(6);
+        if (strlen($label) > 25) {
+            $pdf->Cell(50, 5, substr($label, 0, 25).".");
+            }else
+            $pdf->Cell(50, 5, $label);
         //affichage de l input selon son type
         $id = $idquestiongroup . "_" . $question->id;
         if ($question->type == "input") {
-            $pdf->TextField($id, 50, 5);
-            $pdf->Ln(6);
+            $pdf->TextField($id, 40, 5);
         }
         if ($question->type == "radio") {
             if ($lang == "fr" && $question->values_fr != "") {
@@ -170,18 +171,20 @@ class QuestionnairePDFRenderer {
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $pdf->RadioButton($id, 5, array(), array(), $value);
-                $pdf->Cell(35, 5, $value);
-                $pdf->Ln(6);
+                $pdf->Cell(20, 5, $value);
             }
         }
         if ($question->type == "checkbox") {
+            $pdf->Ln(10);
             $values = $question->values;
             if ($lang == "fr" && isset($question->values_fr)) {
                 $values = $question->values_fr;
             }
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $pdf->CheckBox($id, 5, true, array(), array(), $value);
+                $pdf->Cell(20, 5, "");
+                $pdf->CheckBox($id."_".$value, 5, false, array(), array(), $value);
+                $pdf->Cell(35, 5, $value);
                 $pdf->Ln(10);
             }
         }
@@ -191,7 +194,9 @@ class QuestionnairePDFRenderer {
         }
         if ($question->type == "image") {
             //TODO ameliorer le rendu des images et leur integration
-            //$pdf->Image('images/gnome_mime_image.png', '', '', '', '', 'PNG', '', '', true, 100);
+            $pdf->Image('images/gnome_mime_image.png', '', '', '', '', 'PNG', '', '', true, 100);
+        $pdf->Ln(10);
+            
         }
         if ($question->type == "list") {
             $values = $question->values;
@@ -202,7 +207,6 @@ class QuestionnairePDFRenderer {
                 $arrValuesPDF[$value] = $value;
             }
             $pdf->ComboBox($id, 30, 5, $arrValuesPDF);
-            $pdf->Ln(6);
         }
 
         if ($question->type == "array") {

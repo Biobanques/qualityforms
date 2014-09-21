@@ -56,8 +56,8 @@ db.questionnaire.insert({
                         },
                         {
                             "id": "responsible",
-                            "label": "Name of the administrator",
-                            "label_fr": "Nom du responsable administratif",
+                            "label": "Administrator",
+                            "label_fr": "Responsable administratif",
                             "type": "input",
                             "order": "6",
                             "style": "float:right"
@@ -99,22 +99,22 @@ db.questionnaire.insert({
                         },
                         {
                             "id": "responsiblecollection",
-                            "label": "Name of the person in charge of collections",
-                            "label_fr": "Nom de la personne chargée des collections",
+                            "label": "Responsible charge of collections",
+                            "label_fr": "Responsable chargé des collections",
                             "type": "input",
                             "order": "5",
                         },
                         {
                             "id": "responsiblereception",
-                            "label": "Name of the person in charge of reception",
-                            "label_fr": "Nom de la personne responsable de la réception",
+                            "label": "Responsible of the reception",
+                            "label_fr": "Responsable de la réception",
                             "type": "input",
                             "order": "6",
                             "style": "float:right"
                         }, {
                             "id": "receiverphone",
                             "label": "Phone N°",
-                            "label_fr": "N° d etel",
+                            "label_fr": "N° de tel",
                             "type": "input",
                             "order": "7"
                         },
