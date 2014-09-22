@@ -138,6 +138,13 @@ class Questionnaire extends EMongoDocument {
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
 
+    /**
+     * get the last modified value into a french date format JJ/MM/AAAA
+     * @return type
+     */
+    public function getLastModified(){
+            return date("d/m/Y",$this->last_modified->sec);
+            }
 }
 
 ?>
