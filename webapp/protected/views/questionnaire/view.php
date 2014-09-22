@@ -12,7 +12,10 @@ $this->breadcrumbs = array(
  echo CHtml::link('Vue une page HTML',array('questionnaire/viewOnePage','id'=>$model->_id)); ;
 ?>
 <?php
- echo CHtml::link('Export PDF',array('questionnaire/exportPDF','id'=>$model->_id)); ;
+ //echo CHtml::link('Export PDF',array('questionnaire/exportPDF','id'=>$model->_id)); 
+ //$image = CHtml::image( 'images/x.png', 'Delete', array('title'='Export'));
+$img = CHtml::image(Yii::app()->request->baseUrl.'/images/page_white_acrobat.png','export as pdf'); 
+echo CHtml::link($img, array('questionnaire/exportPDF','id'=>$model->_id), array());
 ?>
 <br><bR>
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'myModalContributors')); ?>

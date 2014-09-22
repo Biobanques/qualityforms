@@ -12,6 +12,9 @@
  * @author nicolas
  */
 class QuestionnairePDFRenderer {
+    
+    
+    public static $LINE_HEIGHT=7;
 
     public static function render($questionnaire) {
         require_once(Yii::getPathOfAlias('application.vendor') . '/tcpdf/tcpdf.php');
@@ -49,13 +52,13 @@ class QuestionnairePDFRenderer {
 // IMPORTANT: disable font subsetting to allow users editing the document
         $pdf->setFontSubsetting(false);
 // set font
-        $pdf->SetFont('helvetica', '', 10, '', false);
+        $pdf->SetFont('helvetica', '', 8, '', false);
 // add a page
         $pdf->AddPage();
         //form default properties
-        $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => array(255, 255, 200), 'strokeColor' => array(255, 128, 128)));
+        $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => array(200, 200, 200), 'strokeColor' => array(255, 128, 128)));
 
-        $pdf->SetFont('helvetica', 'BI', 18);
+        $pdf->SetFont('helvetica', 'B', 18);
         $pdf->Cell(0, 5, 'Biobanques Quality Form ', 0, 1, 'C');
         $pdf->Ln(10);
 
@@ -90,8 +93,12 @@ class QuestionnairePDFRenderer {
     public static function renderPDF($pdf, $questionnaire, $lang) {
         foreach ($questionnaire->questions_group as $question_group) {
             //$pdf->AddPage();
-            if( $question_group->parent_group=="")
-              $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $question_group, $lang, false);
+            if ($question_group->parent_group == "") {
+                // set a bookmark for the current position
+                $pdf->AddPage();
+                $pdf->Bookmark($question_group->title_fr, 0, 0, '', 'B', array(0,64,128));
+                $pdf = QuestionnairePDFRenderer::renderQuestionGroupPDF($pdf, $questionnaire, $question_group, $lang, false);
+            }
         }
         $pdf = QuestionnairePDFRenderer::renderContributors($pdf, $questionnaire->contributors);
         return $pdf;
@@ -106,7 +113,7 @@ class QuestionnairePDFRenderer {
      * @return string
      */
     public function renderQuestionGroupPDF($pdf, $questionnaire, $group, $lang, $isAnswered) {
-        $pdf->Ln(5);
+        $pdf->Ln(10);
         //en par defaut
         $title = $group->title;
         if ($lang == "fr") {
@@ -115,8 +122,9 @@ class QuestionnairePDFRenderer {
         if ($lang == "both") {
             $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
         }
-        $pdf->SetFont('helvetica', 'BI', 18);
-        $pdf->Cell(0, 5, $title, 0, 1, 'C');
+        $pdf->SetFont('helvetica', 'B', 12);
+        $pdf->SetFillColor(211, 211, 211);	
+        $pdf->Cell(0, 5, $title, 0 , 2, 'L',true);
         $pdf->Ln(5);
         $pdf->SetFont('helvetica', '', 12);
         if (isset($group->questions)) {
@@ -151,8 +159,9 @@ class QuestionnairePDFRenderer {
         $label = $question->label;
             //$label = "<i>" . $question->label . "</i><br/>" . $question->label_fr;
         }
-        if($question->style!="float:right")
-                        $pdf->Ln(6);
+        if ($question->style != "float:right") {
+            $pdf->Ln(7);
+        }
         if (strlen($label) > 25) {
             $pdf->Cell(50, 5, substr($label, 0, 25).".");
             }else
