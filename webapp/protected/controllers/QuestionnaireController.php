@@ -63,6 +63,7 @@ class QuestionnaireController extends Controller {
      */
     public function saveQuestionnaireAnswers($model) {
         $answer = new Answer;
+        $answer->last_updated=new MongoDate();
         $answer->copy($model);
         $answer->login = Yii::app()->user->name;
         $flagNoInputToSave = true;

@@ -82,34 +82,4 @@ class AnswerController extends Controller {
             Yii::app()->end();
         }
     }
-
-    /*
-     * render html the current question.
-     */
-    /* public function saveQuestion($idquestiongroup,$idquestion) {
-      $input=$idquestiongroup . "_" . $idquestion;
-      if(isset($_POST[$input]))
-      //affichage de l input selon son type
-      if ($question->type == "input") {
-      $result.="<input type=\"text\" name=\"" . $idquestiongroup . "_" . $idquestion . "\">";
-      }
-      if ($question->type == "radio") {
-      $values = $question->values;
-      $arvalue = split(",", $values);
-      foreach ($arvalue as $value) {
-      $result.="<input type=\"radio\" name=\"" . $idquestiongroup . "_" . $idquestion . "\" value=\"" . $value . "\">" . $value . "</input>";
-      }
-      }
-      if ($question->type == "checkbox") {
-      $values = $question->values;
-      $arvalue = split(",", $values);
-      foreach ($arvalue as $value) {
-      $result.="<input type=\"checkbox\" name=\"" . $idquestiongroup . "_" . $question->id . "\" value=\"" . $value . "\">" . $value . "</input>";
-      }
-      }
-      if ($question->type == "text") {
-      $result.="<input type=\"textarea\" rows=\"4\" cols=\"50\" name=\"" . $idquestiongroup . "_" . $question->id . "\" ></input>";
-      }
-      return $result;
-      } */
 }

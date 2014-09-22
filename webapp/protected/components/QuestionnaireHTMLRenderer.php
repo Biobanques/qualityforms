@@ -12,7 +12,7 @@
  * @author nicolas
  */
 class QuestionnaireHTMLRenderer {
-   
+
     /**
      * render contributors
      * used in plain page and tab page
@@ -24,43 +24,46 @@ class QuestionnaireHTMLRenderer {
         $result.="</div>";
         return $result;
     }
-    
-     /**
+
+    /**
      * render tab associated to each group for a questionnaire
      * if isAnswered is filled, we are in case of answer.
      */
-    public function renderTabbedGroup($questionnaire,$lang,$isAnswered) {
+    public function renderTabbedGroup($questionnaire, $lang, $isAnswered) {
         $divTabs = "<ul class=\"nav nav-tabs\" role=\"tablist\">";
         $divPans = "<div class=\"tab-content\">";
-        $firstTab=false;
-        if($isAnswered)
-        $groups = $questionnaire->answers_group;
-        else
-            $groups=$questionnaire->questions_group;
+        $firstTab = false;
+        if ($isAnswered) {
+            $groups = $questionnaire->answers_group;
+        } else {
+            $groups = $questionnaire->questions_group;
+        }
         foreach ($groups as $group) {
             if ($group->parent_group == null) {
                 //par defaut lang = en
                 $title = $group->title;
-                if ($lang == "fr")
-                    {$title = $group->title_fr;}
-                if ($lang == "both")
-                   { $title = "<i>".$group->title . "</i><bR> " . $group->title_fr;}
-                   $extraActive="";
-                   $extraActive2="";
-                   if($firstTab==false){
-                       $firstTab=true;
-                       $extraActive="class=\"active\"";
-                       $extraActive2=" active";
-                   }
-                $divTabs.= "<li ".$extraActive."><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
-                $divPans.= " <div class=\"tab-pane ".$extraActive2."\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire,$group, $lang,$isAnswered) . "</div>";
+                if ($lang == "fr") {
+                    $title = $group->title_fr;
+                }
+                if ($lang == "both") {
+                    $title = "<i>" . $group->title . "</i><bR> " . $group->title_fr;
+                }
+                $extraActive = "";
+                $extraActive2 = "";
+                if ($firstTab == false) {
+                    $firstTab = true;
+                    $extraActive = "class=\"active\"";
+                    $extraActive2 = " active";
+                }
+                $divTabs.= "<li " . $extraActive . "><a href=\"#" . $group->id . "\" role=\"tab\" data-toggle=\"tab\">" . $title . "</a></li>";
+                $divPans.= " <div class=\"tab-pane " . $extraActive2 . "\" id=\"" . $group->id . "\">" . QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) . "</div>";
             }
         }
         $divPans.="</div>";
         $divTabs.="</ul>";
-        return "<div class=\"tabbable\">".$divTabs . $divPans."</div>";
+        return "<div class=\"tabbable\">" . $divTabs . $divPans . "</div>";
     }
-    
+
     /**
      * render a question group or an answer group.
      * @param type $questionnaire or answer
@@ -69,28 +72,36 @@ class QuestionnaireHTMLRenderer {
      * @param type $isAnswered
      * @return string
      */
-        public function renderQuestionGroupHTML($questionnaire,$group, $lang,$isAnswered) {
+    public function renderQuestionGroupHTML($questionnaire, $group, $lang, $isAnswered) {
         $result = "";
         //en par defaut
-        $title=$group->title;
-        if ($lang == "fr")
-            {$title=$group->title_fr;}
-         if ($lang == "both")
-           { $title= "<i>".$group->title . "</i> / " . $group->title_fr ;}
-        $result.="<div class=\"question_group\">" .$title . "</div>";
-        if (isset($group->questions)) {
-            foreach ($group->questions as $question) {   
-                $result.=QuestionnaireHTMLRenderer::renderQuestionHTML($group->id, $question, $lang,$isAnswered);
+        $title = $group->title;
+        if ($lang == "fr") {
+            $title = $group->title_fr;
+        }
+        if ($lang == "both") {
+            $title = "<i>" . $group->title . "</i> / " . $group->title_fr;
+        }
+        $result.="<div class=\"question_group\">" . $title . "</div>";
+        if ($isAnswered) {
+            $quests = $group->answers;
+        } else {
+            $quests = $group->questions;
+        }
+        if (isset($quests)) {
+            foreach ($quests as $question) {
+                $result.=QuestionnaireHTMLRenderer::renderQuestionHTML($group->id, $question, $lang, $isAnswered);
             }
         }
         //add question groups that have parents for this group
-        if($isAnswered)
-        $groups = $questionnaire->answers_group;
-        else
-            $groups=$questionnaire->questions_group;
+        if ($isAnswered) {
+            $groups = $questionnaire->answers_group;
+        } else {
+            $groups = $questionnaire->questions_group;
+        }
         foreach ($groups as $qg) {
             if ($qg->parent_group == $group->id) {
-                $result.=QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire,$qg, $lang,$isAnswered);
+                $result.=QuestionnaireHTMLRenderer::renderQuestionGroupHTML($questionnaire, $qg, $lang, $isAnswered);
             }
         }
         $result .= "<div class=\"end-question-group\"></div>";
@@ -101,15 +112,17 @@ class QuestionnaireHTMLRenderer {
      * render html the current question.
      */
 
-    public function renderQuestionHTML($idquestiongroup, $question, $lang,$isAnswered) {
+    public function renderQuestionHTML($idquestiongroup, $question, $lang, $isAnswered) {
         $result = "";
-            $result.="<div style=\"" . $question->style . "\">";
+        $result.="<div style=\"" . $question->style . "\">";
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
-        if ($lang == "fr")
-            {$label = $question->label_fr;}
-        if ($lang == "both")
-           { $label = "<i>".$question->label . "</i><br>" . $question->label_fr;}
+        if ($lang == "fr") {
+            $label = $question->label_fr;
+        }
+        if ($lang == "both") {
+            $label = "<i>" . $question->label . "</i><br>" . $question->label_fr;
+        }
 
         $result.="<div class=\"question-label\" >" . $label;
         if (isset($question->help)) {
@@ -121,14 +134,19 @@ class QuestionnaireHTMLRenderer {
         //affichage de l input selon son type
         $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]\"";
         if ($question->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . "/>";
+            $valueInput="";
+            if ($isAnswered) {
+                $valueInput = $question->answer;
+            }
+            $result.="<input type=\"text\" " . $idInput . " value=\"".$valueInput."\"/>";
         }
         if ($question->type == "radio") {
 
-            if ($lang == "fr" && $question->values_fr != "")
+            if ($lang == "fr" && $question->values_fr != "") {
                 $values = $question->values_fr;
-            else
+            } else {
                 $values = $question->values;
+            }
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input>&nbsp;";
@@ -136,8 +154,9 @@ class QuestionnaireHTMLRenderer {
         }
         if ($question->type == "checkbox") {
             $values = $question->values;
-            if ($lang == "fr" && isset($question->values_fr))
+            if ($lang == "fr" && isset($question->values_fr)) {
                 $values = $question->values_fr;
+            }
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
                 $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";
@@ -186,4 +205,5 @@ class QuestionnaireHTMLRenderer {
         $result.="</div>";
         return $result;
     }
+
 }

@@ -1,13 +1,11 @@
 <?php
-/* @var $this EchantillonController */
-/* @var $model Echantillon */
 
 $this->breadcrumbs = array(
-    'Questionnaires' => array('index'),
+    'My documents' => array('index'),
     $model->id,
 );
 ?>
-<h1>View My Questionnaire #<?php echo $model->id; ?></h1>
+<h1>View my document #<?php echo $model->id; ?></h1>
 
 
 <?php

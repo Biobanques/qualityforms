@@ -12,8 +12,10 @@ $this->breadcrumbs=array(
     'template'=>"{items}",
     'columns'=>array(
         array('name'=>'id', 'header'=>'#'),
-        array('name'=>'questionnaireid', 'header'=>'questionnaire'),
-        array('name'=>'last update', 'header'=>'last update'),
+        array('name'=>'name', 'header'=>'questionnaire'),
+        array('name'=>'description','type'=>'raw'),
+        array('name'=>'last_modified', 'value'=>'$data->getLastModified()'),
+        array('name'=>'last_updated','value'=>'$data->getLastUpdated()'),
         array(
             'class'=>'bootstrap.widgets.TbButtonColumn',
             'htmlOptions'=>array('style'=>'width: 50px'),

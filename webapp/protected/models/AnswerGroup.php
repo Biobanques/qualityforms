@@ -17,6 +17,12 @@ class AnswerGroup extends EMongoEmbeddedDocument {
          */
         public $parent_group;
 
+        /**
+         *rule to add condition on display of an element
+         * @var type 
+         */
+        public $display_rule;
+        
     public function behaviors() {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
@@ -58,6 +64,8 @@ class AnswerGroup extends EMongoEmbeddedDocument {
         $this->id = $questionGroup->id;
         $this->title = $questionGroup->title;
         $this->title_fr = $questionGroup->title_fr;
+        $this->parent_group=$questionGroup->parent_group;
+        $this->display_rule=$questionGroup->display_rule;
         foreach ($questionGroup->questions as $question) {
             $aq = new AnswerQuestion;
             $aq->copy($question);

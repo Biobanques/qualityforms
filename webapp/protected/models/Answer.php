@@ -37,10 +37,19 @@ class Answer extends EMongoDocument {
      */
     public $questionnaireMongoId;
     public $name;
+    /**
+     * field last modified from the questionnaire source.
+     * @var type 
+     */
+    public $last_modified;
     public $description;
     public $message_start;
     public $message_end;
     public $answers_group;
+    /*
+     * last date of save action
+     */
+    public $last_updated;
 
        /**
      * contributors are people working on thi squetsionnaire
@@ -74,6 +83,8 @@ class Answer extends EMongoDocument {
 
         return array(
             'id' => 'id',
+            'last_updated'=>'Dernière sauvegarde',
+            'last_modified'=>'Date du questionnaire',
         );
     }
 
@@ -118,7 +129,7 @@ class Answer extends EMongoDocument {
         return $result;
     }*/
 
-    public function renderAnswerGroupHTML($answer_group) {
+   /* public function renderAnswerGroupHTML($answer_group) {
         $result = "";
         $result.="<div class=\"question_group\"><i>" . $answer_group->title . "</i> / " . $answer_group->title_fr . "</div>";
         foreach ($answer_group->answers as $answer) {
@@ -126,14 +137,14 @@ class Answer extends EMongoDocument {
         }
         $result.= "<br><div style=\”clear:both;\"></div>";
         return $result;
-    }
+    }*/
 
     /*
      * render html the current answer.
      * TODO HERITAGE AVEC QUESTION POUR EVITER LES FORKS de PRESENTATION
      */
 
-    public function renderAnswerHTML($idanswergroup, $answer) {
+    /*public function renderAnswerHTML($idanswergroup, $answer) {
         $result = "";
         $result.="<div  style=\"" . $answer->style . "\">";
         $result.="<div class=\"question-label\" ><i>" . $answer->label . "</i><br>" . $answer->label_fr . "</div>";
@@ -165,7 +176,7 @@ class Answer extends EMongoDocument {
         $result.="</div>";
         $result.="</div>";
         return $result;
-    }
+    }*/
 
     /**
      * add the answer to th ecorrect place into the tree.
@@ -198,6 +209,7 @@ class Answer extends EMongoDocument {
         $this->description = $questionnaire->description;
         $this->message_start = $questionnaire->message_start;
         $this->message_end = $questionnaire->message_end;
+        $this->last_modified = $questionnaire->last_modified;
         foreach ($questionnaire->questions_group as $question_group) {
             $answerGroup = new AnswerGroup;
             $answerGroup->copy($question_group);
@@ -214,6 +226,28 @@ class Answer extends EMongoDocument {
     public function renderContributors() {
         return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
     }
+
+        /**
+     * get the last modified value into a french date format JJ/MM/AAAA
+     * @return type
+     */
+    public function getLastModified(){
+        if($this->last_modified!=null)
+            return date("d/m/Y",$this->last_modified->sec);
+        else 
+            return null;
+            }
+            
+                 /**
+     * get the last updatedvalue into a french date format JJ/MM/AAAA
+     * @return type
+     */
+    public function getLastUpdated(){
+        if($this->last_updated!=null)
+            return date("d/m/Y H:i",$this->last_updated->sec);
+        else 
+            return null;
+            }
 
 }
 
