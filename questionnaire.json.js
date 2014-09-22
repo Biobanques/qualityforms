@@ -1,13 +1,14 @@
 //questionnaire deposit form
 db.questionnaire.insert({
     "id": "depositform",
-    "name": "deposit form",
-    "description": "deposit form",
+    "name": "Deposit form",
+    "name_fr":"Fiche de dépôt",
+    "description": "Deposit form allow you to enhance quality around human biological samples.<br />For DNA/RNA, cells, fluids and tissues.",
     "last_modified": new Date(),
-    "message_start": "Welcome to the deposit form for DNA/RNA, cells, fluids and tissues (*)1 form per patient and per sampling date (*) 1 fiche par patient et par date de prélèvement",
+    "message_start": "Welcome to the deposit form for DNA/RNA, cells, fluids and tissues<br />(*)1 form per patient and per sampling date<br /> (*) 1 fiche par patient et par date de prélèvement",
     "message_end": "Thanks for your job",
     "references": "",
-    "contributors": "<b>DNA-RNA /ADN-ARN</b><br> Marie-Alexandra Alyanakian, APHP Necker; Jacques Bonnet, Institut Bergonié ;Marthe Colotte, Imagène; Sylvie Forlani, Banque d’ADN et de cellules Paris ; Jean-Marc Gerard, Qiagen ; Olivier Leroy, Trinean ; Philippe Lorimier, CRB Cancérologie – CHU Grenoble; Claire Mulot, St Peres-Epigeneter ; Sophie Tuffet, Imagène; Sabrina Turbant-Leclere, Banque de Cerveaux Hôpital Pitié Salpêtrière – GIE Neuro-CEB-Paris.<br><br>\n\
+    "contributors": "<b>DNA-RNA /ADN-ARN</b><br /> Marie-Alexandra Alyanakian, APHP Necker; Jacques Bonnet, Institut Bergonié ;Marthe Colotte, Imagène; Sylvie Forlani, Banque d’ADN et de cellules Paris ; Jean-Marc Gerard, Qiagen ; Olivier Leroy, Trinean ; Philippe Lorimier, CRB Cancérologie – CHU Grenoble; Claire Mulot, St Peres-Epigeneter ; Sophie Tuffet, Imagène; Sabrina Turbant-Leclere, Banque de Cerveaux Hôpital Pitié Salpêtrière – GIE Neuro-CEB-Paris.<br><br>\n\
 <b>Cell culture/ Culture cellulaire</b><br>Maud Chapart Leclert, Association Institut de Myologie ; Nathalie Denis, Eurobio ; Isabelle Grosjean, Inserm ; Thierry Larmonier, Genethon ; Nadia Piga, Bioméreux; Céline Schaeffer, CRB Ferdinand Cabanne – Dijon.<br><br>\n\
 <b>Fluids/ Fluide</b><br>Grégory Huberty, Biobanque de Picardie ; Philippe Manivet, CRB GHV Lariboisière /APHP/Inserm942 ; Jane-Lise Samuel ; InsermU942.<br><br>\n\
 <b>Tissue/Tissu</b><br>Christine Chaumeil, CRB CHNNO des 15/20 ; Charles Duyckaerts, Banques de Cerveaux  Hôpital Pitié Salpêtrière – GIE-Neuro-CEB- Paris ; Anne Gomez Brouchet, Biobanque CHU de Toulouse ; Sophie Prevot, Réseau CRB Paris Sud.<br><br>\n\
@@ -319,8 +320,8 @@ db.questionnaire.insert({
                         },
                         {
                             "id": "requirements",
-                            "label": "Requirements or restriction for distribution",
-                            "label_fr": "Conditions requises ou restriction pour la distribution",
+                            "label": "Requirements for distribution",
+                            "label_fr": "Conditions requises pour la distribution",
                             "type": "radio",
                             "values": "yes,no",
                             "values_fr": "oui,non"
@@ -422,7 +423,7 @@ db.questionnaire.insert({
                         {
                             "id": "Cellnature",
                             "label": "Nature of the cells",
-                            "label_fr": "Nature des cellules ( e.g épithéliales,fibroblastes...)",
+                            "label_fr": "Nature des cellules (épithéliales,fibroblastes...)",
                             "type": "input",
                             "style": "float:right"
                         },
@@ -746,8 +747,8 @@ db.questionnaire.insert({
                         },
                         {
                             "id": "Tumor grade",
-                            "label": "In case of neoplasic pathology Tumor grade",
-                            "label_fr": "En cas de pathologie néoplasique Grade de la tumeur",
+                            "label": "Tumor grade(If neoplasic pathology)",
+                            "label_fr": "Grade de la tumeur(si pathologie néoplasique)",
                             "type": "input",
                         },
                         {
@@ -983,7 +984,8 @@ db.questionnaire.insert({
                             "label": "Mycoplasma testing",
                             "label_fr": "Recherche de mycoplasmes",
                             "type": "radio",
-                            "values": "yes/oui,no/non"
+                            "values": "yes,no",
+                            "values_fr": "oui,non"
                         },
                         {
                             "id": "If yes, technique used and results",
@@ -996,43 +998,39 @@ db.questionnaire.insert({
                             "id": "Sterility tests (bacteria, yeast, fungi)",
                             "label": "Sterility tests (bacteria, yeast, fungi)",
                             "label_fr": "Tests de stérilité (bactéries, levures, champignons)",
-                            "type": "input",
+                            "type": "text",
                         },
                         {
                             "id": "Viability before and after freezing",
                             "label": "Viability before and after freezing",
                             "label_fr": "Viabilité avant et après la congélation",
-                            "type": "input",
+                            "type": "text",
                         },
                         {
                             "id": "Phenotype characterization",
-                            "label": "Phenotype characterization (marquer expression, functional characteristics, morphology or other)",
-                            "label_fr": "Caractérisation phénotypique (expression de marqueurs, caractéristiques fonctionnelles, morphologie ou autre)",
-                            "type": "input",
+                            "label": "Phenotype characterization ",
+                            "label_fr": "Caractérisation phénotypique ",
+                            "help":"(marquer expression, functional characteristics, morphology or other)",
+                            "help_fr":"(expression de marqueurs, caractéristiques fonctionnelles, morphologie ou autre)",
+                            "type": "text",
                         },
                         {
                             "id": "Species verification(isoenzymes, DNA barcoding...) ",
                             "label": "Species verification(isoenzymes, DNA barcoding...) ",
                             "label_fr": "Vérification de l’espèce (isoenzymes, DNA barcoding...)",
-                            "type": "input",
-                        },
-                        {
-                            "id": "Viability before and after freezing",
-                            "label": "Viability before and after freezing",
-                            "label_fr": "Viabilité avant et après la congélation",
-                            "type": "input",
+                            "type": "text",
                         },
                         {
                             "id": "Human cells identity verification (DNA profiling or other)",
                             "label": "Human cells identity verification",
                             "label_fr": "Vérification de l’identité des cellules humaines (profile ADN ou autre)",
-                            "type": "input",
+                            "type": "text",
                         },
                         {
                             "id": "Other tests, specify ",
                             "label": "Other tests, specify ",
                             "label_fr": "Autres tests, préciser",
-                            "type": "input",
+                            "type": "text",
                         }, ]},
                 {
                     "id": "Samples_quality_control_fluids",
@@ -1076,9 +1074,9 @@ db.questionnaire.insert({
                     "parent_group": "Samples_quality_control",
                     "questions": [{
                         
-                            "id": "Morphological control has been performed ?",
-                            "label": "Morphological control has been performed ?",
-                            "label_fr": "Le contrôle morphologique a t-il été réalisé ?",
+                            "id": "Morphological control performed",
+                            "label": "Morphological control performed",
+                            "label_fr": "Contrôle morphologique réalisé",
                             "type": "radio",
                             "values": "Yes,No",
                             "values_fr": "Oui,Non"
@@ -1096,9 +1094,11 @@ db.questionnaire.insert({
                             "type": "input"
                         },
                         {
-                            "id": "Control slides (on all samples or specify the samples)",
-                            "label": "Control slides (on all samples or specify the samples)",
-                            "label_fr": "Coupe contrôle (sur tous les échantillons ou préciser les échantillons)",
+                            "id": "Control slides ",
+                            "label": "Control slides",
+                            "label_fr": "Coupe contrôle",
+                            "help":"(on all samples or specify the samples)",
+                            "help_fr":"(sur tous les échantillons ou préciser les échantillons)",
                             "type": "checkbox",
                             "values": "Cryostat slides on the provided cryopreserved sample,Fixed and parrafin-embedded tissue block slides,On a mirror sampling,On a secondary sample distant from the initial sampling",
                    "values_fr": "Coupes au cryostat sur le prélèvement cryopréservé fourni,Coupes bloc tissulaire fixé et inclus en paraffine,Sur un prélèvement miroir,Sur un prélèvement à distance de l’échantillon"

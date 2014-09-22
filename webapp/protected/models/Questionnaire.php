@@ -13,6 +13,7 @@ class Questionnaire extends EMongoDocument {
      */
     public $id;
     public $name;
+    public $name_fr;
     public $description;
     public $message_start;
     public $message_end;

@@ -56,10 +56,24 @@ class QuestionnairePDFRenderer {
 // add a page
         $pdf->AddPage();
         //form default properties
-        $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => array(200, 200, 200), 'strokeColor' => array(255, 128, 128)));
-
+        $pdf->setFormDefaultProp(array('lineWidth' => 1, 'borderStyle' => 'solid', 'fillColor' => "lightGray", 'strokeColor' => "gray"));
+        
         $pdf->SetFont('helvetica', 'B', 18);
         $pdf->Cell(0, 5, 'Biobanques Quality Form ', 0, 1, 'C');
+        $pdf->Ln(10);
+        $pdf->Cell(0, 5, $questionnaire->name, 0, 1, 'C');
+        $pdf->Ln(10);
+        $pdf->Cell(0, 5,"-", 0, 1, 'C');
+        $pdf->Ln(10);
+        $pdf->Cell(0, 5, $questionnaire->name_fr, 0, 1, 'C');
+        $pdf->Ln(30);
+         $pdf->SetFont('helvetica', 'N', 12);
+         $dd = $questionnaire->last_modified;//mongo date
+        $html = '<span>'. "<b>Description :</b> ".$questionnaire->description.'<br /><b>Last Modified :</b>'.date("d/m/Y",$dd->sec).'</span>';
+                $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
+        $pdf->Ln(10);
+        $html = '<span>'.$questionnaire->message_start.'</span>';
+                $pdf->writeHTMLCell(0, 0, '', '', $html, 1, 1, false, true, '', false);
         $pdf->Ln(10);
 
         $pdf = QuestionnairePDFRenderer::renderPDF($pdf, $questionnaire, "fr");
@@ -81,6 +95,7 @@ class QuestionnairePDFRenderer {
      */
     public function renderContributors($pdf, $contributors) {
         $pdf->AddPage();
+                $pdf->Bookmark('Contributeurs', 0, 0, '', 'B', array(0,64,128));
         $pdf->Cell(0, 5, 'Contributors / Contributeurs', 0, 1, 'C');
 // Print text using writeHTMLCell()
         $pdf->writeHTMLCell(0, 0, '', '', $contributors, 0, 1, 0, true, '', true);
@@ -160,16 +175,18 @@ class QuestionnairePDFRenderer {
             //$label = "<i>" . $question->label . "</i><br/>" . $question->label_fr;
         }
         if ($question->style != "float:right") {
-            $pdf->Ln(7);
+            $pdf->Ln(11);
         }
         if (strlen($label) > 25) {
-            $pdf->Cell(50, 5, substr($label, 0, 25).".");
+            //on coupe la chaine en mots
+            //$pdf->Cell(50, 5, substr($label, 0, 25).".");
+            $pdf->writeHTMLCell(50, 10, '', '', $label, 0, 0, 0, true, '', true);
             }else
             $pdf->Cell(50, 5, $label);
         //affichage de l input selon son type
         $id = $idquestiongroup . "_" . $question->id;
         if ($question->type == "input") {
-            $pdf->TextField($id, 40, 5);
+            $pdf->TextField($id, 40, 7);
         }
         if ($question->type == "radio") {
             if ($lang == "fr" && $question->values_fr != "") {
@@ -199,13 +216,12 @@ class QuestionnairePDFRenderer {
         }
         if ($question->type == "text") {
             $pdf->TextField($id, 60, 18, array('multiline' => true, 'lineWidth' => 0, 'borderStyle' => 'none'), array('v' => '', 'dv' => ''));
-            $pdf->Ln(19);
+            $pdf->Ln(22);
         }
         if ($question->type == "image") {
             //TODO ameliorer le rendu des images et leur integration
             $pdf->Image('images/gnome_mime_image.png', '', '', '', '', 'PNG', '', '', true, 100);
-        $pdf->Ln(10);
-            
+            $pdf->Ln(40);
         }
         if ($question->type == "list") {
             $values = $question->values;
