@@ -30,15 +30,28 @@ class Question extends EMongoEmbeddedDocument {
         public $help;
         
         /**
+         *comment on the top of the question
+         * @var type 
+         */
+        public $precomment;
+         /**
+         *comment on the top of the question
+         * @var type 
+         */
+        public $precomment_fr;
+        
+        
+        
+        /**
          *columns if type is array
          * @var type 
          */
-        public $columns;
+       // public $columns;
         /**
          * rows if type is array
          * @var type 
          */
-        public $rows;
+        //public $rows;
 
 	/**
 	 *

@@ -56,6 +56,8 @@ class Answer extends EMongoDocument {
      */
     public $contributors;
     
+    
+    
     public function behaviors() {
         return array('embeddedArrays' => array(
                 'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',

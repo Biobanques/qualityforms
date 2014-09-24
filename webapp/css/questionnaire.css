@@ -42,6 +42,10 @@ and open the template in the editor.
  display: inline-block;
   float: left;
 }
+.question-precomment{
+    float:left;
+    font-weight:bold;
+  }  
 
 
 /**

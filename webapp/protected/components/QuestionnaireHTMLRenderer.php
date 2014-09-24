@@ -113,8 +113,22 @@ class QuestionnaireHTMLRenderer {
      */
 
     public function renderQuestionHTML($idquestiongroup, $question, $lang, $isAnswered) {
-        $result = "";
-        $result.="<div style=\"" . $question->style . "\">";
+        $result = "";   
+        $style="style=\"\"";
+        if ($question->style != "") {
+            $style = "style=\"" . $question->style . "\"";
+        }
+        $result.="<div ".$style.">";
+        if ($question->precomment != null) {
+            $precomment = $question->precomment;
+            if ($lang == "fr") {
+                $precomment = $question->precomment_fr;
+            }
+            if ($lang == "both") {
+                $precomment = "<i>" . $question->precomment . "</i><br>" . $question->precomment_fr;
+            }
+            $result.="<div class=\"question-precomment\">" . $precomment . "</div>";
+        }
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
         if ($lang == "fr") {
@@ -132,13 +146,13 @@ class QuestionnaireHTMLRenderer {
         $result.="<div class=\"question-input\">";
 
         //affichage de l input selon son type
-        $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]".($question->type=="checkbox"?"[]":"")."\"";
-        $valueInput="";
+        $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]" . ($question->type == "checkbox" ? "[]" : "") . "\"";
+        $valueInput = "";
         if ($isAnswered) {
-                $valueInput = $question->answer;
-            }
+            $valueInput = $question->answer;
+        }
         if ($question->type == "input") {
-            $result.="<input type=\"text\" " . $idInput . " value=\"".$valueInput."\"/>";
+            $result.="<input type=\"text\" " . $idInput . " value=\"" . $valueInput . "\"/>";
         }
         if ($question->type == "radio") {
 
@@ -148,9 +162,9 @@ class QuestionnaireHTMLRenderer {
                 $values = $question->values;
             }
             $arvalue = split(",", $values);
-            
+
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" ".($value==$valueInput? 'checked' : '').">&nbsp;" . $value . "</input>&nbsp;";
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" " . ($value == $valueInput ? 'checked' : '') . ">&nbsp;" . $value . "</input>&nbsp;";
             }
         }
         if ($question->type == "checkbox") {
@@ -160,7 +174,7 @@ class QuestionnaireHTMLRenderer {
             }
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $checked=false;
+                $checked = false;
                 //in case of check box $ValuesInput is stored into an array.
                 if ($valueInput != null) {
                     foreach ($valueInput as $vInput) {
@@ -169,7 +183,7 @@ class QuestionnaireHTMLRenderer {
                         }
                     }
                 }
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" ".($checked? 'checked':'').">&nbsp;" . $value . "</input><br>";
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" " . ($checked ? 'checked' : '') . ">&nbsp;" . $value . "</input><br>";
             }
         }
         if ($question->type == "text") {
@@ -184,30 +198,9 @@ class QuestionnaireHTMLRenderer {
             $result.="<select " . $idInput . ">";
             $result.="<option  value=\"\"></option>";
             foreach ($arvalue as $value) {
-                $result.="<option  value=\"" . $value . "\" ".($valueInput==$value? 'selected':'').">" . $value . "</option>";
+                $result.="<option  value=\"" . $value . "\" " . ($valueInput == $value ? 'selected' : '') . ">" . $value . "</option>";
             }
             $result.="</select>";
-        }
-        if ($question->type == "array") {
-            $rows = $question->rows;
-            $arrows = split(",", $rows);
-            $cols = $question->columns;
-            $arcols = split(",", $cols);
-            $result.="<table><tr><td></td>";
-            foreach ($arcols as $col) {
-                $result.="<td>" . $col . "</td>";
-            }
-            $result.="</tr>";
-            foreach ($arrows as $row) {
-                $result.="<tr><td>" . $row . "</td>";
-                foreach ($arcols as $col) {
-                    $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
-                    $idInput = "id=\"" . $idunique . "\" name=\"Questionnaire[" . $idunique . "]\"";
-                    $result.="<td><input type=\"text\" " . $idInput . "/></td>";
-                }
-                $result.="</tr>";
-            }
-            $result.="</table>";
         }
         //close question input
         $result.="</div>";

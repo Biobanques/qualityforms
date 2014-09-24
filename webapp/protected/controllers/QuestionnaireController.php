@@ -91,6 +91,24 @@ class QuestionnaireController extends Controller {
                     $flagNoInputToSave = false;
                     $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
                 }
+//if array, specific save action
+                if ($answerQuestion->type == "array") {
+//construct each id input an dget the result to store it
+                    $rows = $answerQuestion->rows;
+                    $arrows = split(",", $rows);
+                    $cols = $answerQuestion->columns;
+                    $arcols = split(",", $cols);
+                    $answerArray = "";
+                    foreach ($arrows as $row) {
+                        foreach ($arcols as $col) {
+                            $idunique = $idquestiongroup . "_" . $question->id . "_" . $row . "_" . $col;
+                            if (isset($_POST['Questionnaire'][$idunique])) {
+                                $answerArray.=$_POST['Questionnaire'][$idunique] . ",";
+                            }
+                        }
+                    }
+                    $answerQuestion->setAnswer($answerArray);
+                }  
             }
         }if ($flagNoInputToSave == false) {
             if ($answer->save())
@@ -101,7 +119,7 @@ class QuestionnaireController extends Controller {
             }
         } else {
             Yii::app()->user->setFlash('error', "Questionnaire not saved. No Input to save.");
-            //null result
+//null result
             $answer = null;
         }
 
@@ -132,8 +150,8 @@ class QuestionnaireController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionEdit($id) {
-        //$model = $this->loadModel($id);
-        //$form = new QuestionnaireGroupForm;
+//$model = $this->loadModel($id);
+//$form = new QuestionnaireGroupForm;
         Yii::app()->user->setFlash('warning', '<strong>Warning!</strong> Feature not available at this thime!.');
         /* if (isset($_POST['QuestionnaireGroupForm'])) {
           $form->attributes = $_POST['QuestionnaireGroupForm'];
@@ -159,7 +177,7 @@ class QuestionnaireController extends Controller {
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

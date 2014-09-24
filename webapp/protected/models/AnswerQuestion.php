@@ -36,13 +36,25 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
      * columns if type is array
      * @var type 
      */
-    public $columns;
+    //public $columns;
 
     /**
      * rows if type is array
      * @var type 
      */
-    public $rows;
+    //public $rows;
+    
+    /**
+         *comment on the top of the question
+         * @var type 
+         */
+        public $precomment;
+        
+            /**
+         *comment on the top of the question
+         * @var type 
+         */
+        public $precomment_fr;
 
     /**
      *
@@ -79,8 +91,8 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
         $this->style = $question->style;
         $this->values = $question->values;
         $this->values_fr = $question->values_fr;
-        $this->rows = $question->rows;
-        $this->columns = $question->columns;
+        $this->precomment = $question->precomment;
+       // $this->columns = $question->columns;
     }
 
     /**

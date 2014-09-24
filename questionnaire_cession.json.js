@@ -739,12 +739,47 @@ db.questionnaire.insert({
                             "type": "text",
                         },
                         {
-                            "id": "Associated diagnosis",
-                            "label": "Associated diagnosis",
-                            "label_fr": "Diagnostics associés",
-                            "type": "array",
-                            "columns": "Affected/pathologique,Non affected/Non pathologique",
-                            "rows": "site 1, site 2, site 3"
+                            "id": "associateddiagnosissite1a",
+                            "precomment": "Associated diagnosis : Affected",
+                            "precomment_fr": "Diagnostics associés : Pathologique",
+                            "type": "input",
+                            "label": "site 1",
+                            "label_fr": "site 1"
+                        },
+                        {
+                            "id": "associateddiagnosissite1na",
+                            "label": "site 1",
+                            "label_fr": "site 1",
+                            "precomment":"Non affected",
+                            "precomment_fr":"Non pathologique",
+                            "type": "input",
+                            "style": "float:right"
+                        },
+                        {
+                            "id": "associateddiagnosissite2a",
+                            "label": "site 2",
+                            "label_fr": "site 2",
+                            "type": "input",
+                        },
+                        {
+                            "id": "associateddiagnosissite2na",
+                            "label": "site 2",
+                            "label_fr": "site 2",
+                            "type": "input",
+                            "style": "float:right"
+                        },
+                        {
+                            "id": "associateddiagnosissite3a",
+                            "type": "input",
+                            "label": "site 3",
+                            "label_fr": "site 3",
+                        },
+                       {
+                            "id": "associateddiagnosissite3na",
+                            "type": "input",
+                            "label": "site 3",
+                            "label_fr": "site 3",
+                            "style": "float:right"
                         },
                         {
                             "id": "Tumor grade",
