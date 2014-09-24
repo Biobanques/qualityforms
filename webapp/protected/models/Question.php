@@ -39,19 +39,6 @@ class Question extends EMongoEmbeddedDocument {
          * @var type 
          */
         public $precomment_fr;
-        
-        
-        
-        /**
-         *columns if type is array
-         * @var type 
-         */
-       // public $columns;
-        /**
-         * rows if type is array
-         * @var type 
-         */
-        //public $rows;
 
 	/**
 	 *

@@ -92,7 +92,7 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
         $this->values = $question->values;
         $this->values_fr = $question->values_fr;
         $this->precomment = $question->precomment;
-       // $this->columns = $question->columns;
+        $this->precomment_fr = $question->precomment_fr;
     }
 
     /**
