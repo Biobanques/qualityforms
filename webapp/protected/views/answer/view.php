@@ -19,7 +19,6 @@ echo CHtml::link('Vue une page HTML', array('questionnaire/viewOnePage', 'id' =>
         'id' => 'questionnaire-form',
         'enableAjaxValidation' => false,
     ));
-    echo "<div style=\"text-align:center\">" . CHtml::submitButton('Save') . "<div>";
     echo $model->renderTabbedGroup(Yii::app()->language);
     ?>
 </div>

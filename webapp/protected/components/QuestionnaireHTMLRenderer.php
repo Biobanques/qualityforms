@@ -184,7 +184,7 @@ class QuestionnaireHTMLRenderer {
             $result.="<select " . $idInput . ">";
             $result.="<option  value=\"\"></option>";
             foreach ($arvalue as $value) {
-                $result.="<option  value=\"" . $value . "\">" . $value . "</option>";
+                $result.="<option  value=\"" . $value . "\" ".($valueInput==$value? 'selected':'').">" . $value . "</option>";
             }
             $result.="</select>";
         }
