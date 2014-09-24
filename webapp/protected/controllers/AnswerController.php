@@ -1,13 +1,14 @@
 <?php
 
 class AnswerController extends Controller {
+
     /**
      *  NB : boostrap theme need this column2 layout
      * 
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
-    public $layout='//layouts/column2';
+    public $layout = '//layouts/column2';
 
     /**
      * @return array action filters
@@ -40,12 +41,43 @@ class AnswerController extends Controller {
      */
     public function actionView($id) {
         $model = $this->loadModel($id);
-      $this->render('view', array(
+        $this->render('view', array(
             'model' => $model,
         ));
     }
 
-
+    /**
+     * Display to update answers
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdate($id) {
+        $model = $this->loadModel($id);
+        if (isset($_POST['Questionnaire'])) {
+            $model->last_updated = new MongoDate();
+            $flagNoInputToSave = true;
+            foreach ($model->answers_group as $answer_group) {
+                foreach ($answer_group->answers as $answerQuestion) {
+                    $input = $answer_group->id . "_" . $answerQuestion->id;
+                    if (isset($_POST['Questionnaire'][$input])) {
+                        $flagNoInputToSave = false;
+                        $answerQuestion->setAnswer($_POST['Questionnaire'][$input]);
+                    }
+                }
+            }if ($flagNoInputToSave == false) {
+                if ($model->save())
+                    Yii::app()->user->setFlash('success', "Document saved with success");
+                else {
+                    Yii::app()->user->setFlash('error', "Document not saved. A problem occured.");
+                    Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
+                }
+            } else {
+                Yii::app()->user->setFlash('error', "Document not saved. No Input to save.");
+            }
+        }
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
 
     /**
      * Lists all models.
@@ -56,8 +88,8 @@ class AnswerController extends Controller {
             'dataProvider' => $dataProvider,
         ));
     }
-    
-        /**
+
+    /**
      * delete an answer
      */
     public function actionDelete($id) {
@@ -69,7 +101,6 @@ class AnswerController extends Controller {
             'dataProvider' => $dataProvider,
         ));
     }
-
 
     /**
      * Returns the data model based on the primary key given in the GET variable.
@@ -95,4 +126,5 @@ class AnswerController extends Controller {
             Yii::app()->end();
         }
     }
+
 }

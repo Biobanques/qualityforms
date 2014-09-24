@@ -20,26 +20,29 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
      * values if question type is radio
      */
     public $values;
+
     /**
-         * values if question type is radio and french setted
-         */
-        public $values_fr;
+     * values if question type is radio and french setted
+     */
+    public $values_fr;
 
     /**
      * valeu of the answer
      * @var type 
      */
     public $answer;
-     /**
-         *columns if type is array
-         * @var type 
-         */
-        public $columns;
-        /**
-         * rows if type is array
-         * @var type 
-         */
-        public $rows;
+
+    /**
+     * columns if type is array
+     * @var type 
+     */
+    public $columns;
+
+    /**
+     * rows if type is array
+     * @var type 
+     */
+    public $rows;
 
     /**
      *
@@ -79,12 +82,13 @@ class AnswerQuestion extends EMongoEmbeddedDocument {
         $this->rows = $question->rows;
         $this->columns = $question->columns;
     }
+
     /**
      * set the value of an answer
      * @param type $val
      */
-    public function setAnswer($val){
-        $this->answer =$val;
+    public function setAnswer($val) {
+            $this->answer = $val;
     }
 
 }

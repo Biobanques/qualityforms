@@ -55,6 +55,23 @@ class QuestionnaireController extends Controller {
     }
 
     /**
+     * Display to fill in questionnaire
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdate($id) {
+        $model = $this->loadModel($id);
+        $answer = null;
+        if (isset($_POST['Questionnaire'])) {
+            $answer = $this->saveQuestionnaireAnswers($model);
+        }
+        if ($answer != null)
+            $model = $answer;
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
+
+    /**
      * save answers by this questionnaire.
      * for each question group then question save answer
      * //copy the questionnaire into answer
@@ -63,7 +80,7 @@ class QuestionnaireController extends Controller {
      */
     public function saveQuestionnaireAnswers($model) {
         $answer = new Answer;
-        $answer->last_updated=new MongoDate();
+        $answer->last_updated = new MongoDate();
         $answer->copy($model);
         $answer->login = Yii::app()->user->name;
         $flagNoInputToSave = true;
@@ -107,23 +124,6 @@ class QuestionnaireController extends Controller {
      */
     public function actionExportPDF($id) {
         QuestionnairePDFRenderer::render($this->loadModel($id));
-    }
-
-    /**
-     * Display to fill in questionnaire
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionUpdate($id) {
-        $model = $this->loadModel($id);
-        $answer = null;
-        if (isset($_POST['Questionnaire'])) {
-            $answer = $this->saveQuestionnaireAnswers($model);
-        }
-        if ($answer != null)
-            $model = $answer;
-        $this->render('update', array(
-            'model' => $model,
-        ));
     }
 
     /**

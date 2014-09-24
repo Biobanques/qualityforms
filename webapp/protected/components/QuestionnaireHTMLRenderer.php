@@ -132,12 +132,12 @@ class QuestionnaireHTMLRenderer {
         $result.="<div class=\"question-input\">";
 
         //affichage de l input selon son type
-        $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]\"";
-        if ($question->type == "input") {
-            $valueInput="";
-            if ($isAnswered) {
+        $idInput = "id=\"" . $idquestiongroup . "_" . $question->id . "\" name=\"Questionnaire[" . $idquestiongroup . "_" . $question->id . "]".($question->type=="checkbox"?"[]":"")."\"";
+        $valueInput="";
+        if ($isAnswered) {
                 $valueInput = $question->answer;
             }
+        if ($question->type == "input") {
             $result.="<input type=\"text\" " . $idInput . " value=\"".$valueInput."\"/>";
         }
         if ($question->type == "radio") {
@@ -148,8 +148,9 @@ class QuestionnaireHTMLRenderer {
                 $values = $question->values;
             }
             $arvalue = split(",", $values);
+            
             foreach ($arvalue as $value) {
-                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input>&nbsp;";
+                $result.="<input type=\"radio\" " . $idInput . " value=\"" . $value . "\" ".($value==$valueInput? 'checked' : '').">&nbsp;" . $value . "</input>&nbsp;";
             }
         }
         if ($question->type == "checkbox") {
@@ -159,11 +160,20 @@ class QuestionnaireHTMLRenderer {
             }
             $arvalue = split(",", $values);
             foreach ($arvalue as $value) {
-                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\">&nbsp;" . $value . "</input><br>";
+                $checked=false;
+                //in case of check box $ValuesInput is stored into an array.
+                if ($valueInput != null) {
+                    foreach ($valueInput as $vInput) {
+                        if ($vInput == $value) {
+                            $checked = true;
+                        }
+                    }
+                }
+                $result.="<input type=\"checkbox\" " . $idInput . " value=\"" . $value . "\" ".($checked? 'checked':'').">&nbsp;" . $value . "</input><br>";
             }
         }
         if ($question->type == "text") {
-            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\"></textarea>";
+            $result.="<textarea rows=\"4\" cols=\"250\" " . $idInput . " style=\"width: 645px; height: 70px;\" >" . $valueInput . "</textarea>";
         }
         if ($question->type == "image") {
             $result.="<div style=\"width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/qualityforms/images/gnome_mime_image.png');\"> </div>";
