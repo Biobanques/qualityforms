@@ -56,6 +56,19 @@ class AnswerController extends Controller {
             'dataProvider' => $dataProvider,
         ));
     }
+    
+        /**
+     * delete an answer
+     */
+    public function actionDelete($id) {
+        $model = $this->loadModel($id);
+        $model->delete();
+        Yii::app()->user->setFlash('success', 'The document has been deleted with success.');
+        $dataProvider = new EMongoDocumentDataProvider('Answer');
+        $this->render('index', array(
+            'dataProvider' => $dataProvider,
+        ));
+    }
 
 
     /**
