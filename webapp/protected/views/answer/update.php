@@ -43,6 +43,7 @@ $this->breadcrumbs = array(
  $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'questionnaire-form',
 	'enableAjaxValidation'=>false,
+     'htmlOptions' => array('enctype' => 'multipart/form-data'),
 )); 
 echo "<div style=\"text-align:center\">".CHtml::submitButton('Save')."</div>"; 
 ?><br>

@@ -5,3 +5,7 @@
 /webapp/console/runtime/
 /webapp/assets/
 /webapp/protected/runtime/
+/webapp/protected/components/CommonProperties.php
+/webapp/protected/components/CommonProperties_Prod.php
+/webapp/protected/CommonProperties.php
+/webapp/protected/CommonProperties_Prod.php

@@ -35,7 +35,7 @@ return array(
         ),
         'mongodb' => array(
             'class' => 'EMongoDB',
-            'connectionString' => "mongodb://qfuseradmin:bbanques2015@localhost/qualityformsdb",
+            'connectionString' => CommonProperties::$CONNECTION_STRING,
             'dbName' => 'qualityformsdb',
             'fsyncFlag' => true,
             'safeFlag' => true,
