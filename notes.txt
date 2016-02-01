@@ -1,3 +1,15 @@
 connect to mongo :
 
 mongo qualityformsdb -u qfuseradmin -p 'bbanques2015'
+
+#how to use the build tools
+# first you need composer
+# then install the libraries needed
+composer update
+#then launch a build:
+#build all : target full-biuld
+ant full-build
+#build only for continuous integration
+ant static-analysis
+#build for human readabl ereport
+ant 
