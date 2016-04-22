@@ -1,9 +1,12 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
-#    parameter_name: value
+    dsn: mongodb://%database_user%:%database_password%@%database_host%:%database_port%/%authentication_database_name%
+#    dsn: mongodb://ebiobanques:insermEbb@localhost:32020/interop
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    mongo:
+        class: Sokil\Mongo\Client
+        arguments: ["%dsn%"]
+        calls:
+             - [useDatabase, ["%database_name%"]]
