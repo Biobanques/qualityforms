@@ -12,19 +12,26 @@ class WebserviceUserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username) {
         // make a call to your webservice here
-
-        $userData = $controller->getByUsername($username);
+        // $userData =
         // pretend it returns an array on success, false if there is no user
+        global $kernel;
 
+        if ('AppCache' == get_class($kernel)) {
+            $kernel = $kernel->getKernel();
+        }
+
+        $service = $kernel->getContainer()->get('mongo');
+        $userData = $service->getCollection('user')->find()->where('username', $username)->findOne();
+        //$kernel->
         if ($userData) {
-            $password = '...';
-            $username = '...';
-            $salt = '...';
-            $roles = '...';
+            $password = $userData->password;
+            $username = $userData->username;
+            $salt = $userData->salt;
+            $roles = $userData->roles;
 
             // ...
 
-            return new WebserviceUser($username, $password, $salt, $roles);
+            return new User($service->getCollection('user'), $username, $password, $salt, $roles);
         }
 
         throw new UsernameNotFoundException(
@@ -33,7 +40,7 @@ class WebserviceUserProvider implements UserProviderInterface
     }
 
     public function refreshUser(UserInterface $user) {
-        if (!$user instanceof WebserviceUser) {
+        if (!$user instanceof User) {
             throw new UnsupportedUserException(
             sprintf('Instances of "%s" are not supported.', get_class($user))
             );
@@ -43,7 +50,7 @@ class WebserviceUserProvider implements UserProviderInterface
     }
 
     public function supportsClass($class) {
-        return $class === 'AppBundle\Security\User\WebserviceUser';
+        return $class === 'Biobanques\UserBundle\Entity\User';
     }
 
 }

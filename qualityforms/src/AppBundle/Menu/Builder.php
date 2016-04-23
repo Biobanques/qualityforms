@@ -2,7 +2,9 @@
 
 namespace AppBundle\Menu;
 
+use Biobanques\UserBundle\Entity\User;
 use Knp\Menu\FactoryInterface;
+use LogicException;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
@@ -20,10 +22,16 @@ class Builder implements ContainerAwareInterface
         //$em = $this->container->get('doctrine')->getManager();
         // findMostRecent and Blog are just imaginary examples
         // $blog = $em->getRepository('AppBundle:Blog')->findMostRecent();
-        $menu->addChild('login', array(
-            'route' => 'login',
-                // 'routeParameters' => array('id' => $blog->getId())
-        ));
+        if ($this->getUser() == null)
+            $menu->addChild('login', array(
+                'route' => 'login',
+                    // 'routeParameters' => array('id' => $blog->getId())
+            ));
+        else
+            $menu->addChild("logout (" . $this->getUser()->username . ")", array(
+                'route' => 'logout',
+                    // 'routeParameters' => array('id' => $blog->getId())
+            ));
         // create another menu item
         // $menu->addChild('About Me', array('route' => 'about'));
         // you can also add sub level's to your menu's as follows
@@ -31,6 +39,28 @@ class Builder implements ContainerAwareInterface
         // ... add more children
 
         return $menu;
+    }
+
+    /**
+     *
+     * @return User
+     * @throws LogicException
+     */
+    protected function getUser() {
+        if (!$this->container->has('security.token_storage')) {
+            throw new LogicException('The SecurityBundle is not registered in your application.');
+        }
+
+        if (null === $token = $this->container->get('security.token_storage')->getToken()) {
+            return;
+        }
+
+        if (!is_object($user = $token->getUser())) {
+            // e.g. anonymous authentication
+            return;
+        }
+
+        return $user;
     }
 
 }

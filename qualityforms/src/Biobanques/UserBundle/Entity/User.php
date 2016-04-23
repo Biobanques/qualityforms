@@ -19,40 +19,43 @@ class User extends Document implements UserInterface, EquatableInterface
     private $salt;
     private $roles;
 
-    public function __construct($collection, $username = null, $password = null, $salt = null, array $roles = null) {
-        parent::__construct($collection);
-        $this->username = $username;
-        $this->password = $password;
-        $this->salt = $salt;
-        $this->roles = $roles;
-    }
+    public function __construct($collection = null, $username = null, $password = null, $salt = null, array $roles = [], $options = []) {
+        if ($collection == null)
+            $collection = Yii::$app->db->getCollection('user');
+        $data = ['username' => $username,
+            'password' => $password,
+            'salt' => $salt,
+            'roles' => $roles];
 
-    public function getLogin() {
-        return $this->login;
+        parent::__construct($collection, $data, $options);
+
+        /*
+         * use to fetch/save data
+         */
+//        $this->set('username', $username);
+//        $this->set('password', $password);
+//        $this->set('salt', $salt);
+//        $this->set('roles', $roles);
     }
 
     public function getPassword() {
-        return $this->password;
-    }
-
-    public function setLogin($login) {
-        $this->login = $login;
+        return $this->get('password');
     }
 
     public function setPassword($password) {
-        $this->password = $password;
+        $this->set('password', $password);
     }
 
     public function getRoles() {
-        return $this->roles;
+        return $this->get('roles');
     }
 
     public function getSalt() {
-        return $this->salt;
+        return $this->get('salt');
     }
 
     public function getUsername() {
-        return $this->username;
+        return $this->get('username');
     }
 
     public function eraseCredentials() {
