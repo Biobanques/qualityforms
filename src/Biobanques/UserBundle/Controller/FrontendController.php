@@ -40,10 +40,6 @@ class FrontendController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
         $user = new User($this->getCollection());
 
-
-
-
-
         return $this->render('UserBundle:forms:loginForm.html.twig', [
 
                     'last_username' => $lastUsername,
