@@ -39,12 +39,7 @@ class FrontendController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
         $user = new User($this->getCollection());
-        $form = $this->createFormBuilder($user)
-                ->setMethod('post')
-                ->add('username', TextType::class)
-                ->add('password', PasswordType::class)
-                ->add('submit', SubmitType::class, ['label' => 'login'])
-                ->getForm();
+
 
 
 
