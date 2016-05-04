@@ -17,8 +17,10 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Sokil\Mongo\MongoBundle\MongoBundle(),
+            new DatatableBundle\DatatableBundle(),
             new Biobanques\UserBundle\UserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Symfony\Bundle\AsseticBundle\AsseticBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

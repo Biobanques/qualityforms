@@ -16,22 +16,31 @@ class Builder implements ContainerAwareInterface
     public function mainMenu(FactoryInterface $factory, array $options) {
         $menu = $factory->createItem('root');
         $menu->setChildrenAttribute('class', 'nav navbar-nav');
+
         $menu->addChild('Home', array('route' => 'homepage'))
                 ->setAttribute('icon', 'glyphicon glyphicon-home');
         // access services from the container!
         //$em = $this->container->get('doctrine')->getManager();
         // findMostRecent and Blog are just imaginary examples
         // $blog = $em->getRepository('AppBundle:Blog')->findMostRecent();
-        if ($this->getUser() == null)
+        if ($this->getUser() == null) {
             $menu->addChild('login', array(
                 'route' => 'login',
                     // 'routeParameters' => array('id' => $blog->getId())
             ));
-        else
+        } else {
+
+//            $menu->addChild('Manage users', ['route' => 'userIndex']);
+            $menu->addChild('ManageUsers', ['label' => 'Manage users'])->setAttribute('dropdown', true)->setAttribute('icon', 'fa fa-list');
+            $menu['ManageUsers']->addChild('Manage existing users', ['route' => 'userIndex']);
+            $menu['ManageUsers']->addChild('Create new user', ['route' => 'userCreate']);
+//            $menu['users']->addChild('Manage existing users', ['route' => 'userIndex']);
+//            $menu['users']->addChild('Create a new user', ['route' => 'userCreate']);
             $menu->addChild("logout (" . $this->getUser()->username . ")", array(
                 'route' => 'logout',
                     // 'routeParameters' => array('id' => $blog->getId())
             ));
+        }
         // create another menu item
         // $menu->addChild('About Me', array('route' => 'about'));
         // you can also add sub level's to your menu's as follows

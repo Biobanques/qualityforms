@@ -28,3 +28,9 @@ security:
             logout:
                 path: /logout
                 target: /
+#            remember_me:
+#                secret:   '%secret%'
+#                lifetime: 604800 # 1 week in seconds
+#                path:     /
+    access_control:
+        - { path: \w*/admin/\w*, roles: ROLE_ADMIN }

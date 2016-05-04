@@ -22,16 +22,19 @@ class WebserviceUserProvider implements UserProviderInterface
 
         $service = $kernel->getContainer()->get('mongo');
         $userData = $service->getCollection('user')->find()->where('username', $username)->findOne();
-        //$kernel->
+        $data = [];
         if ($userData) {
             $password = $userData->password;
+            $data['password'] = $password;
             $username = $userData->username;
+            $data['username'] = $username;
             $salt = $userData->salt;
+            $data['salt'] = $salt;
             $roles = $userData->roles;
-
+            $data['roles'] = $roles;
             // ...
 
-            return new User($service->getCollection('user'), $username, $password, $salt, $roles);
+            return new User($service->getCollection('user'), $data);
         }
 
         throw new UsernameNotFoundException(

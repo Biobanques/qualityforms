@@ -14,28 +14,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User extends Document implements UserInterface, EquatableInterface
 {
+    private $id;
     private $username;
     private $password;
     private $salt;
     private $roles;
 
-    public function __construct($collection = null, $username = null, $password = null, $salt = null, array $roles = [], $options = []) {
-        if ($collection == null)
-            $collection = Yii::$app->db->getCollection('user');
-        $data = ['username' => $username,
-            'password' => $password,
-            'salt' => $salt,
-            'roles' => $roles];
-
-        parent::__construct($collection, $data, $options);
-
-        /*
-         * use to fetch/save data
-         */
-//        $this->set('username', $username);
-//        $this->set('password', $password);
-//        $this->set('salt', $salt);
-//        $this->set('roles', $roles);
+    public function getId() {
+        return (string) $this->_id;
     }
 
     public function getPassword() {
@@ -43,6 +29,7 @@ class User extends Document implements UserInterface, EquatableInterface
     }
 
     public function setPassword($password) {
+
         $this->set('password', $password);
     }
 

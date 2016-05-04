@@ -30,7 +30,7 @@ framework:
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
-    assets: ~
+
 
 # Twig Configuration
 twig:
@@ -38,6 +38,8 @@ twig:
     strict_variables: "%kernel.debug%"
 #    form_themes: ['bootstrap_3_layout.html.twig']
     form_themes: ['bootstrap_3_horizontal_layout.html.twig']
+    paths:
+        "%kernel.root_dir%/../src/DatatableBundle/Resources/views/": DatatableBundle
 
 # Doctrine Configuration
 #doctrine:
@@ -77,3 +79,9 @@ knp_menu:
     templating: false
     # the renderer to use, list is also available by default
     default_renderer: twig
+    
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~

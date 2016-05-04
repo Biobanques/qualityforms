@@ -24,20 +24,12 @@
         "mongodb/mongodb":"^1.0.0",
         "symfony/event-dispatcher": "dev-master as 2.9",
        "sokil/php-mongo-bundle": "dev-master",
-        "knplabs/knp-menu-bundle":"^2.0"
-       
-       
+        "knplabs/knp-menu-bundle":"^2.0",
+        "symfony/assetic-bundle": "^2.8"
+      
+
     },
-     "repositories": [
-        {
-            "type": "git",
-            "url":"https://github.com/mpenicaud/php-mongo.git"
-        },
-        {
-            "type": "git",
-            "url":"https://github.com/mpenicaud/php-mongo-bundle.git"
-        }
-    ],
+
 
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

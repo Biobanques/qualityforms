@@ -1,1 +1,9 @@
-Hello World!
+{% extends 'default/index.html.twig' %}
+{% block content %}
+    <h2>Users index</h2>
+
+    <p><br>
+        <a href ="{{path('userCreate')}}">Create new user</a>
+        </p><br>
+        {% include  '@DatatableBundle/layouts/datatable.html.twig'%}
+    {% endblock %}    

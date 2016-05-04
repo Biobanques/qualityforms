@@ -6,9 +6,6 @@ use Biobanques\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sokil\Mongo\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,15 +17,9 @@ class FrontendController extends Controller
      * @return Collection
      */
     public function getCollection() {
+
         return $this->get('mongo')->getCollection('user');
     }
-
-//    /**
-//     * @Route("user/index")
-//     */
-//    public function indexAction() {
-//        return $this->render('UserBundle:Default:index.html.twig');
-//    }
 
     /**
      * @Route("/login",name="login")
@@ -38,7 +29,7 @@ class FrontendController extends Controller
 
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-        $user = new User($this->getCollection());
+        //  $user = new User($this->getCollection());
 
         return $this->render('UserBundle:forms:loginForm.html.twig', [
 
@@ -52,26 +43,30 @@ class FrontendController extends Controller
      *
      * @Route("/user/transform",name="transform")
      */
-    public function transformAction(Request $request) {
-
-        $encoder = $this->container->get('security.password_encoder');
-        $users = $this->getCollection()->find()
-        // ->where('username', 'matth')
-        ;
-        foreach ($users as $dbuser) {
-            $user = new User($this->getCollection(), $dbuser->username, $dbuser->password, null, ['ROLE_ADMIN']);
-//            foreach($user->attributes as $attributeName=>$attributeValue)
-
-            $oldpassword = $user->password;
-            $newpassword = $encoder->encodePassword($user, $oldpassword);
-
-            $dbuser->password = $newpassword;
-            $dbuser->roles = ['ROLE_ADMIN'];
-            $dbuser->save();
-        }
-        return new Response($newpassword);
-    }
-
+//    public function transformAction(Request $request) {
+//
+//        $encoder = $this->container->get('security.password_encoder');
+//        $users = $this->getCollection()->find()
+//        // ->where('username', 'matth')
+//        ;
+//        $i = 0;
+//        foreach ($users as $dbuser) {
+//            $i++;
+//            $user = new User($this->getCollection(), $dbuser->username, $dbuser->password, null, []);
+////            foreach($user->attributes as $attributeName=>$attributeValue)
+//            $dbuser->roles = ['ROLE_USER'];
+//            $oldpassword = $dbuser->password;
+//            $newpassword = $encoder->encodePassword($user, $oldpassword);
+//            $dbuser->clearPassword = $oldpassword;
+//            $dbuser->password = $newpassword;
+//            if ($i % 37 == 4)
+//                $dbuser->roles = ['ROLE_USER', 'ROLE_ADMIN'];
+//
+//
+//            $dbuser->save();
+//        }
+//        // return new Response($newpassword);
+//    }
 //    /**
 //     *
 //     * @Route("/logout",name="logout")
