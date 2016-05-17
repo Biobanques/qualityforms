@@ -1,3 +1,4 @@
 services:
     biobanques_user_provider:
         class: Biobanques\UserBundle\Entity\WebserviceUserProvider
+        arguments: ["@service_container"]

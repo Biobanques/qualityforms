@@ -21,62 +21,109 @@ class DatatableQueries
      *
      * @var Collection
      */
-    public $collection;
-    /**
-     *
-     * @var int
-     */
-    public $draw;
-    /**
-     *
-     * @var int
-     */
-    public $start = 0;
-    /**
-     *
-     * @var int
-     */
-    public $length;
-    /**
-     *
-     * @var boolean
-     */
-    public $useRegex;
-    /**
-     *
-     * @var string
-     */
-    public $searchValue;
-    /**
-     *
-     * @var array
-     */
-    public $columns;
+    private $collection;
 
+    /**
+     * @codeCoverageIgnore
+     * @var int
+     */
+    public function getSearch() {
+        return $this->search;
+    }
+
+    public function setSearch($search) {
+        $this->search = $search;
+    }
+
+    private $search = ['value' => '', 'regex' => true];
+    private $draw = 1;
+    /**
+     *
+     * @var int
+     */
+    private $start = 0;
+    /**
+     *
+     * @var int
+     */
+    private $length = 10;
+//    /**
+//     *
+//     * @var boolean
+//     */
+//    private $useRegex;
+//    /**
+//     *
+//     * @var string
+//     */
+//    private $searchValue;
+
+    /**
+     * @codeCoverageIgnore
+     * @var array
+     */public function getOrder() {
+        return $this->order;
+    }
+
+    public function setOrder($order) {
+        $this->order = $order;
+    }
+
+    private $columns;
+    private $order;
+
+    /**
+     * @codeCoverageIgnore
+     * @return array
+     */
     public function getColumns() {
         return $this->columns;
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @return Collection
+     */
     public function getCollection() {
         return $this->collection;
     }
 
-    public function getUseRegex() {
-        return $this->useRegex;
-    }
+//    /**
+//     * @codeCoverageIgnore
+//     * @return boolean
+//     */
+//    public function getUseRegex() {
+//        return $this->useRegex;
+//    }
+//
+//    /**
+//     * @codeCoverageIgnore
+//     * @return string
+//     */
+//    public function getSearchValue() {
+//        return $this->searchValue;
+//    }
 
-    public function getSearchValue() {
-        return $this->searchValue;
-    }
-
+    /**
+     * @codeCoverageIgnore
+     * @return int
+     */
     public function getDraw() {
         return $this->draw;
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @return int
+     */
     public function getStart() {
         return $this->start;
     }
 
+    /**
+     * @codeCoverageIgnore
+     * @return int
+     */
     public function getLength() {
         return $this->length;
     }
@@ -85,13 +132,13 @@ class DatatableQueries
         $this->columns = $columns;
     }
 
-    public function setUseRegex($useRegex) {
-        $this->useRegex = $useRegex;
-    }
-
-    public function setSearchValue($searchValue) {
-        $this->searchValue = $searchValue;
-    }
+//    public function setUseRegex($useRegex) {
+//        $this->useRegex = $useRegex;
+//    }
+//
+//    public function setSearchValue($searchValue) {
+//        $this->searchValue = $searchValue;
+//    }
 
     public function setCollection(Collection $collection) {
         $this->collection = $collection;
@@ -109,6 +156,9 @@ class DatatableQueries
         $this->length = $length;
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct(Collection $collection, ArrayIterator $post) {
         if (!$collection instanceof Collection) {
             throw new Exception("No collection provided, can't process data retrieving");
@@ -116,10 +166,18 @@ class DatatableQueries
             $this->setCollection($collection);
 
         foreach ($post as $key => $value) {
-            $this->$key = $value;
+            $method = 'set' . ucfirst($key);
+            if (is_callable(array($this, $method))) {
+                call_user_func(array($this, $method), $value);
+            }
+            //$this->$key = $value;
         }
     }
 
+    /**
+     *
+     * @return array
+     */
     public function getData() {
 
         $result = [];
@@ -143,6 +201,8 @@ class DatatableQueries
         if (!empty($sortParams))
             $cursor->sort($sortParams);
         ;
+        //skip code coverage (no doc returned in tests)
+        //@codeCoverageIgnoreStart
         foreach ($cursor as $doc) {
             $docData = [];
             foreach ($this->columns as $column) {
@@ -155,13 +215,19 @@ class DatatableQueries
             }
             $result['data'][] = $docData;
         }
+        //@codeCoverageIgnoreEnd
+
         $result['recordsTotal'] = $this->collection->count();
         $result['recordsFiltered'] = $cursor->count();
 
         return $result;
     }
 
-    protected function createSortParam() {
+    /**
+     *
+     * @return array
+     */
+    public function createSortParam() {
         $sortParams = [];
         foreach ($this->order as $orderParam) {
             switch ($orderParam['dir']) {
@@ -176,7 +242,7 @@ class DatatableQueries
         return $sortParams;
     }
 
-    protected function createSearchParams() {
+    public function createSearchParams() {
         $searchParams = [];
         foreach ($this->columns as $column) {
             if ($column['searchable'] == 'true') {
@@ -188,14 +254,17 @@ class DatatableQueries
         return $searchParams;
     }
 
-    protected function createOrCriteria($fieldName) {
-        $searchValue = $this->search['value'];
+    public function createOrCriteria($fieldName) {
+        $searchValue = '';
+        if (isset($this->search['value']))
+            $searchValue = $this->search['value'];
 
         if ($searchValue != '') {
-            if ($this->search['regex'] == 'false')
+
+            if (isset($this->search['regex']) && $this->search['regex'] == 'false')
                 return $this->collection->expression()->where($fieldName, $searchValue);
 
-            elseif ($this->search['regex'] == 'true') {
+            elseif (!isset($this->search['regex']) || $this->search['regex'] == 'true') {
                 $searchValue = str_replace(' ', '|', $searchValue);
                 $searchValue = str_replace(',|', '|', $searchValue);
                 $searchValue = str_replace(',', '|', $searchValue);

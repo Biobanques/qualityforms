@@ -2,18 +2,16 @@
 
 namespace Biobanques\UserBundle\Controller;
 
-use Biobanques\UserBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sokil\Mongo\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class FrontendController extends Controller
 {
 
     /**
-     *
+     * @codeCoverageIgnore
      * @return Collection
      */
     public function getCollection() {

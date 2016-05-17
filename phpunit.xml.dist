@@ -15,17 +15,44 @@
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>tests</directory>
+            <directory>src/*/Tests</directory>
+            <directory>src/*/*/Tests</directory>
         </testsuite>
     </testsuites>
-
+    
     <filter>
+  <whitelist processUncoveredFilesFromWhitelist="true">
+    <directory suffix=".php">src</directory>
+    
+    <exclude>
+      <directory suffix=".php">src/*Bundle/Resources</directory>
+      <directory suffix=".php">src/*/*Bundle/Resources</directory>
+      <directory suffix=".php">src/*/Bundle/*Bundle/Resources</directory>  
+      <directory suffix=".php">src/*Bundle/Tests</directory>
+      <directory suffix=".php">src/*/*Bundle/Tests</directory>
+      <directory suffix=".php">src/*/Bundle/*Bundle/Tests</directory>  
+      <directory suffix=".php">src/*Bundle/DependencyInjection</directory>
+      <directory suffix=".php">src/*/*Bundle/DependencyInjection</directory>
+      <directory suffix=".php">src/*/Bundle/*Bundle/DependencyInjection</directory>  
+    </exclude>
+  </whitelist>
+
         <whitelist>
             <directory>src</directory>
             <exclude>
                 <directory>src/*Bundle/Resources</directory>
                 <directory>src/*/*Bundle/Resources</directory>
                 <directory>src/*/Bundle/*Bundle/Resources</directory>
+                <directory>src/*Bundle/DependencyInjection</directory>
+                <directory>src/*/*Bundle/DependencyInjection</directory>
+                <directory>src/*/Bundle/*Bundle/DependencyInjection</directory>  
             </exclude>
         </whitelist>
     </filter>
+    
+    <logging>
+  <log type="coverage-html" target="./tests/results/" lowUpperBound="35"
+       highLowerBound="70"/>
+  
+</logging>
 </phpunit>

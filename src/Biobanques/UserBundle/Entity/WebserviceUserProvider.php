@@ -2,25 +2,31 @@
 
 namespace Biobanques\UserBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class WebserviceUserProvider implements UserProviderInterface
 {
+    protected $container;
 
     public function loadUserByUsername($username) {
         // make a call to your webservice here
         // $userData =
         // pretend it returns an array on success, false if there is no user
-        global $kernel;
-
-        if ('AppCache' == get_class($kernel)) {
-            $kernel = $kernel->getKernel();
-        }
-
-        $service = $kernel->getContainer()->get('mongo');
+//        global $kernel;
+//@codeCoverageIgnoreStart
+//        if ('AppCache' == get_class($kernel)) {
+//            $kernel = $kernel->getKernel();
+//        }
+//@codeCoverageIgnoreEnd
+//        if ($serviceProvided == null)
+//            $service = $kernel->getContainer()->get('mongo');
+//        else
+//            $service = $serviceProvided;
+        $service = $this->container->get('mongo');
         $userData = $service->getCollection('user')->find()->where('username', $username)->findOne();
         $data = [];
         if ($userData) {
@@ -54,6 +60,10 @@ class WebserviceUserProvider implements UserProviderInterface
 
     public function supportsClass($class) {
         return $class === 'Biobanques\UserBundle\Entity\User';
+    }
+
+    public function __construct($container) {
+        $this->container = $container;
     }
 
 }

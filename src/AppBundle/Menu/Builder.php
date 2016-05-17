@@ -36,7 +36,7 @@ class Builder implements ContainerAwareInterface
             $menu['ManageUsers']->addChild('Create new user', ['route' => 'userCreate']);
 //            $menu['users']->addChild('Manage existing users', ['route' => 'userIndex']);
 //            $menu['users']->addChild('Create a new user', ['route' => 'userCreate']);
-            $menu->addChild("logout (" . $this->getUser()->username . ")", array(
+            $menu->addChild("Logout (" . $this->getUser()->username . ")", array(
                 'route' => 'logout',
                     // 'routeParameters' => array('id' => $blog->getId())
             ));
@@ -51,7 +51,7 @@ class Builder implements ContainerAwareInterface
     }
 
     /**
-     *
+     * @codeCoverageIgnore
      * @return User
      * @throws LogicException
      */

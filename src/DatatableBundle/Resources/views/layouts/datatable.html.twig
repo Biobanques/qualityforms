@@ -1,21 +1,21 @@
 
 {% block content %}
     <div class="table-responsive">
-        <table class='table' cellpadding="1" cellspacing="1" id="{{table_id}}" class="display" width="100%">
+        <table class='table' cellpadding="1" cellspacing="1" id="{{datatable.table_id}}" class="display" width="100%">
             <thead>
                 <tr>
-                    {% for value in columns %}
+                    {% for value in datatable.columns %}
                         <th>{{value.data}}</th>
                         {% endfor %}
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    {% for value in columns %}
-                        <th>{{value.data}}</th>
-                        {% endfor %}
-                </tr>
-            </tfoot>
+            {# <tfoot>
+                 <tr>
+                     {% for value in datatable.columns %}
+                         <th>{{value.data}}</th>
+                         {% endfor %}
+                 </tr>
+             </tfoot>#}
         </table>
     </div>
 
@@ -23,35 +23,37 @@
 {% block javascripts %}
     {#         {{parent()}}#}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {#    The line above is commented in order to avoid conflict between multiple identical js file load (KnpMenu)
+    TODO : use assets to manage dependency to css/jquery, instead of cdn#}
+    {#    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>#}
     <script src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#{{table_id}}').DataTable(
-                    {
-                        "search": {
-                            "regex": true
-                        },
-                        "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-                        "iDisplayLength": 5,
-                        "processing": true,
-                        "serverSide": true,
-                        "ajax": {
-                            url: '{{ ajaxUrl }}',
-                            type: 'POST'
-                        },
-                        "columns":{{columns|json_encode()|raw}},
-                                "columnDefs": [{
-                                        "targets": -1,
-                                        "data": "download_link",
-                                        "render": function (data, type, full, meta) {
-                                            return '<a href="' + data + '/view"><span class = "glyphicon glyphicon-zoom-in" style="margin-left:5px"/></a>' +
-                                                    '<a href="' + data + '/update"><span class = "glyphicon glyphicon-edit" style="margin-left:5px"/></a>' +
-                                                    '<a href="' + data + '/delete" onclick="return confirm(\'Are you sure?\')"><span class = "glyphicon glyphicon-remove" style="margin-left:5px"/></a>';
-                                        }
-                                    }]
-                    });
+        $('#{{datatable.table_id}}').DataTable(
+        {
+        "search": {
+        "regex":{{ datatable.useRegex }}
+        },
+                "lengthMenu": [[5, 10, 25, 50, - 1], [5, 10, 25, 50, "All"]],
+                "iDisplayLength": 5,
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                url: '{{ datatable.ajaxUrl }}',
+                        type: 'POST'
+                },
+                "columns":{{datatable.columns|json_encode()|raw}},
+                "columnDefs": [{
+                "targets": - 1,
+                        "data": "crud_links",
+                        "render": function (data, type, full, meta) {
+                        return '<a href="' + data + '/view"><span class = "glyphicon glyphicon-zoom-in" style="margin-left:5px"/></a>' +
+                                '<a href="' + data + '/update"><span class = "glyphicon glyphicon-edit" style="margin-left:5px"/></a>' +
+                                '<a href="' + data + '/delete" onclick="return confirm(\'Are you sure?\')"><span class = "glyphicon glyphicon-remove" style="margin-left:5px"/></a>';
+                        }
+                }]
+        });
         });
     </script>
 

@@ -12,6 +12,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * and open the template in the editor.
  */
 
+/**
+ * @codeCoverageIgnore
+ */
 class User extends Document implements UserInterface, EquatableInterface
 {
     private $id;
@@ -19,6 +22,12 @@ class User extends Document implements UserInterface, EquatableInterface
     private $password;
     private $salt;
     private $roles;
+
+    public function rules() {
+        return [
+            ['username,password,roles', 'required'],
+        ];
+    }
 
     public function getId() {
         return (string) $this->_id;
@@ -50,19 +59,17 @@ class User extends Document implements UserInterface, EquatableInterface
     }
 
     public function isEqualTo(UserInterface $user) {
-        if (!$user instanceof WebserviceUser) {
+//        if (!$user instanceof WebserviceUser) {
+//            return false;
+//        }
+//        if ($this->getPassword() !== $user->getPassword()) {
+//            return false;
+//        }
+        if ($this->getSalt() !== $user->getSalt()) {
             return false;
         }
 
-        if ($this->password !== $user->getPassword()) {
-            return false;
-        }
-
-        if ($this->salt !== $user->getSalt()) {
-            return false;
-        }
-
-        if ($this->username !== $user->getUsername()) {
+        if ($this->getUsername() !== $user->getUsername()) {
             return false;
         }
 
