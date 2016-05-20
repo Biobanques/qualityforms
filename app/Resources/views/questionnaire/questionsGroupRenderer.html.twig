@@ -1,0 +1,38 @@
+{# empty Twig template #}
+{% set title = group.title%}
+
+{% if lang == 'fr' %}
+    {% set title = group.title_fr%}
+{% endif %}
+{% if lang == 'both' %}
+    {% set title = "<i>#{group.title} </i> / #{group.title_fr}"%}
+{% endif %}
+<div class="question_group"> {{title |raw}}</div>
+{% if isAnswered%}
+    {% set quests = group.getAnswers()%}
+{% else %}
+    {% set quests = group.getQuestions()%}
+{% endif %}
+
+{% if quests%}
+    {% for question in quests%}
+        {% set varsquestions = {'question':question,'idquestiongroup':group.id,'lang':lang,'isAnswered':isAnswered }%}
+        {%include '/questionnaire/questionRenderer.html.twig' with varsquestions%}
+    {% endfor %}
+{% endif %}
+
+{% if isAnswered%}
+    {% set groups = questionnaire.getAnswers_group()%}
+{% else %}
+    {% set groups = questionnaire.getQuestions_group()%}
+{% endif %}
+
+{% for qg in groups%}
+    {% if qg.parent_group==group.id%}
+        {% set varsgroup = {'questionnaire':questionnaire,'group':qg,'lang':lang,'isAnswered':isAnswered }%}
+        {%include '/questionnaire/questionsGroupRenderer.html.twig' with varsgroup%}
+    {% endif %}
+{% endfor %}
+
+<div class="end-question-group"></div>
+

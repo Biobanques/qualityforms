@@ -48,13 +48,25 @@
                 "targets": - 1,
                         "data": "crud_links",
                         "render": function (data, type, full, meta) {
-                        return '<a href="' + data + '/view"><span class = "glyphicon glyphicon-zoom-in" style="margin-left:5px"/></a>' +
-                                '<a href="' + data + '/update"><span class = "glyphicon glyphicon-edit" style="margin-left:5px"/></a>' +
-                                '<a href="' + data + '/delete" onclick="return confirm(\'Are you sure?\')"><span class = "glyphicon glyphicon-remove" style="margin-left:5px"/></a>';
-                        }
-                }]
-        });
-        });
+                        var result = '';
+        {% if datatable.crud.view %}
+                            result = result + '<a href="' + data + '/view"><span class = "glyphicon glyphicon-zoom-in" style="margin-left:5px"/></a>';
+        {%endif%}
+        {% if datatable.crud.update %}
+                            result = result + '<a href="' + data + '/update"><span class = "glyphicon glyphicon-edit" style="margin-left:5px"/></a>';
+        {%endif%}
+        {% if datatable.crud.delete %}
+                            result = result + '<a href="' + data + '/delete" onclick="return confirm(\'Are you sure?\')"><span class = "glyphicon glyphicon-remove" style="margin-left:5px"/></a>';
+        {%endif%}
+        {# return '<a href="' + data + '/view"><span class = "glyphicon glyphicon-zoom-in" style="margin-left:5px"/></a>' +
+'<a href="' + data + '/update"><span class = "glyphicon glyphicon-edit" style="margin-left:5px"/></a>' +
+'<a href="' + data + '/delete" onclick="return confirm(\'Are you sure?\')"><span class = "glyphicon glyphicon-remove" style="margin-left:5px"/></a>';
+#}
+                    return result;
+                    }
+            }]
+    });
+    });
     </script>
 
 {% endblock %}

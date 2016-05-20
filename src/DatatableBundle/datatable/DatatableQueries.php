@@ -3,6 +3,8 @@
 namespace DatatableBundle\datatable;
 
 use ArrayIterator;
+use MongoDate;
+use MongoId;
 use MongoRegex;
 use Sokil\Mongo\Collection;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -22,6 +24,7 @@ class DatatableQueries
      * @var Collection
      */
     private $collection;
+    protected $dateFormat = 'd/m/Y';
 
     /**
      * @codeCoverageIgnore
@@ -208,8 +211,12 @@ class DatatableQueries
             foreach ($this->columns as $column) {
 
                 $name = $column['data'];
-                if ($name == '_id')
+
+
+                if ($doc->$name instanceof MongoId)
                     $docData[$name] = (string) $doc->$name;
+                elseif ($doc->$name instanceof MongoDate)
+                    $docData[$name] = date($this->dateFormat, $doc->$name->sec);
                 else
                     $docData[$name] = $doc->$name;
             }
@@ -323,6 +330,15 @@ class DatatableQueries
         }
 
         return utf8_encode($text);
+    }
+
+    /**
+     * Set format for mongoDate display, with php date() function
+     *
+     * @param string $format
+     */
+    public function setDateFormat($format) {
+        $this->dateFormat = $format;
     }
 
 }

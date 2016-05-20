@@ -19,6 +19,10 @@ class Builder implements ContainerAwareInterface
 
         $menu->addChild('Home', array('route' => 'homepage'))
                 ->setAttribute('icon', 'glyphicon glyphicon-home');
+        $menu->addChild('Questionnaires', array('route' => 'indexQuestionnaires'))
+                ->setAttribute('icon', 'fa fa-list');
+        $menu->addChild('Mes documents', array('route' => 'indexAnswers'))
+                ->setAttribute('icon', 'fa fa-list');
         // access services from the container!
         //$em = $this->container->get('doctrine')->getManager();
         // findMostRecent and Blog are just imaginary examples

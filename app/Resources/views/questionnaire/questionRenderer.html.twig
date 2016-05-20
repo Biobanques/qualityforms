@@ -1,0 +1,110 @@
+{# empty Twig template #}
+
+<div style="{{question.style}}">
+    {% if question.precomment != null %}
+        {% set precomment = question.precomment %}
+        {% if lang == 'fr' %}
+            {% set precomment = question.precomment_fr %}
+        {% endif %}
+        {% if lang == 'both' %}
+            {% set precomment = "<i>#{question.precomment} </i><br>#{question.precomment_fr}"%}
+        {% endif %}
+        <div class="question-precomment">  {{precomment|raw}}</div>
+    {% endif %}
+
+
+    {% set label = question.label %}
+    {% if lang == 'fr' %}
+        {% set label = question.label_fr %}
+    {% endif %}
+    {% if lang == 'both' %}
+        {% set label = "<i>#{question.label} </i><br>#{question.label_fr}"%}
+    {% endif %}
+    <div class="question-label"> {{label|raw}}
+        {# TODO : helpdivcomponent.html l.145       #}
+    </div>
+
+    <div class="question-input">
+        {% set suffix = question.type=='checkbox'?'[]':''%}
+        {% set idInput = "id=\"#{idquestiongroup}_#{question.id}\"
+name=\"#{object}[#{idquestiongroup}_#{question.id}]#{suffix}\""%}
+        {% set valueinput = ''%}
+
+
+        {% if isAnswered%}
+            {% set valueinput = question.answer%}
+        {% endif %}
+
+
+        {% if question.type=='input'%}
+            <input type="text" {{idInput|raw}} value="{{valueinput|raw}}"/>
+        {% endif %}
+
+
+        {% if question.type=='radio'%}
+
+            {% if lang == 'fr' and question.values_fr!=''%}
+                {% set values = question.values_fr|split(',') %}
+            {% else %}
+                {% set values = question.values |split(',')%}
+            {% endif %}
+
+            {% for value in values %}
+                {% set checked = '' %}
+                {% if value == valueinput %}
+                    {% set checked = 'checked' %}
+                {% endif %}
+                <input type="radio" {{idInput|raw}} {{checked|raw}} value="{{value|raw}}" >{{value|raw}} </input>
+            {%endfor%}
+        {% endif %}
+
+
+        {% if question.type=='checkbox'%}
+            {% if lang == 'fr' and question.values_fr!=''%}
+                {% set values = question.values_fr|split(',') %}
+            {% else %}
+                {% set values = question.values |split(',')%}
+            {% endif %}
+            {% for value in values %}
+                {% set checked = false %}
+                {% if valueinput !=null and value in valueinput %}
+                    {% set checked = true %}
+                {% endif %}
+                <input type="checkbox" {{idInput|raw}}  value="{{value|raw}}"
+                       {{ checked ? 'checked' : ''}}>
+                {{value|raw}} </input><br>
+            {%endfor%}
+        {% endif %}
+
+
+        {% if question.type=='text'%}
+            <textarea rows="4" cols="250" {{idInput|raw}} style="width: 645px; height: 70px;" >{{valueinput|raw}} </textarea>
+        {% endif %}
+
+
+        {% if question.type=='image'%}
+            {% if isAnswered%}
+                <input {{idInput|raw}} type="file"/>
+                {% if question.answer != null%}
+                    <div>here the image</div>
+                {% endif %}
+            {% else %}
+                {#  TODO : mettre en place les assets pour gerer les images (a faire avec le remplacement des CDN)              #}
+                {#<div style="width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/qualityforms/images/gnome_mime_image.png');"> </div>#}
+            {% endif %}
+        {% endif %}
+
+
+        {% if question.type=='list'%}
+            {% set values = question.values |split(',')%}
+            <select {{idInput|raw}}>
+                <option  value=""></option>
+                {% for value in values %}
+                    <option  value="{{value|raw}}" {{valueinput == value ? 'selected' : ''}}> {{value|raw}}</option>
+                {%endfor%}
+            </select>
+        {% endif %}
+
+
+    </div>
+</div>

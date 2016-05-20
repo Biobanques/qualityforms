@@ -1,0 +1,6 @@
+{% extends 'default/index.html.twig' %}
+{% block content %}
+    <h2>{{object|capitalize}} index</h2>
+
+    {% include  '@DatatableBundle/layouts/datatable.html.twig'%}
+{% endblock %}

@@ -64,6 +64,7 @@ class BackendController extends Controller
         $datatable->useRegex = 'true';
         $datatable->table_id = 'usersTable';
         $datatable->ajaxUrl = '/admin/users/getUsers';
+        $datatable->crud = ['view' => true, 'update' => true, 'delete' => true];
 
 
         return $this->render('UserBundle:Default:index.html.twig', [

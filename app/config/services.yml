@@ -16,6 +16,10 @@ services:
               %database_name%: 
                 user: 
                   documentClass: "Biobanques\\UserBundle\\Entity\\User"
+                questionnaire: 
+                  documentClass: "AppBundle\\Entity\\Questionnaire"
+                answer: 
+                  documentClass: "AppBundle\\Entity\\Answer"
         - 
           - "useDatabase"
           - 

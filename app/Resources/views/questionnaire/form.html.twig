@@ -1,0 +1,20 @@
+{% extends 'default/index.html.twig' %}
+{% if isAnswered%}
+    {% set object = 'Answer'%}
+{% else %}
+    {% set object = 'Questionnaire'%}
+{% endif %}
+
+
+{% use '/questionnaire/tabbedGroupRenderer.html.twig' with stylesheets as page_stylesheets,content as pageContent %}
+
+{% block stylesheets %}
+    {{parent()}}
+    {{ block('page_stylesheets') }}
+{% endblock %}
+
+{% block content %}
+    <h2>{{action | capitalize~' '~object|lower}} <i>{{questionnaire.name}}</i></h2>
+
+    {{ block('pageContent') }}
+{% endblock %}

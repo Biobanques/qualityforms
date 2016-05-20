@@ -59,7 +59,7 @@ class InitUserCommand extends ContainerAwareCommand
         if ($this->getCollection()->find()->where('username', $name)->count() != 0) {
             $output->writeln('Login already exists, please change it.');
         } elseif ($password != $verifPassword) {
-            $output->writeln('Error on password validation : both provided password must be the equals.');
+            $output->writeln('Error on password validation : both provided passwords must be the equals.');
         } else {
             $adminUser->username = $name;
             $adminUser->password = $encoder->encodePassword($adminUser, $password);
