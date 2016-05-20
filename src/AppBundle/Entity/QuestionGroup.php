@@ -86,63 +86,6 @@ class QuestionGroup extends Structure
         throw new Exception('Wrong class name specified. Use string or closure');
     }
 
-    public function getId() {
-        return $this->id;
-    }
-
-    public function getTitle() {
-        return $this->title;
-    }
-
-    public function getTitle_fr() {
-        return $this->title_fr;
-    }
-
-//    public function getQuestions() {
-//        return $this->questions;
-//    }
-
-    public function getParent_group() {
-        return $this->parent_group;
-    }
-
-    public function getDisplay_rule() {
-        return $this->display_rule;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setTitle($title) {
-        $this->title = $title;
-    }
-
-    public function setTitle_fr($title_fr) {
-        $this->title_fr = $title_fr;
-    }
-
-//    public function setQuestions($questions) {
-//        $this->questions = $questions;
-//    }
-
-    public function setParent_group(type $parent_group) {
-        $this->parent_group = $parent_group;
-    }
-
-    public function setDisplay_rule($display_rule) {
-        $this->display_rule = $display_rule;
-    }
-
-//    public function behaviors() {
-//        return array('embeddedArrays' => array(
-//                'class' => 'ext.YiiMongoDbSuite.extra.EEmbeddedArraysBehavior',
-//                'arrayPropertyName' => 'questions', // name of property, that will be used as an array
-//                'arrayDocClassName' => 'Question'  // class name of embedded documents in array
-//            ),
-//        );
-//    }
-
     public function getQuestions() {
         return $this->getObjectList('questions', 'AppBundle\Entity\Question');
     }
@@ -157,27 +100,6 @@ class QuestionGroup extends Structure
                 'id',
                 'required'
         ));
-    }
-
-//    /**
-//     *
-//     * @return array customized attribute labels (name=>label)
-//     */
-//    public function attributeLabels() {
-//        return array(
-//            'id' => 'Id',
-//            'title' => 'title',
-//            'title_fr' => 'titre',
-//            'parent_group' => 'parent_group'
-//        );
-//    }
-
-    /**
-     * TODO : display rule dinammcally ( with JS)
-     * make the javascript display rule.
-     */
-    public function makeDisplayRule() {
-
     }
 
 }

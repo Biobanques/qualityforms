@@ -28,7 +28,7 @@
 {% endif %}
 
 {% for qg in groups%}
-    {% if qg.parent_group==group.id%}
+    {% if qg.get('parent_group')==group.id%}
         {% set varsgroup = {'questionnaire':questionnaire,'group':qg,'lang':lang,'isAnswered':isAnswered }%}
         {%include '/questionnaire/questionsGroupRenderer.html.twig' with varsgroup%}
     {% endif %}

@@ -334,7 +334,7 @@ class DatatableQueries
 
     /**
      * Set format for mongoDate display, with php date() function
-     *
+     * @codeCoverageIgnore
      * @param string $format
      */
     public function setDateFormat($format) {

@@ -96,81 +96,9 @@ class Questionnaire extends Document
         throw new Exception('Wrong class name specified. Use string or closure');
     }
 
-    public function getId() {
-        return (string) $this->_id;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function getName_fr() {
-        return $this->name_fr;
-    }
-
-    public function getDescription() {
-        return $this->description;
-    }
-
-    public function getMessage_start() {
-        return $this->message_start;
-    }
-
-    public function getMessage_end() {
-        return $this->message_end;
-    }
-
     public function getQuestions_group() {
         $result = $this->getObjectList('questions_group', 'AppBundle\Entity\QuestionGroup');
         return $result;
-    }
-
-    public function getLast_modified() {
-        return $this->last_modified;
-    }
-
-    public function getContributors() {
-        return $this->contributors;
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setName($name) {
-        $this->name = $name;
-    }
-
-    public function setName_fr($name_fr) {
-        $this->name_fr = $name_fr;
-    }
-
-    public function setDescription($description) {
-        $this->description = $description;
-    }
-
-    public function setMessage_start($message_start) {
-        $this->message_start = $message_start;
-    }
-
-    public function setMessage_end($message_end) {
-        $this->message_end = $message_end;
-    }
-
-    public function setQuestions_group($questions_group) {
-        $this->questions_group = $questions_group;
-    }
-
-    public function setLast_modified($last_modified) {
-        $this->last_modified = date("d/m/Y", $last_modified->sec);
-    }
-
-    public function setContributors($contributors) {
-        $this->contributors = $contributors;
-    }
-
-    public function renderTabbedGroup($lang) {
-        return QuestionnaireHTMLRenderer::renderTabbedGroup($this, $lang, false);
     }
 
 }

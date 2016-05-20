@@ -49,49 +49,9 @@ class Answer extends Document
      */
     private $contributors;
 
-    public function getId() {
-        return $this->get('_id');
-    }
-
-    public function getLogin() {
-        return $this->login;
-    }
-
-    public function getQuestionnaireMongoId() {
-        return $this->questionnaireMongoId;
-    }
-
-    public function getName() {
-        return $this->name;
-    }
-
-    public function getLast_modified() {
-        return $this->last_modified;
-    }
-
-    public function getDescription() {
-        return $this->description;
-    }
-
-    public function getMessage_start() {
-        return $this->message_start;
-    }
-
-    public function getMessage_end() {
-        return $this->message_end;
-    }
-
     public function getAnswers_group() {
         $result = $this->getObjectList('answers_group', 'AppBundle\Entity\AnswerGroup');
         return $result;
-    }
-
-    public function getLast_updated() {
-        return $this->last_updated;
-    }
-
-    public function getContributors() {
-        return $this->contributors;
     }
 
     /**
@@ -168,22 +128,6 @@ class Answer extends Document
     }
 
     /**
-     * render in html the questionnaire
-     */
-    public function renderHTML() {
-        $result = "";
-        foreach ($this->answers_group as $answer_group) {
-            $result.=$this->renderAnswerGroupHTML($answer_group);
-            $result.= "<br><div style=\”clear:both;\"></div>";
-        }
-        return $result;
-    }
-
-    public function renderTabbedGroup($lang) {
-        return QuestionnaireHTMLRenderer::renderTabbedGroup($this, $lang, true);
-    }
-
-    /**
      * copy attributes of questionnaire recursively to the final state answer-question.
      * @param type $questionnaire
      */
@@ -203,37 +147,6 @@ class Answer extends Document
             $answersGroup[] = $answerGroup;
             $this->set('answers_group', $answersGroup);
         }
-    }
-
-    /**
-     * render contributors
-     * used in plain page and tab page
-     * @return string
-     */
-    public function renderContributors() {
-        return QuestionnaireHTMLRenderer::renderContributors($this->contributors);
-    }
-
-    /**
-     * get the last modified value into a french date format JJ/MM/AAAA
-     * @return type
-     */
-    public function getLastModified() {
-        if ($this->last_modified != null)
-            return date("d/m/Y", $this->last_modified->sec);
-        else
-            return null;
-    }
-
-    /**
-     * get the last updatedvalue into a french date format JJ/MM/AAAA
-     * @return type
-     */
-    public function getLastUpdated() {
-        if ($this->last_updated != null)
-            return date("d/m/Y H:i", $this->last_updated->sec);
-        else
-            return null;
     }
 
 }

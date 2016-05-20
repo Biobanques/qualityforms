@@ -1,52 +1,52 @@
 {# empty Twig template #}
 
-<div style="{{question.style}}">
-    {% if question.precomment != null %}
-        {% set precomment = question.precomment %}
+<div style="{{question.get('style')}}">
+    {% if question.get('precomment') != null %}
+        {% set precomment = question.get('precomment') %}
         {% if lang == 'fr' %}
-            {% set precomment = question.precomment_fr %}
+            {% set precomment = question.get('precomment_fr') %}
         {% endif %}
         {% if lang == 'both' %}
-            {% set precomment = "<i>#{question.precomment} </i><br>#{question.precomment_fr}"%}
+            {% set precomment = "<i>#{question.get('precomment')} </i><br>#{question.get('precomment_fr')}"%}
         {% endif %}
         <div class="question-precomment">  {{precomment|raw}}</div>
     {% endif %}
 
 
-    {% set label = question.label %}
+    {% set label = question.get('label') %}
     {% if lang == 'fr' %}
-        {% set label = question.label_fr %}
+        {% set label = question.get('label_fr') %}
     {% endif %}
     {% if lang == 'both' %}
-        {% set label = "<i>#{question.label} </i><br>#{question.label_fr}"%}
+        {% set label = "<i>#{question.get('label')} </i><br>#{question.get('label_fr')}"%}
     {% endif %}
     <div class="question-label"> {{label|raw}}
         {# TODO : helpdivcomponent.html l.145       #}
     </div>
 
     <div class="question-input">
-        {% set suffix = question.type=='checkbox'?'[]':''%}
-        {% set idInput = "id=\"#{idquestiongroup}_#{question.id}\"
-name=\"#{object}[#{idquestiongroup}_#{question.id}]#{suffix}\""%}
+        {% set suffix = question.get('type')=='checkbox'?'[]':''%}
+        {% set idInput = "id=\"#{idquestiongroup}_#{question.get('id')}\"
+name=\"#{object}[#{idquestiongroup}_#{question.get('id')}]#{suffix}\""%}
         {% set valueinput = ''%}
 
 
         {% if isAnswered%}
-            {% set valueinput = question.answer%}
+            {% set valueinput = question.get('answer')%}
         {% endif %}
 
 
-        {% if question.type=='input'%}
+        {% if question.get('type')=='input'%}
             <input type="text" {{idInput|raw}} value="{{valueinput|raw}}"/>
         {% endif %}
 
 
-        {% if question.type=='radio'%}
+        {% if question.get('type')=='radio'%}
 
-            {% if lang == 'fr' and question.values_fr!=''%}
-                {% set values = question.values_fr|split(',') %}
+            {% if lang == 'fr' and question.get('values_fr')!=''%}
+                {% set values = question.get('values_fr')|split(',') %}
             {% else %}
-                {% set values = question.values |split(',')%}
+                {% set values = question.get('values') |split(',')%}
             {% endif %}
 
             {% for value in values %}
@@ -59,11 +59,11 @@ name=\"#{object}[#{idquestiongroup}_#{question.id}]#{suffix}\""%}
         {% endif %}
 
 
-        {% if question.type=='checkbox'%}
-            {% if lang == 'fr' and question.values_fr!=''%}
-                {% set values = question.values_fr|split(',') %}
+        {% if question.get('type')=='checkbox'%}
+            {% if lang == 'fr' and question.get('values_fr')!=''%}
+                {% set values = question.get('values_fr')|split(',') %}
             {% else %}
-                {% set values = question.values |split(',')%}
+                {% set values = question.get('values') |split(',')%}
             {% endif %}
             {% for value in values %}
                 {% set checked = false %}
@@ -77,15 +77,15 @@ name=\"#{object}[#{idquestiongroup}_#{question.id}]#{suffix}\""%}
         {% endif %}
 
 
-        {% if question.type=='text'%}
+        {% if question.get('type')=='text'%}
             <textarea rows="4" cols="250" {{idInput|raw}} style="width: 645px; height: 70px;" >{{valueinput|raw}} </textarea>
         {% endif %}
 
 
-        {% if question.type=='image'%}
+        {% if question.get('type')=='image'%}
             {% if isAnswered%}
                 <input {{idInput|raw}} type="file"/>
-                {% if question.answer != null%}
+                {% if question.get('answer') != null%}
                     <div>here the image</div>
                 {% endif %}
             {% else %}
@@ -95,8 +95,8 @@ name=\"#{object}[#{idquestiongroup}_#{question.id}]#{suffix}\""%}
         {% endif %}
 
 
-        {% if question.type=='list'%}
-            {% set values = question.values |split(',')%}
+        {% if question.get('type')=='list'%}
+            {% set values = question.get('values') |split(',')%}
             <select {{idInput|raw}}>
                 <option  value=""></option>
                 {% for value in values %}

@@ -28,28 +28,8 @@ class AnswerGroup extends Structure
      */
     protected $display_rule;
 
-    public function getId() {
-        return $this->get('id');
-    }
-
-    public function getTitle() {
-        return $this->title;
-    }
-
-    public function getTitle_fr() {
-        return $this->title_fr;
-    }
-
     public function getAnswers() {
         return $this->getObjectList('answers', 'AppBundle\Entity\AnswerQuestion');
-    }
-
-    public function getParent_group() {
-        return $this->parent_group;
-    }
-
-    public function getDisplay_rule() {
-        return $this->display_rule;
     }
 
     /**

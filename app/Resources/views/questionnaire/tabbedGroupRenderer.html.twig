@@ -35,7 +35,7 @@
                     <h4 class="modal-title ">{{contribTitle|capitalize}}</h4>
                 </div>
                 <div class="modal-body ">
-                    <p>{{questionnaire.contributors |raw}}</p>
+                    <p>{{questionnaire.get('contributors') |raw}}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -45,17 +45,10 @@
 
         </div>
 
-
-
-
         <div>
             {% set first_tab = false%}
 
             {% set divTabs = '<ul class="nav nav-tabs" role="tablist">'%}
-
-
-
-
 
             {% if isAnswered%}
                 {% set groups = questionnaire.getAnswers_group()%}
@@ -65,12 +58,7 @@
 
             {% for group in groups %}
 
-
-                {#            {{group.title_fr}} : {{group.parent_group}}<br>#}
-
-
-
-                {% if group.parent_group==null%}
+                {% if group.get('parent_group')==null%}
 
                     {% set title = group.title%}
 
@@ -80,25 +68,13 @@
                     {% if lang == 'both' %}
                         {% set title = "<i>#{group.title} </i> <br> #{group.title_fr}"%}
                     {% endif %}
-
                     {% set extraActive = ""%}
                     {% set extraActive2 = ""%}
                     {% if first_tab == false %}
                         {% set first_tab = true%}
                         {% set extraActive = "class=\"active\""%}
-
                     {% endif %}
-
                     {% set divTabs = divTabs ~ "<li #{extraActive |raw}><a href=\"\##{group.id}\" role=\"tab\" data-toggle=\"tab\">#{title |raw}</a></li>"%}
-                    {#            {% set divPans = divPans ~ "<div class=\"tab-pane #{extraActive2 |raw}\" id=\" #{group.id|raw }\">"%}#}
-
-                    {#            {% set divPans = divPans ~ include '/questionnaire/questionsGroupRenderer.html.twig' with varsgroup%}#}
-                    {#            {% set inc = include '/questionnaire/questionsGroupRenderer.html.twig' with varsgroup %}#}
-
-                    {#            {% set divPans = divPans ~ "</div>" %}#}
-
-
-
                 {% endif %}
             {% endfor %}
             {% set divTabs = divTabs ~ ' </ul>'%}
@@ -111,7 +87,7 @@
                     {% endif %}
                     {% set first_tab = false %}
                     {% for group in groups%}
-                        {% if group.parent_group==null%}
+                        {% if group.get('parent_group')==null%}
 
                             {% set extraActive2 = "" %}
                             {% if first_tab == false %}

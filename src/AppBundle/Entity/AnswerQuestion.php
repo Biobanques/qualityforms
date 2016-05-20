@@ -32,57 +32,6 @@ class AnswerQuestion extends Structure
      * @var type
      */
     private $answer;
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function getLabel() {
-        return $this->label;
-    }
-
-    public function getLabel_fr() {
-        return $this->label_fr;
-    }
-
-    public function getType() {
-        return $this->type;
-    }
-
-    public function getStyle() {
-        return $this->style;
-    }
-
-    public function getValues() {
-        return $this->values;
-    }
-
-    public function getValues_fr() {
-        return $this->values_fr;
-    }
-
-    public function getAnswer() {
-        return $this->answer;
-    }
-
-    public function getPrecomment() {
-        return $this->precomment;
-    }
-
-    public function getPrecomment_fr() {
-        return $this->precomment_fr;
-    }
-
-    /**
-     * columns if type is array
-     * @var type
-     */
-    //public $columns;
-    /**
-     * rows if type is array
-     * @var type
-     */
-    //public $rows;
     /**
      * comment on the top of the question
      * @var type
