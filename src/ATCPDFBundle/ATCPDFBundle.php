@@ -10,8 +10,8 @@ namespace ATCPDFBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Description of ATCPDFBundle
- *
+ * Used to override WhiteOctoberTCPDFBundle config and take care of 'pdf_' parameters in app config
+ * @codeCoverageIgnore
  * @author matthieu
  */
 class ATCPDFBundle extends Bundle

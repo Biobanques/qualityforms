@@ -10,9 +10,10 @@ namespace AppBundle\Pdf;
 use TCPDF;
 
 /**
- * Description of QuestionnaireHTMLRenderer
- * render to display elements of questionnaire
- * @author nicolas
+ * Description of QuestionnairePDFRenderer
+ * render to display elements of questionnaire in pdf file
+ * @author matthieu
+ * @codeCoverageIgnore
  */
 class QuestionnairePDFRenderer
 {
@@ -146,7 +147,7 @@ class QuestionnairePDFRenderer
         $pdf->Cell(0, 5, $title, 0, 2, 'L', true);
         $pdf->Ln(5);
         $pdf->SetFont('helvetica', '', 12);
-        if (isset($group->questions)) {
+        if (null != $group->getQuestions()) {
             foreach ($group->getQuestions() as $question) {
                 $pdf = QuestionnairePDFRenderer::renderQuestionPDF($pdf, $group->id, $question, $lang, $isAnswered);
             }
@@ -177,7 +178,7 @@ class QuestionnairePDFRenderer
      * @param type $isAnswered
      * @return TCPDF
      */
-    public static function renderQuestionPDF($pdf, $idquestiongroup, $question, $lang, $isAnswered) {
+    public static function renderQuestionPDF(\TCPDF $pdf, $idquestiongroup, $question, $lang, $isAnswered) {
         //par defaut lang = enif ($lang == "en")
         $label = $question->label;
         if ($lang == "fr") {
@@ -199,7 +200,7 @@ class QuestionnairePDFRenderer
         //affichage de l input selon son type
         $id = $idquestiongroup . "_" . $question->id;
         if ($question->type == "input") {
-            $pdf->TextField($id, 40, 7);
+            $pdf->TextField($id, 40, 7, [], ['v' => $question->get('answer')]);
         }
         if ($question->type == "radio") {
             if ($lang == "fr" && $question->values_fr != "") {

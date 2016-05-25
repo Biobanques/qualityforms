@@ -1,28 +1,68 @@
 {% extends 'default/index.html.twig' %}
+
+
+
+{% block links %}
+    {% if isAnswered%}
+        <div class = 'row' style="margin-top: 15px;margin-bottom: 15px">
+            <div class =' col-lg-3'><a href ={{path('exportPDFAnswer',{'id':questionnaire._id})}}> <i class = 'fa fa-file-pdf-o'></i>  PDF export</a></div>
+            {% if onePage is defined and onePage==true %}
+                <div class =' col-lg-3'><a href ={{path('viewAnswer',{'id':questionnaire._id})}}> <i class = 'fa fa-table'></i>  Multiple tabs view</a></div>
+            {% else %}
+                <div class =' col-lg-3'><a href ={{path('viewOnePageAnswer',{'id':questionnaire._id})}}> <i class = 'fa fa-table'></i>  One page view</a></div>
+            {% endif %}
+            {#            <div class =' col-lg-3'><a href ={{path('viewOnePageAnswer',{'id':questionnaire._id})}}> <i class = 'fa fa-table'></i>  Multiple tabs view</a></div>
+            #}        </div>
+        {% else %}
+        <div class = 'row' style="margin-top: 15px;margin-bottom: 15px">
+            <div class =' col-lg-3'><a href ={{path('exportPDFQuestionnaire',{'id':questionnaire._id})}}> <i class = 'fa fa-file-pdf-o'></i>  PDF export</a></div>
+
+            {% if onePage is defined and onePage==true %}
+                <div class =' col-lg-3'><a href ={{path('viewQuestionnaire',{'id':questionnaire._id})}}> <i class = 'fa fa-table'></i>  Multiple tabs view</a></div>
+            {% else %}
+                <div class =' col-lg-3'><a href ={{path('viewOnePageQuestionnaire',{'id':questionnaire._id})}}> <i class = 'fa fa-table'></i>  One page view</a></div>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+{% endblock %}
+
+
 {% if isAnswered%}
     {% set object = 'Answer'%}
+
 {% else %}
     {% set object = 'Questionnaire'%}
+
 {% endif %}
 
 {% use '/questionnaire/tabbedGroupRenderer.html.twig' with stylesheets as page_stylesheets,content as pageContent %}
-
+{% use '/questionnaire/onePageRenderer.html.twig' with stylesheets as page_stylesheets2,content as pageContent2 %}
 
 {% block stylesheets %}
     {{parent()}}
-    {{ block('page_stylesheets') }}
+    {% if onePage is defined and onePage==true %}
+        {{ block('page_stylesheets2') }}
+
+    {% else %}
+        {{ block('page_stylesheets') }}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     <h2>{{action | capitalize~' '~object|lower}} <i>{{questionnaire.name}}</i></h2>
 
-
-    <div class = 'row' style="margin-top: 15px;margin-bottom: 15px">
-        <div class =' col-lg-3'><a href ={{path('exportPDFQuestionnaire',{'id':questionnaire._id})}}> <i class = 'fa fa-file-pdf-o'></i>  PDF export</a></div>
-        <div class =' col-lg-3'><a href ={{path('viewOnePage',{'id':questionnaire._id})}}> <i class = 'fa fa-file-text-o'></i>  One page view</a></div>
-    </div>
+    {{ block('links') }}
 
 
 
-    {{ block('pageContent') }}
+    {% if onePage is defined and onePage==true %}
+        {{ block('pageContent2') }}
+
+    {% else %}
+        {{ block('pageContent') }}
+    {% endif %}
+
+
 {% endblock %}

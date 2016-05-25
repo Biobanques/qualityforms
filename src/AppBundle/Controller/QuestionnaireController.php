@@ -195,16 +195,17 @@ class QuestionnaireController extends Controller
 
     /**
      * Export to PDF
-     * @Route("/questionnaire/{id}/viewonepage",name="viewOnePage")
+     * @Route("/questionnaire/{id}/viewonepage",name="viewOnePageQuestionnaire")
      */
     public function actionViewOnePage(Request $request, $id) {
 
         $questionnaire = $this->getCollection()->getDocument($id);
-        return $this->render('/questionnaire/formOnePage.html.twig', [
+        return $this->render('/questionnaire/form.html.twig', [
                     'questionnaire' => $questionnaire,
                     'lang' => 'fr',
                     'isAnswered' => false,
-                    'action' => 'view'
+                    'action' => 'view',
+                    'onePage' => true
         ]);
     }
 

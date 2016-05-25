@@ -28,6 +28,10 @@ class AnswerGroup extends Structure
      */
     protected $display_rule;
 
+    public function getQuestions() {
+        return $this->getAnswers();
+    }
+
     public function getAnswers() {
         return $this->getObjectList('answers', 'AppBundle\Entity\AnswerQuestion');
     }

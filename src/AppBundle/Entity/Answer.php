@@ -49,6 +49,10 @@ class Answer extends Document
      */
     private $contributors;
 
+    public function getQuestions_group() {
+        return $this->getAnswers_group();
+    }
+
     public function getAnswers_group() {
         $result = $this->getObjectList('answers_group', 'AppBundle\Entity\AnswerGroup');
         return $result;

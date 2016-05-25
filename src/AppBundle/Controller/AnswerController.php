@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Answer;
+use AppBundle\Pdf\QuestionnairePDFRenderer;
 use DatatableBundle\datatable\DatatableQueries;
 use MongoDate;
 use MongoId;
@@ -14,6 +15,7 @@ use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use TCPDF;
 
 /**
  * @Security("has_role('ROLE_USER')")
@@ -83,7 +85,7 @@ class AnswerController extends Controller
      * @Route("/answer/{id}/view",name="viewAnswer")
      */
     public function viewAction(Request $request, $id) {
-        $answer = $this->getCollection()->find()->byId($id)->asObject()->findOne();
+        $answer = $this->getCollection()->getDocument($id);
 
 
         return $this->render('/questionnaire/form.html.twig', [
@@ -177,6 +179,34 @@ class AnswerController extends Controller
         }
 
         return $answer;
+    }
+
+    /**
+     * Export to PDF
+     * @Route("/answer/{id}/exportpdf",name="exportPDFAnswer")
+     */
+    public function actionExportPDF(Request $request, $id) {
+
+        $answer = $this->getCollection()->getDocument($id);
+        /* @var TCPDF */
+        $pdf = $this->container->get('white_october.tcpdf')->create();
+        return QuestionnairePDFRenderer::render($pdf, $answer);
+    }
+
+    /**
+     * Export to PDF
+     * @Route("/answer/{id}/viewonepage",name="viewOnePageAnswer")
+     */
+    public function actionViewOnePage(Request $request, $id) {
+
+        $answer = $this->getCollection()->getDocument($id);
+        return $this->render('/questionnaire/form.html.twig', [
+                    'questionnaire' => $answer,
+                    'lang' => 'fr',
+                    'isAnswered' => true,
+                    'action' => 'view',
+                    'onePage' => true
+        ]);
     }
 
 }
