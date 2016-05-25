@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Answer;
+use AppBundle\Entity\Questionnaire;
+use AppBundle\Pdf\QuestionnairePDFRenderer;
 use DatatableBundle\datatable\DatatableQueries;
 use MongoDate;
 use MongoId;
@@ -14,6 +16,7 @@ use stdClass;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use TCPDF;
 
 class QuestionnaireController extends Controller
 {
@@ -37,7 +40,6 @@ class QuestionnaireController extends Controller
         $columns[] = ['data' => 'description', 'searchable' => true, 'orderable' => false,];
         $columns[] = ['data' => 'last_modified', 'searchable' => true, 'orderable' => true,];
 
-
         $columns[] = [
             //  "className" => 'glyphicon glyphicon-edit ',
             "orderable" => false,
@@ -57,7 +59,7 @@ class QuestionnaireController extends Controller
         $datatable->crud = ['view' => true, 'update' => true, 'delete' => false];
 
         return $this->render('questionnaire/index.html.twig', [
-                    'object' => 'Questionnaire',
+                    'object' => 'Questionnaires',
                     'datatable' => $datatable
         ]);
     }
@@ -78,7 +80,7 @@ class QuestionnaireController extends Controller
      * @Route("/questionnaire/{id}/view",name="viewQuestionnaire")
      */
     public function viewAction(Request $request, $id) {
-        $questionnaire = $this->getCollection()->find()->byId($id)->asObject()->findOne();
+        $questionnaire = $this->getCollection()->getDocument($id);
 
 
         return $this->render('/questionnaire/form.html.twig', [
@@ -96,17 +98,19 @@ class QuestionnaireController extends Controller
      * @Route("/questionnaire/{id}/update",name="updateQuestionnaire")
      */
     public function updateAction(Request $request, $id) {
-        $questionnaire = $this->getCollection()->find()->byId($id)->asObject()->findOne();
+        /* @var Questionnaire */
+        $questionnaire = $this->getCollection()->getDocument($id);
         $post = $request->request->all();
         $answer = null;
         $isAnswered = false;
 
-        if ($request->request->all() != []) {
+
+        if ($post != []) {
             $answer = $this->saveQuestionnaireAnswers($questionnaire, $post);
-        }
-        if ($answer != null) {
-            $questionnaire = $answer;
-            $isAnswered = true;
+            if ($answer != null) {
+                $questionnaire = $answer;
+                $isAnswered = true;
+            }
         }
         return $this->render('/questionnaire/form.html.twig', [
                     'questionnaire' => $questionnaire,
@@ -127,12 +131,13 @@ class QuestionnaireController extends Controller
             $answerCounter = 0;
             foreach ($answer_group->getAnswers() as $answerQuestion) {
                 $input = $answer_group->get('id') . "_" . $answerQuestion->get('id');
-                if (isset($post['Questionnaire'][$input])) {
+                if (isset($post['Questionnaire'][$input]) && $post['Questionnaire'][$input] != "") {
                     $flagNoInputToSave = false;
                     $answerQuestion->setAnswer($post['Questionnaire'][$input]);
                 }
-//if array, specific save action
-                if ($answerQuestion->type == "array") {
+
+                //@codeCoverageIgnoreStart
+                if ($answerQuestion->get('type') == "array") {
 //construct each id input an dget the result to store it
                     $rows = $answerQuestion->rows;
                     $arrows = split(",", $rows);
@@ -149,6 +154,7 @@ class QuestionnaireController extends Controller
                     }
                     $answerQuestion->setAnswer($answerArray);
                 }
+                //@codeCoverageIgnoreEnd
 
                 $group = $answer_group->get('answers');
                 $group[$answerCounter] = $answerQuestion->toArray();
@@ -163,11 +169,8 @@ class QuestionnaireController extends Controller
         if ($flagNoInputToSave == false) {
             if ($answer->save())
                 $this->addFlash('success', 'Questionnaire saved with success');
-            //Yii::app()->user->setFlash('success', "Questionnaire saved with success");
             else {
                 $this->addFlash('error', 'Questionnaire not saved. A problem occured.');
-                //  Yii::app()->user->setFlash('error', "Questionnaire not saved. A problem occured.");
-                // Yii::log("pb save answer" . print_r($answer->getErrors()), CLogger::LEVEL_ERROR);
             }
         } else {
             $this->addFlash('error', 'No input to save');
@@ -176,6 +179,18 @@ class QuestionnaireController extends Controller
         }
 
         return $answer;
+    }
+
+    /**
+     * Displays a particular model.
+     * @Route("/questionnaire/{id}/exportpdf",name="exportPDF")
+     */
+    public function actionExportPDF(Request $request, $id) {
+
+        $questionnaire = $this->getCollection()->getDocument($id);
+        /* @var TCPDF */
+        $pdf = $this->container->get('white_october.tcpdf')->create();
+        return QuestionnairePDFRenderer::render($pdf, $questionnaire);
     }
 
 }

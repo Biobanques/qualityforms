@@ -38,6 +38,7 @@ twig:
     strict_variables: "%kernel.debug%"
 #    form_themes: ['bootstrap_3_layout.html.twig']
     form_themes: ['bootstrap_3_horizontal_layout.html.twig']
+    
     paths:
         "%kernel.root_dir%/../src/DatatableBundle/Resources/views/": DatatableBundle
 
@@ -69,7 +70,9 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
+    port:      "%mailer_port%"
     spool:     { type: memory }
+
 
 knp_menu:
     # use "twig: false" to disable the Twig extension and the TwigRenderer
@@ -85,3 +88,13 @@ assetic:
     use_controller: '%kernel.debug%'
     filters:
         cssrewrite: ~
+        
+white_october_tcpdf:
+    tcpdf:
+        k_path_images: %kernel.root_dir%/../web/bundles/app/public/images/
+        pdf_creator: 'Biobanques'
+        pdf_author: 'Biobanques'
+        pdf_header_title: 'Biobanques PDF'
+        pdf_header_string: 'by Biobanques - www.biobanques.eu'
+        pdf_header_logo: 'logobb_125w100h.jpg'
+        pdf_header_logo_width: 30

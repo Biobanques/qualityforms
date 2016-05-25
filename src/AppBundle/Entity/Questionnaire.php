@@ -8,9 +8,8 @@ use Sokil\Mongo\Exception;
 use Sokil\Mongo\Structure;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * @author mpenicaud
+ * @codeCoverageIgnore
  */
 
 /**
@@ -36,6 +35,15 @@ class Questionnaire extends Document
      * contributors are people working on thi squetsionnaire
      */
     private $contributors;
+
+    /**
+     *
+     * @return array
+     */
+    public function getQuestions_group() {
+        $result = $this->getObjectList('questions_group', 'AppBundle\Entity\QuestionGroup');
+        return $result;
+    }
 
     /**
      * Override Structure method
@@ -94,11 +102,6 @@ class Questionnaire extends Document
         }
 
         throw new Exception('Wrong class name specified. Use string or closure');
-    }
-
-    public function getQuestions_group() {
-        $result = $this->getObjectList('questions_group', 'AppBundle\Entity\QuestionGroup');
-        return $result;
     }
 
 }

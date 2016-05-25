@@ -12,8 +12,8 @@ use AppBundle\Entity\AnswerGroup;
  * Object answer to store a questionnaire definition + answers
  * Copy of object questionnaire to prevent problems of update with questionnaire and forwar compatibility
  * @property integer $id
- * @author nmalservet
- *
+ * @author mpenicaud
+ * @codeCoverageIgnore
  */
 class Answer extends Document
 {

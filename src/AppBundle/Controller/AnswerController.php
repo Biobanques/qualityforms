@@ -15,6 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Security("has_role('ROLE_USER')")
+ */
 class AnswerController extends Controller
 {
 
@@ -57,7 +60,7 @@ class AnswerController extends Controller
         $datatable->crud = ['view' => true, 'update' => true, 'delete' => false];
 
         return $this->render('questionnaire/index.html.twig', [
-                    'object' => 'Answer',
+                    'object' => 'Answers',
                     'datatable' => $datatable
         ]);
     }
@@ -70,6 +73,7 @@ class AnswerController extends Controller
         $query = new DatatableQueries($this->getCollection(), $request->request->getIterator());
         $query->setDateFormat('d/m/Y H\hi');
         $result = $query->getData();
+
         return JsonResponse::create($result);
     }
 

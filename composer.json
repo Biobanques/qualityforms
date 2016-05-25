@@ -25,7 +25,8 @@
         "symfony/event-dispatcher": "dev-master as 2.9",
        "sokil/php-mongo-bundle": "dev-master",
         "knplabs/knp-menu-bundle":"^2.0",
-        "symfony/assetic-bundle": "^2.8"
+        "symfony/assetic-bundle": "^2.8",
+        "whiteoctober/tcpdf-bundle": "dev-master"
       
 
     },

@@ -25,7 +25,7 @@
             </div>
         </div>
     {% endblock %}
-    <div class ='col-lg-2'></div>
+    <div class ='col-lg-2'>{% block leftMenu %}{% endblock %}</div>
     <div class ='col-lg-9'>
         {%block flash %}
             {% for flash_message in app.session.flashBag.get('notice') %}

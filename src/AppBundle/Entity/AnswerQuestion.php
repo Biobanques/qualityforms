@@ -6,8 +6,8 @@ use Sokil\Mongo\Structure;
 
 /**
  * embedded class question-answer, store question id and ansswer filled
- * @author nmalservet
- *
+ * @author mpenicaud
+ * @codeCoverageIgnore
  */
 class AnswerQuestion extends Structure
 {
@@ -31,7 +31,7 @@ class AnswerQuestion extends Structure
      * valeu of the answer
      * @var type
      */
-    private $answer;
+    //private $answer;
     /**
      * comment on the top of the question
      * @var type

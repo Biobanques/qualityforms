@@ -1,110 +1,115 @@
 {# empty Twig template #}
 
-<div style="{{question.get('style')}}">
-    {% if question.get('precomment') != null %}
-        {% set precomment = question.get('precomment') %}
+
+{% if question.get('style') != null %}
+    <div style="{{question.get('style')}}">
+    {% else %}
+        <div>
+        {% endif %}
+        {% if question.get('precomment') != null %}
+            {% set precomment = question.get('precomment') %}
+            {% if lang == 'fr' %}
+                {% set precomment = question.get('precomment_fr') %}
+            {% endif %}
+            {% if lang == 'both' %}
+                {% set precomment = "<i>#{question.get('precomment')} </i><br>#{question.get('precomment_fr')}"%}
+            {% endif %}
+            <div class="question-precomment">  {{precomment|raw}}</div>
+        {% endif %}
+
+
+        {% set label = question.get('label') %}
         {% if lang == 'fr' %}
-            {% set precomment = question.get('precomment_fr') %}
+            {% set label = question.get('label_fr') %}
         {% endif %}
         {% if lang == 'both' %}
-            {% set precomment = "<i>#{question.get('precomment')} </i><br>#{question.get('precomment_fr')}"%}
+            {% set label = "<i>#{question.get('label')} </i><br>#{question.get('label_fr')}"%}
         {% endif %}
-        <div class="question-precomment">  {{precomment|raw}}</div>
-    {% endif %}
+        <div class="question-label"> {{label|raw}}
+            {# TODO : helpdivcomponent.html l.145       #}
+        </div>
 
-
-    {% set label = question.get('label') %}
-    {% if lang == 'fr' %}
-        {% set label = question.get('label_fr') %}
-    {% endif %}
-    {% if lang == 'both' %}
-        {% set label = "<i>#{question.get('label')} </i><br>#{question.get('label_fr')}"%}
-    {% endif %}
-    <div class="question-label"> {{label|raw}}
-        {# TODO : helpdivcomponent.html l.145       #}
-    </div>
-
-    <div class="question-input">
-        {% set suffix = question.get('type')=='checkbox'?'[]':''%}
-        {% set idInput = "id=\"#{idquestiongroup}_#{question.get('id')}\"
+        <div class="question-input">
+            {% set suffix = question.get('type')=='checkbox'?'[]':''%}
+            {% set idInput = "id=\"#{idquestiongroup}_#{question.get('id')}\"
 name=\"#{object}[#{idquestiongroup}_#{question.get('id')}]#{suffix}\""%}
-        {% set valueinput = ''%}
+            {% set valueinput = ''%}
 
 
-        {% if isAnswered%}
-            {% set valueinput = question.get('answer')%}
-        {% endif %}
-
-
-        {% if question.get('type')=='input'%}
-            <input type="text" {{idInput|raw}} value="{{valueinput|raw}}"/>
-        {% endif %}
-
-
-        {% if question.get('type')=='radio'%}
-
-            {% if lang == 'fr' and question.get('values_fr')!=''%}
-                {% set values = question.get('values_fr')|split(',') %}
-            {% else %}
-                {% set values = question.get('values') |split(',')%}
-            {% endif %}
-
-            {% for value in values %}
-                {% set checked = '' %}
-                {% if value == valueinput %}
-                    {% set checked = 'checked' %}
-                {% endif %}
-                <input type="radio" {{idInput|raw}} {{checked|raw}} value="{{value|raw}}" >{{value|raw}} </input>
-            {%endfor%}
-        {% endif %}
-
-
-        {% if question.get('type')=='checkbox'%}
-            {% if lang == 'fr' and question.get('values_fr')!=''%}
-                {% set values = question.get('values_fr')|split(',') %}
-            {% else %}
-                {% set values = question.get('values') |split(',')%}
-            {% endif %}
-            {% for value in values %}
-                {% set checked = false %}
-                {% if valueinput !=null and value in valueinput %}
-                    {% set checked = true %}
-                {% endif %}
-                <input type="checkbox" {{idInput|raw}}  value="{{value|raw}}"
-                       {{ checked ? 'checked' : ''}}>
-                {{value|raw}} </input><br>
-            {%endfor%}
-        {% endif %}
-
-
-        {% if question.get('type')=='text'%}
-            <textarea rows="4" cols="250" {{idInput|raw}} style="width: 645px; height: 70px;" >{{valueinput|raw}} </textarea>
-        {% endif %}
-
-
-        {% if question.get('type')=='image'%}
             {% if isAnswered%}
-                <input {{idInput|raw}} type="file"/>
-                {% if question.get('answer') != null%}
-                    <div>here the image</div>
-                {% endif %}
-            {% else %}
-                {#  TODO : mettre en place les assets pour gerer les images (a faire avec le remplacement des CDN)              #}
-                {#<div style="width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/qualityforms/images/gnome_mime_image.png');"> </div>#}
+                {% set valueinput = question.get('answer')%}
             {% endif %}
-        {% endif %}
 
 
-        {% if question.get('type')=='list'%}
-            {% set values = question.get('values') |split(',')%}
-            <select {{idInput|raw}}>
-                <option  value=""></option>
+            {% if question.get('type')=='input'%}
+                <input type="text" {{idInput|raw}} value="{{valueinput|raw}}"/>
+            {% endif %}
+
+
+            {% if question.get('type')=='radio'%}
+
+                {% if lang == 'fr' and question.get('values_fr')!=''%}
+                    {% set values = question.get('values_fr')|split(',') %}
+                {% else %}
+                    {% set values = question.get('values') |split(',')%}
+                {% endif %}
+
                 {% for value in values %}
-                    <option  value="{{value|raw}}" {{valueinput == value ? 'selected' : ''}}> {{value|raw}}</option>
+                    {% set checked = '' %}
+                    {% if value == valueinput %}
+                        {% set checked = 'checked' %}
+                    {% endif %}
+                    <input type="radio" {{idInput|raw}} {{checked|raw}} value="{{value|raw}}" >{{value|raw}} </input>
                 {%endfor%}
-            </select>
-        {% endif %}
+            {% endif %}
 
 
+            {% if question.get('type')=='checkbox'%}
+                {% if lang == 'fr' and question.get('values_fr')!=''%}
+                    {% set values = question.get('values_fr')|split(',') %}
+                {% else %}
+                    {% set values = question.get('values') |split(',')%}
+                {% endif %}
+                {% for value in values %}
+                    {% set checked = false %}
+                    {% if valueinput !=null and value in valueinput %}
+                        {% set checked = true %}
+                    {% endif %}
+                    <input type="checkbox" {{idInput|raw}}  value="{{value|raw}}"
+                           {{ checked ? 'checked' : ''}}>
+                    {{value|raw}} </input><br>
+                {%endfor%}
+            {% endif %}
+
+
+            {% if question.get('type')=='text'%}
+                <textarea rows="4" cols="250" {{idInput|raw}} style="width: 645px; height: 70px;" >{{valueinput|raw}} </textarea>
+            {% endif %}
+
+
+            {% if question.get('type')=='image'%}
+                {% if isAnswered%}
+                    <input {{idInput|raw}} type="file"/>
+                    {% if question.get('answer') != null%}
+                        <div>here the image</div>
+                    {% endif %}
+                {% else %}
+                    {#  TODO : mettre en place les assets pour gerer les images (a faire avec le remplacement des CDN)              #}
+                    {#<div style="width:128px;height:128px;background-repeat:no-repeat;background-image:url('http://localhost/qualityforms/images/gnome_mime_image.png');"> </div>#}
+                {% endif %}
+            {% endif %}
+
+
+            {% if question.get('type')=='list'%}
+                {% set values = question.get('values') |split(',')%}
+                <select {{idInput|raw}}>
+                    <option  value=""></option>
+                    {% for value in values %}
+                        <option  value="{{value|raw}}" {{valueinput == value ? 'selected' : ''}}> {{value|raw}}</option>
+                    {%endfor%}
+                </select>
+            {% endif %}
+
+
+        </div>
     </div>
-</div>

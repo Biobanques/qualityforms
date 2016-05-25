@@ -76,4 +76,8 @@ class User extends Document implements UserInterface, EquatableInterface
         return true;
     }
 
+    public function isAdmin() {
+        return in_array('ROLE_ADMIN', $this->getRoles());
+    }
+
 }

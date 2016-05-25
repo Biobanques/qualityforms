@@ -15,6 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  * and open the template in the editor.
  */
 
+/**
+ * @codeCoverageIgnore
+ */
 class InitUserCommand extends ContainerAwareCommand
 {
 

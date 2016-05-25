@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Biobanques\UserBundle\UserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
+            new WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle(),
+            new ATCPDFBundle\ATCPDFBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

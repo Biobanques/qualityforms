@@ -6,8 +6,8 @@ use Sokil\Mongo\Structure;
 
 /**
  * classe embarquée Question, définit les objets Question dans les questionnaires
- * @author matthieu
- *
+ * @author mpenicaud
+ * @codeCoverageIgnore
  */
 class QuestionGroup extends Structure
 {

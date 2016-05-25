@@ -1,0 +1,15 @@
+{# empty Twig template #}
+{% extends 'default/index.html.twig' %}
+{% block leftMenu %}
+    {% image 'bundles/app/public/images/logobb.png' %}
+    <a href ="http://www.biobanques.eu"> <img src="{{ asset_url }}"style="max-width:100% " alt="Biobanques" /></a>
+        {% endimage %}
+    {% endblock %}
+
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Welcome to Biobanques Quality forms</h1>
+        Quality forms allow you to manage follow-up of biological samples with specifc forms built by the WP2 of the common infrastructure Biobanques.
+    </div>
+{% endblock %}

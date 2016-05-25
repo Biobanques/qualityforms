@@ -4,7 +4,7 @@
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
+    <h2>Login</h2>
     <form class="form-horizontal" action="{{ path('login') }}" method="post" role="form">
 
 

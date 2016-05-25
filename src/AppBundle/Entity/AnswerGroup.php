@@ -8,8 +8,8 @@ use AppBundle\Entity\AnswerQuestion;
 
 /**
  * classe embarquée AnswerGroup, définit les objets Question dans les questionnaires
- * @author matthieu
- *
+ * @author mpenicaud
+ * @codeCoverageIgnore
  */
 class AnswerGroup extends Structure
 {

@@ -27,24 +27,29 @@ class Builder implements ContainerAwareInterface
         //$em = $this->container->get('doctrine')->getManager();
         // findMostRecent and Blog are just imaginary examples
         // $blog = $em->getRepository('AppBundle:Blog')->findMostRecent();
+
+
         if ($this->getUser() == null) {
             $menu->addChild('login', array(
                 'route' => 'login',
                     // 'routeParameters' => array('id' => $blog->getId())
             ));
-        } else {
+        }
 
 //            $menu->addChild('Manage users', ['route' => 'userIndex']);
+        if ($this->getUser() != null && $this->getUser()->isAdmin()) {
             $menu->addChild('ManageUsers', ['label' => 'Manage users'])->setAttribute('dropdown', true)->setAttribute('icon', 'fa fa-list');
             $menu['ManageUsers']->addChild('Manage existing users', ['route' => 'userIndex']);
             $menu['ManageUsers']->addChild('Create new user', ['route' => 'userCreate']);
-//            $menu['users']->addChild('Manage existing users', ['route' => 'userIndex']);
-//            $menu['users']->addChild('Create a new user', ['route' => 'userCreate']);
+        }
+        $menu->addChild('Contact', ['label' => 'Contact', 'route' => 'contact'])->setAttribute('icon', 'fa fa-envelope');
+
+        if ($this->getUser() != null)
             $menu->addChild("Logout (" . $this->getUser()->username . ")", array(
                 'route' => 'logout',
                     // 'routeParameters' => array('id' => $blog->getId())
             ));
-        }
+
         // create another menu item
         // $menu->addChild('About Me', array('route' => 'about'));
         // you can also add sub level's to your menu's as follows
