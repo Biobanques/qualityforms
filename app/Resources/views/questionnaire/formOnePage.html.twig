@@ -5,7 +5,7 @@
     {% set object = 'Questionnaire'%}
 {% endif %}
 
-{% use '/questionnaire/tabbedGroupRenderer.html.twig' with stylesheets as page_stylesheets,content as pageContent %}
+{% use '/questionnaire/onePageRenderer.html.twig' with stylesheets as page_stylesheets,content as pageContent %}
 
 
 {% block stylesheets %}
@@ -19,7 +19,7 @@
 
     <div class = 'row' style="margin-top: 15px;margin-bottom: 15px">
         <div class =' col-lg-3'><a href ={{path('exportPDFQuestionnaire',{'id':questionnaire._id})}}> <i class = 'fa fa-file-pdf-o'></i>  PDF export</a></div>
-        <div class =' col-lg-3'><a href ={{path('viewOnePage',{'id':questionnaire._id})}}> <i class = 'fa fa-file-text-o'></i>  One page view</a></div>
+        <div class =' col-lg-3'><a href ={{path('viewQuestionnaire',{'id':questionnaire._id})}}> <i class = 'fa fa-table'></i>  Multiple tabs view</a></div>
     </div>
 
 

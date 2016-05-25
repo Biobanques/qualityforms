@@ -88,7 +88,7 @@ class QuestionnaireController extends Controller
                     'questionnaire' => $questionnaire,
                     'lang' => 'fr',
                     'isAnswered' => false,
-                    'action' => 'view'
+                    'action' => 'view',
         ]);
     }
 
@@ -182,8 +182,8 @@ class QuestionnaireController extends Controller
     }
 
     /**
-     * Displays a particular model.
-     * @Route("/questionnaire/{id}/exportpdf",name="exportPDF")
+     * Export to PDF
+     * @Route("/questionnaire/{id}/exportpdf",name="exportPDFQuestionnaire")
      */
     public function actionExportPDF(Request $request, $id) {
 
@@ -191,6 +191,21 @@ class QuestionnaireController extends Controller
         /* @var TCPDF */
         $pdf = $this->container->get('white_october.tcpdf')->create();
         return QuestionnairePDFRenderer::render($pdf, $questionnaire);
+    }
+
+    /**
+     * Export to PDF
+     * @Route("/questionnaire/{id}/viewonepage",name="viewOnePage")
+     */
+    public function actionViewOnePage(Request $request, $id) {
+
+        $questionnaire = $this->getCollection()->getDocument($id);
+        return $this->render('/questionnaire/formOnePage.html.twig', [
+                    'questionnaire' => $questionnaire,
+                    'lang' => 'fr',
+                    'isAnswered' => false,
+                    'action' => 'view'
+        ]);
     }
 
 }
